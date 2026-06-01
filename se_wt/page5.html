@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter - Architecture</title>
+    <style>
+        /* --- Core Setup for Iframe Perfection --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --card-bg: #ffffff;
+        }
+
+        /* CRITICAL FIX: 
+           Locks the body to the exact height/width of the iframe. 
+           Prevents scrolling and cuts off margins.
+        */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh; /* 100% of the iframe height */
+            overflow: hidden; /* STRICTLY NO SCROLLBARS */
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            box-sizing: border-box;
+        }
+
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
+        /* --- Dashboard Wrapper --- */
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 2% 4%;
+            gap: 2%; /* Dynamic spacing */
+        }
+
+        /* --- Header --- */
+        .header {
+            flex-shrink: 0;
+            text-align: center;
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+            border-radius: 8px;
+            padding: 1.5% 2%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Grid Layout --- */
+        .grid-container {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1.2fr;
+            gap: 2%;
+            min-height: 0; /* Important for flex-child grid to not overflow */
+        }
+
+        /* --- Cards --- */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 4%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid var(--dark-charcoal);
+            overflow: hidden; /* Keep contents inside */
+        }
+
+        .card-title {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--dark-charcoal);
+            margin: 0 0 4% 0;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary-brown);
+            padding-bottom: 2%;
+            flex-shrink: 0;
+        }
+
+        /* --- Layers Section (Top Left) --- */
+        .layers-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .layer-item {
+            background: rgba(137, 106, 85, 0.1);
+            padding: 2% 4%;
+            border-left: 4px solid var(--primary-brown);
+            border-radius: 0 4px 4px 0;
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .layer-item span {
+            color: var(--primary-brown);
+            margin-right: 10px;
+        }
+
+        /* --- Tech Stack Section (Top Right) --- */
+        .stack-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4%;
+            height: 100%;
+            align-content: center;
+        }
+
+        .tech-badge {
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+            text-align: center;
+            padding: 8% 4%;
+            border-radius: 6px;
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .tech-badge:hover { transform: scale(1.05); background-color: var(--primary-brown); }
+        .tech-badge strong { font-size: clamp(0.9rem, 2vw, 1.1rem); margin-bottom: 5px; }
+
+        /* --- System Flow Section (Bottom Full Width) --- */
+        .card.flow-card {
+            grid-column: 1 / -1; /* Span full width */
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+            border-top: 4px solid var(--primary-brown);
+        }
+
+        .flow-card .card-title {
+            color: var(--primary-brown);
+            border-bottom-color: var(--light-beige);
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        .flow-box {
+            background-color: var(--primary-brown);
+            padding: 1.5% 4%;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: clamp(0.8rem, 1.8vw, 1rem);
+            text-align: center;
+            width: 60%;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--light-beige);
+            line-height: 0.5;
+        }
+
+        .flow-modules {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 2%;
+        }
+
+        .module-box {
+            background-color: var(--light-beige);
+            color: var(--dark-charcoal);
+            flex: 1;
+            text-align: center;
+            padding: 2% 1%;
+            border-radius: 4px;
+            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+            font-weight: 600;
+        }
+
+        /* --- Responsive Tweaks for very small iframes --- */
+        @media (max-width: 600px) {
+            .grid-container {
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto; /* Fallback scroll ONLY on mobile if absolutely crushed */
+                scrollbar-width: none; /* Hide scrollbar */
+            }
+            .grid-container::-webkit-scrollbar { display: none; }
+            .card { flex: 1 0 auto; margin-bottom: 10px; }
+            html, body { overflow: auto; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <header class="header">
+            <h1>Architecture & System Model</h1>
+        </header>
+
+        <div class="grid-container">
+            
+            <div class="card">
+                <h2 class="card-title">Layered Architecture</h2>
+                <ul class="layers-list">
+                    <li class="layer-item"><span>01</span> Presentation (UI/Vanilla JS)</li>
+                    <li class="layer-item"><span>02</span> Application Logic (Express/JWT)</li>
+                    <li class="layer-item"><span>03</span> Business Logic (Split Engine)</li>
+                    <li class="layer-item"><span>04</span> Data Access (Mongoose ODM)</li>
+                    <li class="layer-item"><span>05</span> Persistence (MongoDB 7)</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Technology Stack</h2>
+                <div class="stack-grid">
+                    <div class="tech-badge">
+                        <strong>MongoDB</strong> Database
+                    </div>
+                    <div class="tech-badge">
+                        <strong>Node.js</strong> Server
+                    </div>
+                    <div class="tech-badge">
+                        <strong>Express API</strong> Routing
+                    </div>
+                    <div class="tech-badge">
+                        <strong>Bcrypt & JWT</strong> Security
+                    </div>
+                </div>
+            </div>
+
+            <div class="card flow-card">
+                <h2 class="card-title">System Overview Diagram</h2>
+                <div class="flow-diagram">
+                    <div class="flow-box">Authentication & Security Module</div>
+                    <div class="flow-arrow">▼</div>
+                    <div class="flow-box">Expense Splitter Management Engine</div>
+                    <div class="flow-arrow">▼</div>
+                    <div class="flow-modules">
+                        <div class="module-box">User<br>Module</div>
+                        <div class="module-box">Group<br>Module</div>
+                        <div class="module-box">Expense<br>Module</div>
+                        <div class="module-box">Admin<br>Module</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
