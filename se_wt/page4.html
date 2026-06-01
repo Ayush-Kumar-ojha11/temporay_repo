@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter - System Requirements</title>
+    <style>
+        /* --- Color Palette & Fonts --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .anim-right { animation: fadeInRight 0.8s ease-out forwards; opacity: 0; }
+        .anim-left { animation: fadeInLeft 0.8s ease-out forwards; opacity: 0; }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* --- Page Header --- */
+        .page-header {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Common Section Styles --- */
+        .section {
+            padding: 80px 10%;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .title-dark { color: var(--dark-charcoal); }
+        .title-light { color: var(--primary-brown); }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-brown);
+            display: block;
+            margin: 15px auto 0;
+        }
+
+        /* --- Functional Requirements (Cards Layout) --- */
+        .fr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .fr-card {
+            background: var(--card-bg);
+            border-top: 5px solid var(--dark-charcoal);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .fr-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .fr-badge {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .fr-card h3 {
+            font-size: 1.2rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 10px;
+        }
+
+        .fr-card p {
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        /* --- Non-Functional Requirements (List Layout) --- */
+        .nfr-section {
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+        }
+
+        .nfr-section .section-title::after {
+            background-color: var(--light-beige);
+        }
+
+        .nfr-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .nfr-item {
+            display: flex;
+            align-items: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-left: 4px solid var(--primary-brown);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .nfr-id {
+            color: var(--primary-brown);
+            font-weight: 700;
+            min-width: 80px;
+            font-size: 1.1rem;
+        }
+
+        .nfr-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--light-beige);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nfr-content p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        @media (max-width: 600px) {
+            .nfr-item { flex-direction: column; }
+            .nfr-id { margin-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1 class="anim-left">System Requirements</h1>
+    </header>
+
+    <!-- Functional Requirements Section -->
+    <section class="section">
+        <h2 class="section-title title-dark anim-right">Functional Requirements</h2>
+        
+        <div class="fr-grid">
+            <div class="fr-card anim-left delay-1">
+                <span class="fr-badge">FR-01</span>
+                <h3>Categorization</h3>
+                <p>Users shall be able to categorize the type of expense and how many people are involved in that category.[cite: 1]</p>
+            </div>
+            <div class="fr-card anim-left delay-1">
+                <span class="fr-badge">FR-02</span>
+                <h3>Group Creation & Management</h3>
+                <p>Users shall be able to create named expense groups, add or remove members, and manage group-level expenses.[cite: 1]</p>
+            </div>
+            <div class="fr-card anim-left delay-2">
+                <span class="fr-badge">FR-03</span>
+                <h3>Add Expense</h3>
+                <p>Users shall log shared expense events with details including amount, description, date, and the group members involved.[cite: 1]</p>
+            </div>
+            <div class="fr-card anim-left delay-2">
+                <span class="fr-badge">FR-04</span>
+                <h3>Automatic Balance Calculation</h3>
+                <p>The system shall automatically calculate individual balances — computing exactly who owes whom based on recorded expenses.[cite: 1]</p>
+            </div>
+            <div class="fr-card anim-left delay-3">
+                <span class="fr-badge">FR-05</span>
+                <h3>Expense Summary View</h3>
+                <p>Users shall view a consolidated dashboard showing total group expenses and their individual current balance at a glance.[cite: 1]</p>
+            </div>
+            <div class="fr-card anim-left delay-3">
+                <span class="fr-badge">FR-06</span>
+                <h3>Settlement / Mark as Paid</h3>
+                <p>Users shall be able to mark specific debts as settled, updating balances.[cite: 1]</p>
+            </div>
+            <div class="fr-card anim-left delay-3">
+                <span class="fr-badge">FR-07</span>
+                <h3>Transaction History</h3>
+                <p>The system shall maintain a complete history of all expense entries and settlement events for each group.[cite: 1]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Non-Functional Requirements Section -->
+    <section class="section nfr-section">
+        <h2 class="section-title title-light anim-right">Non-Functional Requirements</h2>
+        
+        <div class="nfr-list">
+            <div class="nfr-item anim-right delay-1">
+                <div class="nfr-id">NFR-01</div>
+                <div class="nfr-content">
+                    <h4>Performance</h4>
+                    <p>The system should load pages and calculate balances within 2 sec, handling multiple simultaneous users without slowdown.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-1">
+                <div class="nfr-id">NFR-02</div>
+                <div class="nfr-content">
+                    <h4>Security</h4>
+                    <p>All user data and passwords must be protected using encryption. Secure transfer sessions must be enforced.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-2">
+                <div class="nfr-id">NFR-03</div>
+                <div class="nfr-content">
+                    <h4>Usability</h4>
+                    <p>The interface must be simple and intuitive for all users regardless of technical background — mobile and desktop friendly.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-2">
+                <div class="nfr-id">NFR-04</div>
+                <div class="nfr-content">
+                    <h4>Reliability</h4>
+                    <p>The system should operate 99.99 percent of the time without crashes, unexpected errors, or data loss during normal usage conditions.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-2">
+                <div class="nfr-id">NFR-05</div>
+                <div class="nfr-content">
+                    <h4>Availability</h4>
+                    <p>The platform should maintain 24/7 uptime, ensuring users can access and manage their expenses at any time of day.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-3">
+                <div class="nfr-id">NFR-06</div>
+                <div class="nfr-content">
+                    <h4>Data Accuracy</h4>
+                    <p>All expense entries and balance calculations must be stored and computed with complete correctness — no rounding errors.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-3">
+                <div class="nfr-id">NFR-07</div>
+                <div class="nfr-content">
+                    <h4>Maintainability</h4>
+                    <p>Codebase should be modular, well-documented and structured to allow easy updates, feature additions and bug fixes.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-3">
+                <div class="nfr-id">NFR-08</div>
+                <div class="nfr-content">
+                    <h4>Compatibility</h4>
+                    <p>The web application must function correctly across major browsers (Chrome, Firefox, Safari) on mobile, tablet, and desktop.[cite: 1]</p>
+                </div>
+            </div>
+            <div class="nfr-item anim-right delay-3">
+                <div class="nfr-id">NFR-09</div>
+                <div class="nfr-content">
+                    <h4>Scalability</h4>
+                    <p>The architecture must support growth in users and groups without requiring significant redesign of core system components.[cite: 1]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
