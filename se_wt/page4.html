@@ -43,7 +43,7 @@
 
         /* --- Scroll Triggered Animations --- */
         .observe-me {
-            opacity: 0; /* Hidden by default until observer triggers */
+            opacity: 0; 
             will-change: transform, opacity;
         }
 
@@ -83,7 +83,6 @@
         }
 
         .page-header h1 {
-            /* Responsive font using clamp */
             font-size: clamp(1.8rem, 5vw, 3rem);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -127,18 +126,17 @@
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            /* ENHANCED HOVER: Added a bouncy easing curve and multi-property transitions */
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        box-shadow 0.4s ease, 
-                        border-color 0.4s ease;
+            /* REVISED HOVER: Simple transform for the pop effect */
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative; 
             will-change: transform;
         }
 
         .fr-card:hover {
-            /* ENHANCED HOVER: Lifts higher, casts a wider shadow, and changes border color */
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            border-top-color: var(--primary-brown);
+            /* REVISED HOVER: Scales up by 3% for a clean "pop" */
+            transform: scale(1.03);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            z-index: 10;
         }
 
         .fr-badge {
@@ -150,12 +148,6 @@
             font-weight: 600;
             display: inline-block;
             margin-bottom: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .fr-card:hover .fr-badge {
-            /* Extra touch: Darkens the badge slightly when the card is hovered */
-            background-color: var(--dark-charcoal);
         }
 
         .fr-card h3 {
@@ -194,16 +186,18 @@
             padding: 20px;
             border-left: 4px solid var(--primary-brown);
             border-radius: 0 8px 8px 0;
-            /* ENHANCED HOVER: Added transform transition for a sliding effect */
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        background 0.3s ease;
+            /* REVISED HOVER: Simple transform for the pop effect */
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            position: relative;
             will-change: transform;
         }
         
         .nfr-item:hover {
-            /* ENHANCED HOVER: Slides right slightly and brightens background */
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateX(10px);
+            /* REVISED HOVER: Scales up by 2% for a subtle list pop */
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            z-index: 10;
         }
 
         .nfr-id {
@@ -356,14 +350,14 @@
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.15 // Triggers when 15% of the element is visible
+                threshold: 0.15 
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Optional: Stops observing once animated
+                        observer.unobserve(entry.target); 
                     }
                 });
             }, observerOptions);
