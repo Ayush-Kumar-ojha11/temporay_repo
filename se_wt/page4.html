@@ -127,12 +127,18 @@
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            /* ENHANCED HOVER: Added a bouncy easing curve and multi-property transitions */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        box-shadow 0.4s ease, 
+                        border-color 0.4s ease;
+            will-change: transform;
         }
 
         .fr-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            /* ENHANCED HOVER: Lifts higher, casts a wider shadow, and changes border color */
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-top-color: var(--primary-brown);
         }
 
         .fr-badge {
@@ -144,6 +150,12 @@
             font-weight: 600;
             display: inline-block;
             margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .fr-card:hover .fr-badge {
+            /* Extra touch: Darkens the badge slightly when the card is hovered */
+            background-color: var(--dark-charcoal);
         }
 
         .fr-card h3 {
@@ -182,11 +194,16 @@
             padding: 20px;
             border-left: 4px solid var(--primary-brown);
             border-radius: 0 8px 8px 0;
-            transition: background 0.3s;
+            /* ENHANCED HOVER: Added transform transition for a sliding effect */
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        background 0.3s ease;
+            will-change: transform;
         }
         
         .nfr-item:hover {
-            background: rgba(255, 255, 255, 0.08);
+            /* ENHANCED HOVER: Slides right slightly and brightens background */
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(10px);
         }
 
         .nfr-id {
