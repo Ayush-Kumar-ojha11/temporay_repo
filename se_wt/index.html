@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ayush Ojha — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* exact palette extracted from image_d4b01e.jpg */
+  --theme-dark: #352F2C;       /* Rich chocolate dark canvas */
+  --theme-cream: #FBF9F6;      /* Main soft background cream */
+  --theme-tan: #EFEBE4;        /* Darker structural contrast cream */
+  --theme-accent: #93634B;     /* Terracotta/brown title accent banners */
+  --theme-accent-light: #D4BCAE;
+  
+  --text-dark: #25201E;
+  --text-muted: #6B625E;
+  --text-light: #FBF9F6;
+  
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+html{scroll-behavior:smooth; height: 100%; overflow-x: hidden;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--theme-cream);
+  color:var(--text-dark);
+  font-size:15px;
+  line-height:1.7;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--theme-dark);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+  border-bottom:1px solid var(--theme-accent);
+}
+.nav-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:var(--theme-tan);
+  letter-spacing:.04em;
+  text-decoration:none;
+}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{
+  font-size:12px;font-weight:500;
+  color:var(--theme-accent-light);
+  text-decoration:none;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--text-light)}
+
+/* ── HERO ── */
+.hero{
+  background:var(--theme-dark);
+  padding:6rem 2rem 5rem;
+  position:relative;
+  overflow:hidden;
+}
+.hero-tag{
+  display:inline-block;
+  font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--theme-accent-light);
+  border:1px solid var(--theme-accent);
+  padding:4px 14px;border-radius:2px;
+  margin-bottom:1.2rem;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,5vw,3.6rem);
+  font-weight:900;
+  color:var(--text-light);
+  line-height:1.1;
+  margin-bottom:.6rem;
+}
+.hero h1 span{color:var(--theme-accent-light)}
+.hero-sub{
+  font-size:1rem;font-weight:400;
+  color:var(--theme-tan);
+  max-width:520px;
+  margin-bottom:2rem;
+  line-height:1.6;
+}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-size:12px;font-weight:500;
+  padding:5px 14px;
+  background:rgba(255,255,255,0.05);
+  color:var(--theme-tan);
+  border:1px solid var(--theme-accent);
+  border-radius:2px;
+}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:5rem 2rem; max-width: 1300px; margin: 0 auto;}
+.section-bg-alt { background: var(--theme-tan); }
+.section-label{
+  font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--theme-accent);
+  margin-bottom:.5rem;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;font-weight:700;
+  color:var(--theme-dark);
+  margin-bottom:.4rem;
+  line-height:1.2;
+}
+.section-divider{
+  width:48px;height:3px;
+  background:var(--theme-accent);
+  margin-bottom:2.5rem;
+  border-radius:1px;
+}
+.section-desc{
+  color:var(--text-muted);
+  max-width:620px;
+  margin-bottom:2.5rem;
+  font-size:.95rem;
+}
+
+/* ── CARD POP-UP ANIMATIONS & INTERACTIONS ── */
+.about-card, .clo-item, .project-card, .skill-group {
+  transition: var(--transition-smooth);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.about-card:hover, .clo-item:hover, .project-card:hover, .skill-group:hover {
+  transform: translateY(-6px);
+  background-color: #FFFDFB !important;
+  box-shadow: 0 12px 24px rgba(53, 47, 44, 0.08);
+  border-color: var(--theme-accent-light);
+}
+
+/* ── ABOUT ── */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+}
+.about-card{
+  background:#fff;
+  border:1px solid rgba(147, 99, 75, 0.15);
+  border-left:4px solid var(--theme-accent);
+  padding:1.5rem;
+  border-radius:0 4px 4px 0;
+}
+.about-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--theme-dark);
+  margin-bottom:.5rem;
+}
+.about-card p{font-size:.9rem;color:var(--text-muted);line-height:1.6}
+.about-card .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:.75rem}
+.tag{
+  font-size:11px;font-weight:500;
+  padding:3px 10px;
+  background:var(--theme-tan);
+  color:var(--theme-dark);
+  border-radius:2px;
+}
+
+/* ── CLO TABLE ── */
+.clo-tabs{display:flex;gap:0;margin-bottom:1.5rem;border-bottom:2px solid var(--theme-tan)}
+.clo-tab{
+  font-size:13px;font-weight:600;
+  letter-spacing:.04em;
+  padding:.6rem 1.4rem;
+  cursor:pointer;
+  border:none;background:none;
+  color:var(--text-muted);
+  border-bottom:3px solid transparent;
+  margin-bottom:-2px;
+  transition:all .2s;
+}
+.clo-tab.active{
+  color:var(--theme-dark);
+  border-bottom-color:var(--theme-accent);
+}
+.clo-panel{display:none}
+.clo-panel.active{display:block}
+.clo-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.clo-item{
+  background:#fff;
+  border:1px solid rgba(147, 99, 75, 0.15);
+  padding:1.25rem;
+  border-radius:4px;
+  display:flex;gap:.75rem;align-items:flex-start;
+}
+.clo-num{
+  min-width:28px;height:28px;
+  background:var(--theme-accent);
+  color:var(--text-light);
+  font-size:11px;font-weight:700;
+  border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.clo-text{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+.clo-text strong{color:var(--theme-dark);display:block;margin-bottom:2px;font-size:.875rem}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.project-card{
+  background:#fff;
+  border:1px solid rgba(147, 99, 75, 0.15);
+  border-radius:4px;
+  overflow:hidden;
+}
+.project-header{
+  background:var(--theme-dark);
+  padding:1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.project-header h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--text-light);
+}
+.project-badge{
+  font-size:10px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;
+  background:var(--theme-accent);
+  color:var(--text-light);
+  border-radius:2px;
+}
+.project-body{padding:1.25rem}
+.project-body p{font-size:.875rem;color:var(--text-muted);margin-bottom:.75rem;line-height:1.6}
+.project-stack{display:flex;flex-wrap:wrap;gap:5px}
+.stack-tag{
+  font-size:11px;padding:3px 9px;
+  background:var(--theme-cream);
+  border:1px solid var(--theme-tan);
+  color:var(--theme-dark);
+  border-radius:2px;
+  font-weight:500;
+}
+.project-feature{
+  font-size:.8rem;color:var(--text-muted);
+  border-top:1px solid var(--theme-tan);
+  margin-top:.75rem;padding-top:.75rem;
+}
+.project-feature span{
+  display:inline-block;
+  background:var(--theme-tan);
+  color:var(--theme-dark);
+  font-size:11px;font-weight:500;
+  padding:2px 8px;border-radius:2px;
+  margin:2px;
+}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.skill-group{
+  background:#fff;
+  border:1px solid rgba(147, 99, 75, 0.15);
+  padding:1.25rem;border-radius:4px;
+}
+.skill-group h3{
+  font-size:.8rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--theme-accent);
+  margin-bottom:.75rem;
+  padding-bottom:.5rem;
+  border-bottom:1px solid var(--theme-tan);
+}
+.skill-pill{
+  display:inline-block;
+  font-size:12px;font-weight:500;
+  padding:4px 11px;
+  background:var(--theme-cream);
+  border:1px solid var(--theme-tan);
+  color:var(--theme-dark);
+  border-radius:2px;
+  margin:3px 2px;
+}
+
+/* ── CP ── */
+.cp-banner{
+  background:var(--theme-dark);
+  border-radius:4px;
+  padding:1.5rem 2rem;
+  display:flex;align-items:center;gap:2rem;
+  margin-bottom:1.5rem;
+}
+.cp-stat{text-align:center}
+.cp-stat .val{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;font-weight:900;
+  color:var(--theme-accent-light);
+  display:block;
+}
+.cp-stat .lbl{
+  font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--theme-tan);
+}
+.cp-divider{width:1px;background:var(--theme-accent);height:48px}
+.cp-desc{color:var(--theme-tan);font-size:.9rem;flex:1;line-height:1.6}
+
+/* ── CONTACT / FOOTER ── */
+footer{
+  background:var(--theme-dark);
+  padding:4rem 2rem;
+  text-align:center;
+}
+footer p{color:var(--theme-tan);font-size:.875rem}
+.contact-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.contact-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.875rem;font-weight:500;
+  color:var(--text-light);
+  text-decoration:none;
+  padding:.5rem 1.25rem;
+  border:1px solid var(--theme-accent);
+  border-radius:2px;
+  transition: var(--transition-smooth);
+}
+.contact-link:hover{background:var(--theme-accent);color:var(--text-light)}
+.footer-bottom{
+  border-top:1px solid var(--theme-accent);
+  padding-top:1.25rem;
+  margin-top:1.5rem;
+  font-size:.8rem;color:var(--theme-accent-light);
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+}
+
+/* ── RESPONSIVE CANVAS & iFRAME FIXES ── */
+@media(max-width:960px){
+  .skills-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .about-grid,.clo-grid,.projects-grid,.skills-grid{grid-template-columns:1fr}
+  .cp-banner{flex-direction:column;gap:1.25rem;text-align:center}
+  .cp-divider{display:none}
+  .section{padding:3.5rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">Ayush Ojha</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#clo">Outcomes</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#cp">CP</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">4th Semester · KLE Technological University</div>
+  <h1>Ayush <span>Ojha</span></h1>
+  <p class="hero-sub">CSE student passionate about building full-stack applications, sorting through algorithmic frameworks, and modeling software configurations effectively.</p>
+  <div class="hero-chips">
+    <span class="chip">Web Technologies (WT)</span>
+    <span class="chip">Software Engineering (SE)</span>
+    <span class="chip">React · Node.js · Express</span>
+    <span class="chip">C++ Engineering Foundations</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="section-wrapper">
+  <section class="section" id="about">
+    <div class="section-label">Introduction</div>
+    <div class="section-title">About Me</div>
+    <div class="section-divider"></div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Background</h3>
+        <p>Computer Science & Engineering student at KLE Technological University, Hubli. Focused on core software paradigms, programmatic layouts, and functional data flows layout design.</p>
+      </div>
+      <div class="about-card">
+        <h3>Interests</h3>
+        <p>Algorithmic engineering platforms, responsive user interface models, desktop simulations, and modular hardware prototyping setups.</p>
+        <div class="tag-row">
+          <span class="tag">Web Architecture</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">Hardware Prototyping</span>
+        </div>
+      </div>
+      <div class="about-card">
+        <h3>Current Focus</h3>
+        <p>Developing full-stack tracking applications using modern React architecture and component structure lifecycles.</p>
+        <div class="tag-row">
+          <span class="tag">Component Design</span>
+          <span class="tag">React State</span>
+          <span class="tag">Data Routing</span>
+        </div>
+      </div>
+      <div class="about-card">
+        <h3>Academic Integration</h3>
+        <p>Applying standard object-oriented design rules, network foundations, and unified software lifecycle processing structures straight to development models.</p>
+        <div class="tag-row">
+          <span class="tag">Object-Oriented Setup</span>
+          <span class="tag">Networks</span>
+          <span class="tag">Software Modeling</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- COURSE LEARNING OUTCOMES -->
+<div class="section-bg-alt">
+  <section class="section" id="clo">
+    <div class="section-label">Academic Outcomes</div>
+    <div class="section-title">Course Learning Outcomes</div>
+    <div class="section-divider"></div>
+    <p class="section-desc">Demonstrated engineering insights aligned with structural layout planning and modern full-stack implementation paradigms.</p>
+
+    <div class="clo-tabs">
+      <button class="clo-tab active" onclick="switchTab('wt',this)">Web Technologies</button>
+      <button class="clo-tab" onclick="switchTab('se',this)">Software Engineering</button>
+    </div>
+
+    <div class="clo-panel active" id="panel-wt">
+      <div class="clo-grid">
+        <div class="clo-item">
+          <div class="clo-num">1</div>
+          <div class="clo-text"><strong>HTML & CSS Layouts</strong>Structuring document contexts seamlessly with semantic properties and styling responsive frame containers.</div>
+        </div>
+        <div class="clo-item">
+          <div class="clo-num">2</div>
+          <div class="clo-text"><strong>Client-Side Interaction</strong>Managing programmatic data pipelines, event loops, and rendering asynchronous DOM components.</div>
+        </div>
+        <div class="clo-item">
+          <div class="clo-num">3</div>
+          <div class="clo-text"><strong>Component Architectures</strong>Compiling modular views with state hooks while maintaining data clean flows.</div>
+        </div>
+        <div class="clo-item">
+          <div class="clo-num">4</div>
+          <div class="clo-text"><strong>Backend Services</strong>Formulating server pathways, processing endpoints, and organizing structured asset distribution.</div>
+        </div>
+        <div class="clo-item">
+          <div class="clo-num">5</div>
+          <div class="clo-text"><strong>Data Structuring</strong>Connecting runtime systems to data tables to persist operational properties safely.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clo-panel" id="panel-se">
+      <div class="clo-grid">
+        <div class="clo-item">
+          <div class="clo-num">1</div>
+          <div class="clo-text"><strong>Process Frameworks</strong>Tracking development milestones through standard lifecycle configurations and sprint steps.</div>
+        </div>
+        <div class="clo-item">
+          <div class="clo-num">2</div>
+          <div class="clo-text"><strong>System Analysis</strong>Eliciting functional structures and designing explicit logic diagrams to document workflows.</div>
+        </div>
+        <div class="clo-item">
+          <div class="clo-num">3</div>
+          <div class="clo-text"><strong>Structural Modeling</strong>Drafting comprehensive structural maps using standard UML entity layouts.</div>
+        </div>
+        <div class="clo-item">
+          <div class="clo-num">4</div>
+          <div class="clo-text"><strong>Architectural Tiers</strong>Enforcing clear structural boundaries across backend layers and viewer logic modules.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PROJECTS -->
+<div class="section-wrapper">
+  <section class="section" id="projects">
+    <div class="section-label">Work</div>
+    <div class="section-title">Projects</div>
+    <div class="section-divider"></div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>SplitSmart</h3>
+          <span class="project-badge">Active</span>
+        </div>
+        <div class="project-body">
+          <p>Full-stack ledger tracking application providing transactional parsing engines, balance matching, and clean data rendering windows.</p>
+          <div class="project-stack">
+            <span class="stack-tag">React Blueprint</span>
+            <span class="stack-tag">Node Backplane</span>
+            <span class="stack-tag">REST Processing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Clinic Management System</h3>
+          <span class="project-badge">Full-Stack</span>
+        </div>
+        <div class="project-body">
+          <p>An administrative operational routing scaffold built to evaluate interactive data endpoints and decoupled components.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Python Engine</span>
+            <span class="stack-tag">Data Tables</span>
+            <span class="stack-tag">React Frame</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- SKILLS -->
+<div class="section-bg-alt">
+  <section class="section" id="skills">
+    <div class="section-label">Technical</div>
+    <div class="section-title">Skills</div>
+    <div class="section-divider"></div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Core Engineering</h3>
+        <span class="skill-pill">C++</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Java</span>
+        <span class="skill-pill">JavaScript</span>
+      </div>
+      <div class="skill-group">
+        <h3>User Interface</h3>
+        <span class="skill-pill">React Viewports</span>
+        <span class="skill-pill">Vite Bundler</span>
+        <span class="skill-pill">Flexbox Rules</span>
+        <span class="skill-pill">Grid Templates</span>
+      </div>
+      <div class="skill-group">
+        <h3>Service Layers</h3>
+        <span class="skill-pill">Node Environment</span>
+        <span class="skill-pill">Express Handlers</span>
+        <span class="skill-pill">Relational Mapping</span>
+        <span class="skill-pill">Data Serialization</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- COMPETITIVE PROGRAMMING -->
+<div class="section-wrapper">
+  <section class="section" id="cp">
+    <div class="section-label">Competitive Programming</div>
+    <div class="section-title">Algorithmic Foundations</div>
+    <div class="section-divider"></div>
+    <div class="cp-banner">
+      <div class="cp-stat"><span class="val">C++</span><span class="lbl">Primary Paradigm</span></div>
+      <div class="cp-divider"></div>
+      <div class="cp-stat"><span class="val">G++</span><span class="lbl">Compiler Target</span></div>
+      <div class="cp-divider"></div>
+      <p class="cp-desc">Actively practicing algorithmic optimizations, matrix analysis methods, and data parsing loops designed for complex variable scaling.</p>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text-light);margin-bottom:1rem">Let's Connect</p>
+  <p style="margin-bottom:1.5rem; color: var(--theme-accent-light)">KLE Technological University, Hubli · Computer Science & Engineering</p>
+  <div class="contact-links">
+    <a class="contact-link" href="#" target="_blank">GitHub</a>
+    <a class="contact-link" href="mailto:#">Email</a>
+    <a class="contact-link" href="#" target="_blank">LinkedIn</a>
+  </div>
+  <div class="footer-bottom">
+    <span>Ayush Ojha · CSE Portfolio</span>
+    <span>·</span>
+    <span>Web Technologies & Software Engineering</span>
+  </div>
+</footer>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.clo-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.clo-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
