@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Learning Outcomes — Ayush Ojha</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --theme-dark: #352F2C;       
+  --theme-cream: #FBF9F6;      
+  --theme-tan: #EFEBE4;        
+  --theme-accent: #93634B;     
+  --theme-accent-light: #D4BCAE;
+  
+  --text-dark: #25201E;
+  --text-muted: #6B625E;
+  --text-light: #FBF9F6;
+  
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+html{scroll-behavior:smooth; height: 100%; overflow-x: hidden;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--theme-cream);
+  color:var(--text-dark);
+  font-size:15px;
+  line-height:1.7;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--theme-dark);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+  border-bottom:1px solid var(--theme-accent);
+}
+.nav-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:var(--theme-tan);
+  letter-spacing:.04em;
+  text-decoration:none;
+}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{
+  font-size:12px;font-weight:500;
+  color:var(--theme-accent-light);
+  text-decoration:none;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--text-light)}
+
+/* ── HERO ── */
+.hero{
+  background:var(--theme-dark);
+  padding:5rem 2rem 4rem;
+  position:relative;
+  text-align:center;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:900;
+  color:var(--text-light);
+  line-height:1.2;
+  margin-bottom:.5rem;
+}
+.hero p{
+  color:var(--theme-tan);
+  font-size:1.05rem;
+  max-width:600px;
+  margin:0 auto;
+}
+
+/* ── SECTION WRAPPER & DROPDOWN ── */
+.section{padding:4rem 2rem; max-width: 1000px; margin: 0 auto;}
+
+.dropdown-container {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: var(--theme-tan);
+  border-radius: 8px;
+  border: 1px solid rgba(147, 99, 75, 0.2);
+}
+.dropdown-container label {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--theme-dark);
+  margin-bottom: 1rem;
+}
+select.custom-select {
+  appearance: none;
+  background-color: #fff;
+  border: 2px solid var(--theme-accent);
+  border-radius: 4px;
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  cursor: pointer;
+  width: 100%;
+  max-width: 400px;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2393634B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem top 50%;
+  background-size: 0.65rem auto;
+  transition: var(--transition-smooth);
+}
+select.custom-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(147, 99, 75, 0.2);
+}
+
+/* ── PANELS ── */
+.outcome-panel {
+  display: none;
+  animation: fadeIn 0.4s ease-in-out;
+}
+.outcome-panel.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── WT CODE BLOCKS ── */
+.code-block-wrapper {
+  background: var(--theme-dark);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+.code-header {
+  background: #25201E;
+  padding: 0.6rem 1rem;
+  color: var(--theme-accent-light);
+  font-family: monospace;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #4a423e;
+}
+pre {
+  margin: 0;
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  color: #FBF9F6;
+  line-height: 1.5;
+}
+.code-comment { color: #8c8c8c; }
+.code-keyword { color: #d19a66; }
+.code-string { color: #98c379; }
+.code-function { color: #61afef; }
+
+/* ── SE DIAGRAMS ── */
+.diagram-card {
+  background: #fff;
+  border: 1px solid rgba(147, 99, 75, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.diagram-card h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--theme-dark);
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+.diagram-card p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+.diagram-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid var(--theme-tan);
+}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--theme-dark);
+  padding:3rem 2rem;
+  text-align:center;
+  margin-top: 2rem;
+}
+.footer-bottom{
+  color:var(--theme-accent-light);
+  font-size:.85rem;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#">Learning Outcomes</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Learning Outcomes</h1>
+  <p>A breakdown of the code I wrote and the system architectures I designed this semester.</p>
+</section>
+
+<div class="section">
+  
+  <div class="dropdown-container">
+    <label for="outcome-select">Select a subject to view outcomes:</label>
+    <select id="outcome-select" class="custom-select" onchange="switchPanel(this.value)">
+      <option value="wt">Web Technology (Code & Implementation)</option>
+      <option value="se">Software Engineering (Design & Architecture)</option>
+    </select>
+  </div>
+
+  <div id="panel-wt" class="outcome-panel active">
+    
+    <div style="margin-bottom: 2rem;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--theme-dark); margin-bottom:0.5rem;">Frontend Implementation</h2>
+      <p style="color:var(--text-muted);">This is how I handle client-side requests using standard HTML structures and Vanilla JS to talk to the backend API.</p>
+    </div>
+
+    <div class="code-block-wrapper">
+      <div class="code-header">splitsmart_frontend.html / app.js</div>
+      <pre><code><span class="code-comment">&lt;!-- Simple HTML Form --&gt;</span>
+&lt;form id="addExpenseForm"&gt;
+  &lt;input type="text" id="desc" placeholder="Expense Description" required /&gt;
+  &lt;input type="number" id="amount" placeholder="Amount" required /&gt;
+  &lt;button type="submit"&gt;Add Expense&lt;/button&gt;
+&lt;/form&gt;
+
+<span class="code-comment">// JavaScript Fetch Logic</span>
+document.<span class="code-function">getElementById</span>(<span class="code-string">'addExpenseForm'</span>).<span class="code-function">addEventListener</span>(<span class="code-string">'submit'</span>, <span class="code-keyword">async</span> (e) =&gt; {
+  e.<span class="code-function">preventDefault</span>();
+  <span class="code-keyword">const</span> desc = document.<span class="code-function">getElementById</span>(<span class="code-string">'desc'</span>).value;
+  <span class="code-keyword">const</span> amount = document.<span class="code-function">getElementById</span>(<span class="code-string">'amount'</span>).value;
+  <span class="code-keyword">const</span> token = localStorage.<span class="code-function">getItem</span>(<span class="code-string">'jwt_token'</span>);
+
+  <span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'/api/expenses'</span>, {
+    method: <span class="code-string">'POST'</span>,
+    headers: { 
+      <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span>,
+      <span class="code-string">'Authorization'</span>: <span class="code-string">`Bearer ${token}`</span>
+    },
+    body: JSON.<span class="code-function">stringify</span>({ desc, amount })
+  });
+
+  <span class="code-keyword">const</span> data = <span class="code-keyword">await</span> response.<span class="code-function">json</span>();
+  console.<span class="code-function">log</span>(<span class="code-string">'Expense added:'</span>, data);
+});</code></pre>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--theme-dark); margin-bottom:0.5rem;">Backend API & Middleware</h2>
+      <p style="color:var(--text-muted);">Here is a look at the Node.js/Express backend handling the POST request, verifying the JWT, and saving data to MongoDB.</p>
+    </div>
+
+    <div class="code-block-wrapper">
+      <div class="code-header">server.js / routes.js</div>
+      <pre><code><span class="code-keyword">const</span> express = <span class="code-function">require</span>(<span class="code-string">'express'</span>);
+<span class="code-keyword">const</span> router = express.<span class="code-function">Router</span>();
+<span class="code-keyword">const</span> Expense = <span class="code-function">require</span>(<span class="code-string">'../models/Expense'</span>);
+<span class="code-keyword">const</span> verifyJWT = <span class="code-function">require</span>(<span class="code-string">'../middleware/auth'</span>);
+
+<span class="code-comment">// POST Route to add an expense (Protected by JWT)</span>
+router.<span class="code-function">post</span>(<span class="code-string">'/api/expenses'</span>, verifyJWT, <span class="code-keyword">async</span> (req, res) =&gt; {
+  <span class="code-keyword">try</span> {
+    <span class="code-keyword">const</span> { desc, amount, payers, groupId } = req.body;
+    
+    <span class="code-comment">// Create and save to MongoDB via Mongoose</span>
+    <span class="code-keyword">const</span> newExpense = <span class="code-keyword">new</span> Expense({
+      desc,
+      amount,
+      payers,
+      groupId,
+      addedBy: req.user.id
+    });
+    
+    <span class="code-keyword">await</span> newExpense.<span class="code-function">save</span>();
+    
+    res.<span class="code-function">status</span>(201).<span class="code-function">json</span>({ message: <span class="code-string">'Expense saved successfully'</span>, id: newExpense._id });
+  } <span class="code-keyword">catch</span> (err) {
+    res.<span class="code-function">status</span>(500).<span class="code-function">json</span>({ error: <span class="code-string">'Server error'</span> });
+  }
+});
+
+module.exports = router;</code></pre>
+    </div>
+
+  </div>
+
+
+  <div id="panel-se" class="outcome-panel">
+    
+    <div class="diagram-card">
+      <h3>System Architecture</h3>
+      <p>The big picture of the SplitSmart app showing how the Client (Vanilla JS), Server (Express API + JWT), and Database (MongoDB) communicate.</p>
+      <img src="image_d35644.png" alt="Architecture Diagram showing Client, Server, and Database" />
+    </div>
+
+    <div class="diagram-card">
+      <h3>Sequence Diagram</h3>
+      <p>A step-by-step logic flow detailing exactly what happens during the "Add Expense" event, from the browser form submit down to the database save.</p>
+      <img src="image_d356a4.png" alt="Sequence Diagram for adding an expense" />
+    </div>
+
+    <div class="diagram-card">
+      <h3>Use Case Diagram</h3>
+      <p>Mapping out the core functionalities and establishing the boundaries of what standard users versus admins can do inside the application.</p>
+      <img src="image_d35702.png" alt="Use Case Diagram showing Admin and User actions" />
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span>Ayush Kumar Ojha · Learning Outcomes Portfolio</span>
+  </div>
+</footer>
+
+<script>
+  // Simple JS to toggle between WT and SE panels
+  function switchPanel(panelId) {
+    // Hide all panels
+    document.querySelectorAll('.outcome-panel').forEach(panel => {
+      panel.classList.remove('active');
+    });
+    // Show the selected panel
+    document.getElementById('panel-' + panelId).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
