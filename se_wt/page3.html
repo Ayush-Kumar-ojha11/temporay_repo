@@ -4,267 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Splitter - Objectives & Problem Statement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- Color Palette & Fonts --- */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
-
         :root {
-            --primary-brown: #896a55; 
-            --dark-charcoal: #322f2c; 
-            --light-beige: #f6f3ed; 
+            --primary-brown: #896a55;
+            --dark-charcoal: #322f2c;
+            --light-beige: #f6f3ed;
             --text-dark: #222222;
             --text-light: #ffffff;
             --card-bg: #ffffff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
 
-        body {
-            background-color: var(--light-beige);
-            color: var(--text-dark);
-            line-height: 1.6;
+        html, body {
+            width: 100%;
+            height: auto;
             overflow-x: hidden;
+            overflow-y: auto;
         }
 
-        /* --- Animations --- */
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        body { background-color: var(--light-beige); color: var(--text-dark); line-height: 1.6; }
 
-        .animate-item {
-            opacity: 0;
-            animation: fadeSlideUp 0.8s ease-out forwards;
-        }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeSlideLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeSlideRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes underlineExpand { from { width: 0; } to { width: 80px; } }
 
-        /* Delays for cascading effect */
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
+        .anim-up, .anim-left, .anim-right, .anim-scale { opacity: 0; }
+        .anim-up.visible    { animation: fadeSlideUp    0.75s ease-out forwards; }
+        .anim-left.visible  { animation: fadeSlideLeft  0.75s ease-out forwards; }
+        .anim-right.visible { animation: fadeSlideRight 0.75s ease-out forwards; }
+        .anim-scale.visible { animation: scaleIn        0.65s ease-out forwards; }
 
-        /* --- Page Header --- */
+        .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+        .d3 { animation-delay: 0.25s; } .d4 { animation-delay: 0.35s; }
+        .d5 { animation-delay: 0.45s; } .d6 { animation-delay: 0.55s; }
+        .d7 { animation-delay: 0.65s; } .d8 { animation-delay: 0.75s; }
+
         .page-header {
             background-color: var(--primary-brown);
             color: var(--text-light);
             padding: 60px 20px;
             text-align: center;
+            position: relative; overflow: hidden;
         }
+        .page-header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: var(--dark-charcoal); opacity: 0.1; }
+        .page-header::after  { content: ''; position: absolute; bottom: -60px; left: -30px; width: 180px; height: 180px; border-radius: 50%; background: var(--dark-charcoal); opacity: 0.07; }
+        .page-header h1 { font-size: clamp(1.6rem, 4vw, 2.5rem); text-transform: uppercase; letter-spacing: 2px; }
 
-        .page-header h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .problem-section { background-color: var(--dark-charcoal); color: var(--text-light); padding: 70px 8%; }
 
-        /* --- Problem Statement Section --- */
-        .problem-section {
-            background-color: var(--dark-charcoal);
-            color: var(--text-light);
-            padding: 80px 10%;
-        }
+        .section-title-light { font-size: clamp(1.4rem, 3.5vw, 2.2rem); margin-bottom: 14px; text-align: center; text-transform: uppercase; color: var(--primary-brown); letter-spacing: 1px; }
 
-        .section-title-light {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            text-align: center;
-            text-transform: uppercase;
-            color: var(--primary-brown);
-        }
+        .problem-intro { text-align: center; font-size: clamp(0.95rem, 2vw, 1.1rem); margin-bottom: 44px; font-weight: 300; opacity: 0.8; }
 
-        .problem-intro {
-            text-align: center;
-            font-size: 1.2rem;
-            margin-bottom: 50px;
-            font-weight: 300;
-        }
+        .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 22px; }
 
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+        .problem-card { background: rgba(255,255,255,0.05); border-left: 4px solid var(--primary-brown); padding: 24px; border-radius: 0 8px 8px 0; transition: background 0.3s ease, transform 0.3s ease; }
+        .problem-card:hover { background: rgba(255,255,255,0.1); transform: translateX(6px); }
+        .problem-card h3 { font-size: 1.05rem; margin-bottom: 10px; color: var(--light-beige); letter-spacing: 0.5px; }
+        .problem-card p { font-size: 0.9rem; opacity: 0.75; line-height: 1.7; }
 
-        .problem-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 4px solid var(--primary-brown);
-            padding: 25px;
-            border-radius: 0 8px 8px 0;
-            transition: background 0.3s ease;
-        }
+        .objectives-section { padding: 70px 8%; background-color: var(--light-beige); }
 
-        .problem-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+        .section-title-dark { font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--dark-charcoal); margin-bottom: 44px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .section-title-dark::after { content: ''; width: 0; height: 4px; background-color: var(--primary-brown); display: block; margin: 12px auto 0; animation: underlineExpand 0.8s ease-out 0.4s forwards; }
 
-        .problem-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--light-beige);
-        }
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
 
-        .problem-card p {
-            font-size: 0.95rem;
-            opacity: 0.8;
-        }
+        .objective-item { background-color: var(--card-bg); padding: 28px 24px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); text-align: center; position: relative; z-index: 1; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .objective-item:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(137,106,85,0.15); }
+        .objective-number { font-size: 2.8rem; font-weight: 700; color: rgba(137,106,85,0.12); position: absolute; top: 10px; right: 16px; z-index: -1; line-height: 1; }
+        .objective-item h4 { color: var(--dark-charcoal); font-size: 1rem; margin-bottom: 12px; margin-top: 8px; }
+        .objective-item p { font-size: 0.88rem; color: #666; line-height: 1.65; }
 
-        /* --- Objectives Section --- */
-        .objectives-section {
-            padding: 80px 10%;
-            background-color: var(--light-beige);
-        }
-
-        .section-title-dark {
-            font-size: 2.5rem;
-            color: var(--dark-charcoal);
-            margin-bottom: 50px;
-            text-align: center;
-            text-transform: uppercase;
-            position: relative;
-        }
-
-        .section-title-dark::after {
-            content: '';
-            width: 80px;
-            height: 4px;
-            background-color: var(--primary-brown);
-            display: block;
-            margin: 15px auto 0;
-        }
-
-        .objectives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .objective-item {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .objective-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
-        }
-
-        .objective-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: rgba(137, 106, 85, 0.15); /* Faint brown */
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            z-index: -1;
-        }
-
-        .objective-item h4 {
-            color: var(--dark-charcoal);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            margin-top: 10px;
-        }
-
-        .objective-item p {
-            font-size: 0.9rem;
-            color: #555;
+        @media (max-width: 600px) {
+            .problem-section, .objectives-section { padding: 50px 5%; }
+            .page-header { padding: 44px 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="page-header animate-item">
-        <h1>Motivation & Objectives</h1>
+    <header class="page-header">
+        <h1 class="anim-up d1">Motivation & Objectives</h1>
     </header>
 
-    <!-- Problem Statement Section -->
     <section class="problem-section">
-        <h2 class="section-title-light animate-item delay-1">The Problem Statement</h2>
-        <p class="problem-intro animate-item delay-1">Shared expenses naturally degrade into financial confusion and interpersonal friction.[cite: 1]</p>
-        
+        <h2 class="section-title-light anim-up d1">The Problem Statement</h2>
+        <p class="problem-intro anim-up d2">Shared expenses naturally degrade into financial confusion and interpersonal friction.</p>
         <div class="problem-grid">
-            <div class="problem-card animate-item delay-2">
-                <h3>01. High Manual Effort</h3>
-                <p>Groups rely on spreadsheets, WhatsApp messages, or memory — all highly time-consuming and error-prone methods for tracking shared costs.[cite: 1]</p>
-            </div>
-            <div class="problem-card animate-item delay-2">
-                <h3>02. Frequent Calculation Errors</h3>
-                <p>Manual arithmetic inevitably leads to mistakes in splitting bills, causing under or over-payment and repeated disputes among members.[cite: 1]</p>
-            </div>
-            <div class="problem-card animate-item delay-3">
-                <h3>03. No Transparency</h3>
-                <p>Existing informal methods lack the full Financial history. Members cannot easily verify who paid what and who owes whom.[cite: 1]</p>
-            </div>
-            <div class="problem-card animate-item delay-3">
-                <h3>04. Lack of Settlement Tracking</h3>
-                <p>There is no mechanism to mark debts as settled, leading to old, unpaid amounts lingering indefinitely without resolution.[cite: 1]</p>
-            </div>
-            <div class="problem-card animate-item delay-4">
-                <h3>05. Privacy & Security Gaps</h3>
-                <p>Sharing financial data through messaging apps exposes sensitive information with no encryption or access control.[cite: 1]</p>
-            </div>
+            <div class="problem-card anim-left d1"><h3>01. High Manual Effort</h3><p>Groups rely on spreadsheets, WhatsApp messages, or memory — all highly time-consuming and error-prone methods for tracking shared costs.</p></div>
+            <div class="problem-card anim-left d2"><h3>02. Frequent Calculation Errors</h3><p>Manual arithmetic inevitably leads to mistakes in splitting bills, causing under or over-payment and repeated disputes among members.</p></div>
+            <div class="problem-card anim-right d3"><h3>03. No Transparency</h3><p>Existing informal methods lack full financial history. Members cannot easily verify who paid what and who owes whom.</p></div>
+            <div class="problem-card anim-right d4"><h3>04. Lack of Settlement Tracking</h3><p>There is no mechanism to mark debts as settled, leading to old, unpaid amounts lingering indefinitely without resolution.</p></div>
+            <div class="problem-card anim-up d5"><h3>05. Privacy & Security Gaps</h3><p>Sharing financial data through messaging apps exposes sensitive information with no encryption or access control.</p></div>
         </div>
     </section>
 
-    <!-- Objectives Section -->
     <section class="objectives-section">
-        <h2 class="section-title-dark animate-item">Project Objectives</h2>
-        
+        <h2 class="section-title-dark anim-up d1">Project Objectives</h2>
         <div class="objectives-grid">
-            <div class="objective-item animate-item delay-1">
-                <div class="objective-number">01</div>
-                <h4>Web Application</h4>
-                <p>Web application engineered to manage shared expenses efficiently.[cite: 1]</p>
-            </div>
-            <div class="objective-item animate-item delay-1">
-                <div class="objective-number">02</div>
-                <h4>Authentication</h4>
-                <p>Allow users to securely register and log in using email/password with encrypted credential management.[cite: 1]</p>
-            </div>
-            <div class="objective-item animate-item delay-2">
-                <div class="objective-number">03</div>
-                <h4>Group Management</h4>
-                <p>Enable users to create expense groups, add members, and record shared expense events with descriptions.[cite: 1]</p>
-            </div>
-            <div class="objective-item animate-item delay-2">
-                <div class="objective-number">04</div>
-                <h4>Algorithmic Calculation</h4>
-                <p>Automatically compute exact individual balances — who owes whom and how much — with zero manual arithmetic.[cite: 1]</p>
-            </div>
-            <div class="objective-item animate-item delay-3">
-                <div class="objective-number">05</div>
-                <h4>Debt Settlement</h4>
-                <p>Allow users to mark payments as settled and maintain a clear record of all transactions.[cite: 1]</p>
-            </div>
-            <div class="objective-item animate-item delay-3">
-                <div class="objective-number">06</div>
-                <h4>History Tracking</h4>
-                <p>Maintain a complete history of all group expenses and settlements for full financial transparency.[cite: 1]</p>
-            </div>
-            <div class="objective-item animate-item delay-4">
-                <div class="objective-number">07</div>
-                <h4>Intuitive Interface</h4>
-                <p>Provide a highly user-friendly interface prioritising clear data entry, readable balances, and minimal friction.[cite: 1]</p>
-            </div>
-            <div class="objective-item animate-item delay-4">
-                <div class="objective-number">08</div>
-                <h4>Secure Architecture</h4>
-                <p>Build a secure web app using encryption to protect user transaction data.[cite: 1]</p>
-            </div>
+            <div class="objective-item anim-scale d1"><div class="objective-number">01</div><h4>Web Application</h4><p>Web application engineered to manage shared expenses efficiently.</p></div>
+            <div class="objective-item anim-scale d2"><div class="objective-number">02</div><h4>Authentication</h4><p>Allow users to securely register and log in using email/password with encrypted credential management.</p></div>
+            <div class="objective-item anim-scale d3"><div class="objective-number">03</div><h4>Group Management</h4><p>Enable users to create expense groups, add members, and record shared expense events with descriptions.</p></div>
+            <div class="objective-item anim-scale d4"><div class="objective-number">04</div><h4>Algorithmic Calculation</h4><p>Automatically compute exact individual balances — who owes whom and how much — with zero manual arithmetic.</p></div>
+            <div class="objective-item anim-scale d5"><div class="objective-number">05</div><h4>Debt Settlement</h4><p>Allow users to mark payments as settled and maintain a clear record of all transactions.</p></div>
+            <div class="objective-item anim-scale d6"><div class="objective-number">06</div><h4>History Tracking</h4><p>Maintain a complete history of all group expenses and settlements for full financial transparency.</p></div>
+            <div class="objective-item anim-scale d7"><div class="objective-number">07</div><h4>Intuitive Interface</h4><p>Provide a highly user-friendly interface prioritising clear data entry, readable balances, and minimal friction.</p></div>
+            <div class="objective-item anim-scale d8"><div class="objective-number">08</div><h4>Secure Architecture</h4><p>Build a secure web app using encryption to protect user transaction data.</p></div>
         </div>
     </section>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.anim-up, .anim-left, .anim-right, .anim-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        function sendHeight() {
+            window.parent.postMessage({ type: 'setHeight', height: document.documentElement.scrollHeight }, '*');
+        }
+        sendHeight();
+        window.addEventListener('resize', sendHeight);
+        setTimeout(sendHeight, 500);
+        setTimeout(sendHeight, 1500);
+    </script>
 
 </body>
 </html>
