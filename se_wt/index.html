@@ -123,19 +123,13 @@ nav{
   margin-bottom:2.5rem;
   border-radius:1px;
 }
-.section-desc{
-  color:var(--text-muted);
-  max-width:620px;
-  margin-bottom:2.5rem;
-  font-size:.95rem;
-}
 
 /* ── CARD POP-UP ANIMATIONS & INTERACTIONS ── */
-.about-card, .clo-item, .project-card, .skill-group {
+.about-card, .project-card, .skill-group {
   transition: var(--transition-smooth);
   box-shadow: 0 2px 5px rgba(0,0,0,0.02);
 }
-.about-card:hover, .clo-item:hover, .project-card:hover, .skill-group:hover {
+.about-card:hover, .project-card:hover, .skill-group:hover {
   transform: translateY(-6px);
   background-color: #FFFDFB !important;
   box-shadow: 0 12px 24px rgba(53, 47, 44, 0.08);
@@ -170,45 +164,6 @@ nav{
   color:var(--theme-dark);
   border-radius:2px;
 }
-
-/* ── CLO TABLE ── */
-.clo-tabs{display:flex;gap:0;margin-bottom:1.5rem;border-bottom:2px solid var(--theme-tan)}
-.clo-tab{
-  font-size:13px;font-weight:600;
-  letter-spacing:.04em;
-  padding:.6rem 1.4rem;
-  cursor:pointer;
-  border:none;background:none;
-  color:var(--text-muted);
-  border-bottom:3px solid transparent;
-  margin-bottom:-2px;
-  transition:all .2s;
-}
-.clo-tab.active{
-  color:var(--theme-dark);
-  border-bottom-color:var(--theme-accent);
-}
-.clo-panel{display:none}
-.clo-panel.active{display:block}
-.clo-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.clo-item{
-  background:#fff;
-  border:1px solid rgba(147, 99, 75, 0.15);
-  padding:1.25rem;
-  border-radius:4px;
-  display:flex;gap:.75rem;align-items:flex-start;
-}
-.clo-num{
-  min-width:28px;height:28px;
-  background:var(--theme-accent);
-  color:var(--text-light);
-  font-size:11px;font-weight:700;
-  border-radius:2px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.clo-text{font-size:.85rem;color:var(--text-muted);line-height:1.5}
-.clo-text strong{color:var(--theme-dark);display:block;margin-bottom:2px;font-size:.875rem}
 
 /* ── PROJECTS ── */
 .projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
@@ -246,19 +201,6 @@ nav{
   color:var(--theme-dark);
   border-radius:2px;
   font-weight:500;
-}
-.project-feature{
-  font-size:.8rem;color:var(--text-muted);
-  border-top:1px solid var(--theme-tan);
-  margin-top:.75rem;padding-top:.75rem;
-}
-.project-feature span{
-  display:inline-block;
-  background:var(--theme-tan);
-  color:var(--theme-dark);
-  font-size:11px;font-weight:500;
-  padding:2px 8px;border-radius:2px;
-  margin:2px;
 }
 
 /* ── SKILLS ── */
@@ -342,7 +284,7 @@ footer p{color:var(--theme-tan);font-size:.875rem}
   .skills-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
-  .about-grid,.clo-grid,.projects-grid,.skills-grid{grid-template-columns:1fr}
+  .about-grid,.projects-grid,.skills-grid{grid-template-columns:1fr}
   .cp-banner{flex-direction:column;gap:1.25rem;text-align:center}
   .cp-divider{display:none}
   .section{padding:3.5rem 1.25rem}
@@ -352,27 +294,25 @@ footer p{color:var(--theme-tan);font-size:.875rem}
 <body>
 
 <nav>
-  <a class="nav-brand" href="#">Ayush Ojha</a>
+  <a class="nav-brand" href="#">Ayush Kumar Ojha</a>
   <div class="nav-links">
     <a href="#about">About</a>
-    <a href="#clo">Outcomes</a>
-    <a href="#projects">Projects</a>
     <a href="#skills">Skills</a>
-    <a href="#cp">CP</a>
+    <a href="#projects">Projects</a>
+    <a href="#cp">Competitive Programming</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-tag">4th Semester · KLE Technological University</div>
-  <h1>Ayush <span>Ojha</span></h1>
-  <p class="hero-sub">CSE student passionate about building full-stack applications, sorting through algorithmic frameworks, and modeling software configurations effectively.</p>
+  <div class="hero-tag">Computer Science & Engineering Student</div>
+  <h1>Ayush Kumar <span>Ojha</span></h1>
+  <p class="hero-sub">Passionate software builder focusing on modular application architectures, backend systems layout design, and programmatic logic optimization.</p>
   <div class="hero-chips">
-    <span class="chip">Web Technologies (WT)</span>
-    <span class="chip">Software Engineering (SE)</span>
-    <span class="chip">React · Node.js · Express</span>
-    <span class="chip">C++ Engineering Foundations</span>
+    <span class="chip">Full-Stack React Engineering</span>
+    <span class="chip">C++ Algorithmic Systems</span>
+    <span class="chip">Database Systems Integration</span>
   </div>
 </section>
 
@@ -385,95 +325,65 @@ footer p{color:var(--theme-tan);font-size:.875rem}
     <div class="about-grid">
       <div class="about-card">
         <h3>Background</h3>
-        <p>Computer Science & Engineering student at KLE Technological University, Hubli. Focused on core software paradigms, programmatic layouts, and functional data flows layout design.</p>
+        <p>Pursuing engineering architectures with a strong emphasis on clean code structure, modular full-stack frameworks, and efficient algorithm analysis pipelines.</p>
       </div>
       <div class="about-card">
-        <h3>Interests</h3>
-        <p>Algorithmic engineering platforms, responsive user interface models, desktop simulations, and modular hardware prototyping setups.</p>
+        <h3>Interests & Focus</h3>
+        <p>Deeply engaged in web development cycles, algorithmic design, and interactive system models. Dedicated to engineering robust database setups and high-performance system logic.</p>
         <div class="tag-row">
           <span class="tag">Web Architecture</span>
           <span class="tag">Problem Solving</span>
-          <span class="tag">Hardware Prototyping</span>
+          <span class="tag">Database Design</span>
         </div>
       </div>
       <div class="about-card">
-        <h3>Current Focus</h3>
-        <p>Developing full-stack tracking applications using modern React architecture and component structure lifecycles.</p>
+        <h3>Current Development</h3>
+        <p>Architecting SplitSmart — a detailed full-stack application built around modern component rendering lifecycles, structured session management tools, and non-relational database frameworks.</p>
         <div class="tag-row">
-          <span class="tag">Component Design</span>
-          <span class="tag">React State</span>
-          <span class="tag">Data Routing</span>
+          <span class="tag">SplitSmart App</span>
+          <span class="tag">React Architecture</span>
+          <span class="tag">API Routes</span>
         </div>
       </div>
       <div class="about-card">
-        <h3>Academic Integration</h3>
-        <p>Applying standard object-oriented design rules, network foundations, and unified software lifecycle processing structures straight to development models.</p>
+        <h3>Core Paradigms</h3>
+        <p>Integrating clear object-oriented design structures, secure data-handling protocols, and verified computational algorithms across every software layout.</p>
         <div class="tag-row">
-          <span class="tag">Object-Oriented Setup</span>
-          <span class="tag">Networks</span>
-          <span class="tag">Software Modeling</span>
+          <span class="tag">Object-Oriented Programming</span>
+          <span class="tag">Logic Optimization</span>
         </div>
       </div>
     </div>
   </section>
 </div>
 
-<!-- COURSE LEARNING OUTCOMES -->
+<!-- SKILLS -->
 <div class="section-bg-alt">
-  <section class="section" id="clo">
-    <div class="section-label">Academic Outcomes</div>
-    <div class="section-title">Course Learning Outcomes</div>
+  <section class="section" id="skills">
+    <div class="section-label">Technical</div>
+    <div class="section-title">Skills & Toolkit</div>
     <div class="section-divider"></div>
-    <p class="section-desc">Demonstrated engineering insights aligned with structural layout planning and modern full-stack implementation paradigms.</p>
-
-    <div class="clo-tabs">
-      <button class="clo-tab active" onclick="switchTab('wt',this)">Web Technologies</button>
-      <button class="clo-tab" onclick="switchTab('se',this)">Software Engineering</button>
-    </div>
-
-    <div class="clo-panel active" id="panel-wt">
-      <div class="clo-grid">
-        <div class="clo-item">
-          <div class="clo-num">1</div>
-          <div class="clo-text"><strong>HTML & CSS Layouts</strong>Structuring document contexts seamlessly with semantic properties and styling responsive frame containers.</div>
-        </div>
-        <div class="clo-item">
-          <div class="clo-num">2</div>
-          <div class="clo-text"><strong>Client-Side Interaction</strong>Managing programmatic data pipelines, event loops, and rendering asynchronous DOM components.</div>
-        </div>
-        <div class="clo-item">
-          <div class="clo-num">3</div>
-          <div class="clo-text"><strong>Component Architectures</strong>Compiling modular views with state hooks while maintaining data clean flows.</div>
-        </div>
-        <div class="clo-item">
-          <div class="clo-num">4</div>
-          <div class="clo-text"><strong>Backend Services</strong>Formulating server pathways, processing endpoints, and organizing structured asset distribution.</div>
-        </div>
-        <div class="clo-item">
-          <div class="clo-num">5</div>
-          <div class="clo-text"><strong>Data Structuring</strong>Connecting runtime systems to data tables to persist operational properties safely.</div>
-        </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <span class="skill-pill">C++</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Java</span>
+        <span class="skill-pill">JavaScript</span>
       </div>
-    </div>
-
-    <div class="clo-panel" id="panel-se">
-      <div class="clo-grid">
-        <div class="clo-item">
-          <div class="clo-num">1</div>
-          <div class="clo-text"><strong>Process Frameworks</strong>Tracking development milestones through standard lifecycle configurations and sprint steps.</div>
-        </div>
-        <div class="clo-item">
-          <div class="clo-num">2</div>
-          <div class="clo-text"><strong>System Analysis</strong>Eliciting functional structures and designing explicit logic diagrams to document workflows.</div>
-        </div>
-        <div class="clo-item">
-          <div class="clo-num">3</div>
-          <div class="clo-text"><strong>Structural Modeling</strong>Drafting comprehensive structural maps using standard UML entity layouts.</div>
-        </div>
-        <div class="clo-item">
-          <div class="clo-num">4</div>
-          <div class="clo-text"><strong>Architectural Tiers</strong>Enforcing clear structural boundaries across backend layers and viewer logic modules.</div>
-        </div>
+      <div class="skill-group">
+        <h3>Frontend Frameworks</h3>
+        <span class="skill-pill">React Components</span>
+        <span class="skill-pill">Vite Bundler</span>
+        <span class="skill-pill">Flexbox Layouts</span>
+        <span class="skill-pill">Grid Systems</span>
+      </div>
+      <div class="skill-group">
+        <h3>Backend & Data</h3>
+        <span class="skill-pill">Node.js Environment</span>
+        <span class="skill-pill">Express Handlers</span>
+        <span class="skill-pill">Relational Mapping</span>
+        <span class="skill-pill">Data Persistence</span>
       </div>
     </div>
   </section>
@@ -483,7 +393,7 @@ footer p{color:var(--theme-tan);font-size:.875rem}
 <div class="section-wrapper">
   <section class="section" id="projects">
     <div class="section-label">Work</div>
-    <div class="section-title">Projects</div>
+    <div class="section-title">Featured Projects</div>
     <div class="section-divider"></div>
     <div class="projects-grid">
 
@@ -493,11 +403,11 @@ footer p{color:var(--theme-tan);font-size:.875rem}
           <span class="project-badge">Active</span>
         </div>
         <div class="project-body">
-          <p>Full-stack ledger tracking application providing transactional parsing engines, balance matching, and clean data rendering windows.</p>
+          <p>A full-stack tracking architecture featuring dynamic state management layers, session tokens, and automated balance calculation operations.</p>
           <div class="project-stack">
-            <span class="stack-tag">React Blueprint</span>
+            <span class="stack-tag">React Engineering</span>
             <span class="stack-tag">Node Backplane</span>
-            <span class="stack-tag">REST Processing</span>
+            <span class="stack-tag">REST Patterns</span>
           </div>
         </div>
       </div>
@@ -508,11 +418,11 @@ footer p{color:var(--theme-tan);font-size:.875rem}
           <span class="project-badge">Full-Stack</span>
         </div>
         <div class="project-body">
-          <p>An administrative operational routing scaffold built to evaluate interactive data endpoints and decoupled components.</p>
+          <p>An administrative operational routing scaffold built to map decoupled component communications and verify network endpoint delivery pipelines.</p>
           <div class="project-stack">
-            <span class="stack-tag">Python Engine</span>
-            <span class="stack-tag">Data Tables</span>
-            <span class="stack-tag">React Frame</span>
+            <span class="stack-tag">Python Framework</span>
+            <span class="stack-tag">Data Routing</span>
+            <span class="stack-tag">Modular Views</span>
           </div>
         </div>
       </div>
@@ -521,50 +431,18 @@ footer p{color:var(--theme-tan);font-size:.875rem}
   </section>
 </div>
 
-<!-- SKILLS -->
-<div class="section-bg-alt">
-  <section class="section" id="skills">
-    <div class="section-label">Technical</div>
-    <div class="section-title">Skills</div>
-    <div class="section-divider"></div>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <h3>Core Engineering</h3>
-        <span class="skill-pill">C++</span>
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">Java</span>
-        <span class="skill-pill">JavaScript</span>
-      </div>
-      <div class="skill-group">
-        <h3>User Interface</h3>
-        <span class="skill-pill">React Viewports</span>
-        <span class="skill-pill">Vite Bundler</span>
-        <span class="skill-pill">Flexbox Rules</span>
-        <span class="skill-pill">Grid Templates</span>
-      </div>
-      <div class="skill-group">
-        <h3>Service Layers</h3>
-        <span class="skill-pill">Node Environment</span>
-        <span class="skill-pill">Express Handlers</span>
-        <span class="skill-pill">Relational Mapping</span>
-        <span class="skill-pill">Data Serialization</span>
-      </div>
-    </div>
-  </section>
-</div>
-
 <!-- COMPETITIVE PROGRAMMING -->
-<div class="section-wrapper">
+<div class="section-bg-alt">
   <section class="section" id="cp">
     <div class="section-label">Competitive Programming</div>
-    <div class="section-title">Algorithmic Foundations</div>
+    <div class="section-title">Algorithmic Optimization</div>
     <div class="section-divider"></div>
     <div class="cp-banner">
-      <div class="cp-stat"><span class="val">C++</span><span class="lbl">Primary Paradigm</span></div>
+      <div class="cp-stat"><span class="val">Ayush_ojha_2006</span><span class="lbl">Codeforces Footprint</span></div>
       <div class="cp-divider"></div>
-      <div class="cp-stat"><span class="val">G++</span><span class="lbl">Compiler Target</span></div>
+      <div class="cp-stat"><span class="val">C++</span><span class="lbl">Primary Tool</span></div>
       <div class="cp-divider"></div>
-      <p class="cp-desc">Actively practicing algorithmic optimizations, matrix analysis methods, and data parsing loops designed for complex variable scaling.</p>
+      <p class="cp-desc">Actively configuring programmatic problem setups using robust array operations, matrix manipulations, and custom bitwise logic pathways optimized for fast evaluation runtimes.</p>
     </div>
   </section>
 </div>
@@ -572,26 +450,16 @@ footer p{color:var(--theme-tan);font-size:.875rem}
 <!-- FOOTER / CONTACT -->
 <footer id="contact">
   <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text-light);margin-bottom:1rem">Let's Connect</p>
-  <p style="margin-bottom:1.5rem; color: var(--theme-accent-light)">KLE Technological University, Hubli · Computer Science & Engineering</p>
+  <p style="margin-bottom:1.5rem; color: var(--theme-accent-light)">Ayush Kumar Ojha · Computer Science & Engineering</p>
   <div class="contact-links">
-    <a class="contact-link" href="#" target="_blank">GitHub</a>
-    <a class="contact-link" href="mailto:#">Email</a>
-    <a class="contact-link" href="#" target="_blank">LinkedIn</a>
+    <a class="contact-link" href="https://codeforces.com/profile/Ayush_ojha_2006" target="_blank">Codeforces</a>
+    <a class="contact-link" href="https://github.com/Ayush-Kumar-ojha11" target="_blank">GitHub</a>
+    <a class="contact-link" href="mailto:01fe24bcs211@kletech.ac.in">Email</a>
   </div>
   <div class="footer-bottom">
-    <span>Ayush Ojha · CSE Portfolio</span>
-    <span>·</span>
-    <span>Web Technologies & Software Engineering</span>
+    <span>Ayush Kumar Ojha · Personal Engineering Portfolio</span>
   </div>
 </footer>
 
-<script>
-function switchTab(id, btn) {
-  document.querySelectorAll('.clo-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.clo-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
-  btn.classList.add('active');
-}
-</script>
 </body>
 </html>
