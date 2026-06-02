@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter - Client Server Architecture</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Color Palette & Variables --- */
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --card-bg: #ffffff;
+            --accent-blue: #4A90E2; /* For subtle shadows matching your image request */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html, body { 
+            width: 100%; 
+            height: auto; 
+            overflow-x: hidden; 
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes underlineExpand { from { width: 0; } to { width: 80px; } }
+
+        .anim-up, .anim-down, .anim-scale { opacity: 0; }
+        .anim-up.visible { animation: fadeInUp 0.8s ease-out forwards; }
+        .anim-down.visible { animation: fadeInDown 0.8s ease-out forwards; }
+        .anim-scale.visible { animation: scaleIn 0.8s ease-out forwards; }
+
+        .d1 { animation-delay: 0.1s; } 
+        .d2 { animation-delay: 0.2s; }
+        .d3 { animation-delay: 0.3s; }
+        .d4 { animation-delay: 0.4s; }
+
+        /* --- Page Header & Section Styles --- */
+        .page-header {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+            padding: clamp(40px, 8vw, 80px) 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section {
+            padding: clamp(40px, 8vw, 80px) 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 50px;
+            text-align: center;
+            text-transform: uppercase;
+            color: var(--dark-charcoal);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: ''; 
+            width: 0; 
+            height: 4px;
+            background-color: var(--primary-brown); 
+            display: block;
+            margin: 15px auto 0;
+        }
+        
+        .section-title.visible::after {
+            animation: underlineExpand 0.8s ease-out 0.4s forwards;
+        }
+
+        /* --- Client-Server Architecture Diagram CSS --- */
+        .cs-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 15px;
+        }
+
+        .cs-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            gap: 20px;
+        }
+
+        /* Top Row: Clients (Pill Shaped) */
+        .cs-client {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-brown);
+            color: var(--dark-charcoal);
+            font-weight: 600;
+            text-align: center;
+            padding: 15px 20px;
+            border-radius: 50px; /* Makes it a pill shape */
+            width: 22%;
+            box-shadow: 4px 4px 0px rgba(137, 106, 85, 0.2);
+            transition: transform 0.3s;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+        }
+        
+        .cs-client:hover { transform: translateY(-5px); }
+
+        /* Arrows */
+        .cs-arrows {
+            padding: 10px 0;
+        }
+
+        .arrow-box {
+            width: 22%;
+            display: flex;
+            justify-content: center;
+            color: var(--dark-charcoal);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Middle Row: Internet */
+        .cs-internet {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-brown);
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--dark-charcoal);
+            box-shadow: 6px 6px 0px rgba(137, 106, 85, 0.2);
+            border-radius: 4px;
+        }
+
+        /* Bottom Row: Split Server/Database Boxes */
+        .cs-server-group {
+            width: 22%;
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--primary-brown);
+            box-shadow: 4px 4px 0px rgba(137, 106, 85, 0.2);
+            transition: transform 0.3s;
+            background-color: var(--card-bg);
+        }
+
+        .cs-server-group:hover { transform: translateY(-5px); }
+
+        .cs-server-top {
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-brown);
+            color: var(--dark-charcoal);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+        }
+
+        .cs-server-bottom {
+            padding: 15px 10px;
+            text-align: center;
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            color: #555;
+            background-color: rgba(137, 106, 85, 0.05);
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .cs-row { flex-wrap: wrap; justify-content: center; }
+            .cs-client, .arrow-box, .cs-server-group { width: 45%; margin-bottom: 10px; }
+            .cs-arrows { display: none; } /* Hide vertical arrows on mobile to save space */
+        }
+
+        @media (max-width: 480px) {
+            .cs-client, .cs-server-group { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1 class="anim-down">Architecture</h1>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title anim-up">Client-Server Architecture</h2>
+        
+        <div class="cs-diagram">
+            
+            <div class="cs-row anim-down d1">
+                <div class="cs-client">Client 1<br>(Web Browser)</div>
+                <div class="cs-client">Client 2<br>(Mobile Web)</div>
+                <div class="cs-client">Client 3<br>(Admin Panel)</div>
+                <div class="cs-client">Client 4<br>(Other Users)</div>
+            </div>
+
+            <div class="cs-row cs-arrows anim-scale d2">
+                <div class="arrow-box">↕</div>
+                <div class="arrow-box">↕</div>
+                <div class="arrow-box">↕</div>
+                <div class="arrow-box">↕</div>
+            </div>
+
+            <div class="cs-row anim-scale d3">
+                <div class="cs-internet">
+                    Internet (HTTP REST API / JSON)
+                </div>
+            </div>
+
+            <div class="cs-row cs-arrows anim-scale d4">
+                <div class="arrow-box">↕</div>
+                <div class="arrow-box">↕</div>
+                <div class="arrow-box">↕</div>
+                <div class="arrow-box">↕</div>
+            </div>
+
+            <div class="cs-row anim-up d1">
+                
+                <div class="cs-server-group">
+                    <div class="cs-server-top">Auth & Admin Server</div>
+                    <div class="cs-server-bottom">Users & Admins DB</div>
+                </div>
+
+                <div class="cs-server-group">
+                    <div class="cs-server-top">Expense Engine</div>
+                    <div class="cs-server-bottom">Transactions DB</div>
+                </div>
+
+                <div class="cs-server-group">
+                    <div class="cs-server-top">Group Management</div>
+                    <div class="cs-server-bottom">Group Records</div>
+                </div>
+
+                <div class="cs-server-group">
+                    <div class="cs-server-top">Static Web Server</div>
+                    <div class="cs-server-bottom">Frontend HTML/JS</div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // --- Intersection Observer for Scroll Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.anim-up, .anim-down, .anim-scale, .section-title').forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- IFRAME FIX: Height Communication Script ---
+        function sendHeight() {
+            window.parent.postMessage({ type: 'setHeight', height: document.documentElement.scrollHeight }, '*');
+        }
+        sendHeight();
+        window.addEventListener('resize', sendHeight);
+        setTimeout(sendHeight, 500);
+        setTimeout(sendHeight, 1500);
+    </script>
+</body>
+</html>
