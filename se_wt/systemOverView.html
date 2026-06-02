@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter - System Overview</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Color Palette & Variables (Maintained) --- */
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html, body { 
+            width: 100%; 
+            height: auto; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+        }
+
+        body {
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes underlineExpand { from { width: 0; } to { width: 80px; } }
+
+        .anim-up, .anim-down, .anim-scale { opacity: 0; }
+        .anim-up.visible { animation: fadeInUp 0.8s ease-out forwards; }
+        .anim-down.visible { animation: fadeInDown 0.8s ease-out forwards; }
+        .anim-scale.visible { animation: scaleIn 0.8s ease-out forwards; }
+
+        .d1 { animation-delay: 0.1s; } 
+        .d2 { animation-delay: 0.25s; }
+        .d3 { animation-delay: 0.4s; }
+        .d4 { animation-delay: 0.55s; }
+
+        /* --- Page Header --- */
+        .page-header {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+            padding: clamp(40px, 8vw, 80px) 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Common Section Styles --- */
+        .section {
+            padding: clamp(40px, 8vw, 80px) 10%;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            position: relative;
+            color: var(--dark-charcoal);
+        }
+
+        .section-title::after {
+            content: ''; 
+            width: 0; 
+            height: 4px;
+            background-color: var(--primary-brown); 
+            display: block;
+            margin: 15px auto 0;
+        }
+        
+        .section-title.visible::after {
+            animation: underlineExpand 0.8s ease-out 0.4s forwards;
+        }
+
+        /* --- Architecture Diagram Styles --- */
+        .arch-container {
+            background-color: var(--dark-charcoal);
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .arch-header {
+            color: var(--primary-brown);
+            text-transform: uppercase;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .arch-tier {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .arch-box {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+            padding: 20px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .arch-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .arch-arrow {
+            text-align: center;
+            color: var(--light-beige);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .arch-box-light {
+            background-color: var(--light-beige);
+            color: var(--dark-charcoal);
+            padding: 20px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .arch-box-light span {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .arch-box-light:hover {
+            transform: translateY(-5px);
+            background-color: #ffffff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive Breakpoints for Grid */
+        @media (max-width: 768px) {
+            .arch-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1 class="anim-down">System Architecture</h1>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title anim-up">System Overview</h2>
+        
+        <div class="arch-container anim-scale d1">
+            <div class="arch-header">System Overview Diagram</div>
+            
+            <div class="arch-tier anim-up d1">
+                <div class="arch-box">
+                    Authentication & Security Module
+                </div>
+            </div>
+            
+            <div class="arch-arrow anim-down d2">▼</div>
+            
+            <div class="arch-tier anim-up d2">
+                <div class="arch-box">
+                    Expense Splitter Management Engine
+                </div>
+            </div>
+
+            <div class="arch-arrow anim-down d3">▼</div>
+
+            <div class="arch-grid">
+                <div class="arch-box-light anim-up d1">
+                    User <span>Module</span>
+                </div>
+                <div class="arch-box-light anim-up d2">
+                    Group <span>Module</span>
+                </div>
+                <div class="arch-box-light anim-up d3">
+                    Expense <span>Module</span>
+                </div>
+                <div class="arch-box-light anim-up d4">
+                    Admin <span>Module</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- Intersection Observer for Scroll Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.anim-up, .anim-down, .anim-scale, .section-title').forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- IFRAME FIX: Height Communication Script ---
+        function sendHeight() {
+            window.parent.postMessage({ type: 'setHeight', height: document.documentElement.scrollHeight }, '*');
+        }
+        sendHeight();
+        window.addEventListener('resize', sendHeight);
+        setTimeout(sendHeight, 500);
+        setTimeout(sendHeight, 1500);
+    </script>
+</body>
+</html>
