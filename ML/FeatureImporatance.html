@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Selection — Sleep Sense</title>
+    <style>
+        /* --- Color Palette & Fonts (Expense Splitter Theme) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
+
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- Continuous & Keyframe Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+            50% { text-shadow: 0 0 25px rgba(137, 106, 85, 0.7); transform: scale(1.02); }
+            100% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes shadowPulse {
+            0% { box-shadow: 0 15px 35px rgba(137, 106, 85, 0.1); }
+            50% { box-shadow: 0 25px 50px rgba(137, 106, 85, 0.3); }
+            100% { box-shadow: 0 15px 35px rgba(137, 106, 85, 0.1); }
+        }
+
+        .animate-up { animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Scroll Reveal Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-bounce);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: translateY(40px) scale(0.92);
+            transition: var(--transition-bounce);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--dark-charcoal);
+            padding: 15px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 2px solid var(--primary-brown);
+        }
+        .nav-brand {
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--light-beige);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+        .nav-brand:hover { color: var(--primary-brown); }
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+            padding: 140px 20px 120px;
+            text-align: center;
+            border-bottom: 15px solid var(--primary-brown);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(137,106,85,0.1) 0%, transparent 60%);
+            animation: pulseGlow 6s infinite alternate;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-weight: 300;
+            color: var(--primary-brown);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .hero h1 span { color: var(--primary-brown); }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            max-width: 650px;
+            margin: 0 auto;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Content Sections --- */
+        .section {
+            padding: 100px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 900;
+            position: relative;
+        }
+        
+        .section-alt .section-title {
+            color: var(--text-light);
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-brown);
+            display: block;
+            margin: 15px auto 0;
+            transition: width 0.6s ease;
+        }
+        
+        .section-alt .section-title::after {
+            background-color: var(--dark-charcoal);
+        }
+
+        .section-title:hover::after { width: 180px; }
+
+        .intro-text {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .section-alt .intro-text {
+            color: var(--light-beige);
+        }
+
+        /* --- Image Display --- */
+        .chart-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border-top: 8px solid var(--primary-brown);
+            margin: 0 auto 60px;
+            max-width: 900px;
+            animation: shadowPulse 6s infinite ease-in-out;
+            transition: var(--transition-bounce);
+        }
+
+        .chart-container:hover {
+            transform: scale(1.02);
+        }
+
+        .chart-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            display: block;
+        }
+
+        /* --- Insights Grid --- */
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .insight-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-left: 8px solid var(--primary-brown);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(137, 106, 85, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(50, 47, 44, 0.15);
+        }
+        .insight-card:hover::before { transform: translateX(100%); }
+
+        .insight-card h3 {
+            color: var(--dark-charcoal);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .insight-card h3 span {
+            display: inline-block;
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .insight-card p {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark-charcoal);
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--light-beige);
+            margin-top: 50px;
+        }
+        footer p { opacity: 0.8; font-size: 0.95rem; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a class="nav-brand" href="#">Ayush Kumar Ojha</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content animate-up">
+            <h2>Cutting Through The Noise</h2>
+            <h1>Feature <span>Selection</span></h1>
+            <p class="animate-up delay-1">Finding out which habits actually dictate our stress levels.</p>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title reveal">The XGBoost Reality Check</h2>
+        <p class="intro-text reveal-scale delay-1">
+            After looking at the correlation heatmap during my analysis, I needed a more robust way to know which features my XGBoost model <em>actually</em> relied on to make its predictions. Instead of just looking at basic correlation, I used <strong>Permutation Importance</strong>. By randomly shuffling each feature and seeing how much the model's accuracy dropped, I could pinpoint exactly what matters most in the real world.
+        </p>
+
+        <div class="chart-container reveal delay-2">
+            <img src="feature_importance.png" alt="Permutation Feature Importance Chart">
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <h2 class="section-title reveal">My Biggest Takeaways</h2>
+        <p class="intro-text reveal-scale delay-1">
+            When the code finally finished running and this chart popped up, I had a few major "Aha!" moments that completely validated my preprocessing efforts.
+        </p>
+        
+        <div class="insight-grid">
+            <div class="insight-card reveal-left delay-1">
+                <h3><span>Takeaway 01</span> Sleep is the Ultimate Baseline</h3>
+                <p><strong>Sleep Duration</strong> didn't just casually top the chart; it absolutely dominated it. It proved that no matter what else you do during the day, your raw hours of sleep are the single most critical factor in predicting your baseline stress levels. Everything else builds on top of this.</p>
+            </div>
+
+            <div class="insight-card reveal-scale delay-2">
+                <h3><span>Takeaway 02</span> Engineering Paid Off</h3>
+                <p>This was a massive win for me. I custom-engineered the <strong>Screen_to_Sleep_Ratio</strong> feature during preprocessing, and seeing it sit at number two on the importance chart felt amazing! It proved that combining variables to capture the <em>relationship</em> between habits is often more powerful than the raw data itself.</p>
+            </div>
+
+            <div class="insight-card reveal-right delay-3">
+                <h3><span>Takeaway 03</span> Demographics Are Noise</h3>
+                <p>I originally assumed that things like Age, Gender, or Occupation would play a huge role in stress. The model proved me completely wrong. Those features sat at the absolute bottom near zero. It taught me a valuable lesson: for this specific problem, your daily lifestyle choices matter infinitely more than who you are or what your job title is.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Ayush Kumar Ojha · Personal Portfolio</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale");
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
+</body>
+</html>
