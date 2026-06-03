@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dataset Overview - Ayush Ojha</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ayush Ojha — Portfolio Masterpage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
     <style>
         /* --- Color Palette & Fonts (Expense Splitter Theme) --- */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
-
         :root {
             --primary-brown: #896a55; 
             --dark-charcoal: #322f2c; 
@@ -18,11 +17,17 @@
             --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        * {
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            height: 100%;
+            overflow-x: hidden;
         }
 
         body {
@@ -30,6 +35,7 @@
             color: var(--text-dark);
             line-height: 1.7;
             overflow-x: hidden;
+            width: 100%;
         }
 
         /* --- Continuous & Keyframe Animations --- */
@@ -38,20 +44,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-60px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
         @keyframes pulseGlow {
             0% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
-            50% { text-shadow: 0 0 25px rgba(137, 106, 85, 0.7); transform: scale(1.02); }
+            50% { text-shadow: 0 0 25px rgba(137, 106, 85, 0.7); transform: scale(1.01); }
             100% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
         }
 
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
 
@@ -59,7 +60,6 @@
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
         .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
 
         /* Scroll Reveal Classes */
         .reveal {
@@ -71,9 +71,18 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
         .reveal-scale {
             opacity: 0;
-            transform: translateY(40px) scale(0.9);
+            transform: translateY(40px) scale(0.92);
             transition: var(--transition-bounce);
         }
         .reveal-scale.active {
@@ -134,7 +143,7 @@
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-size: clamp(3rem, 6vw, 4.5rem);
             font-weight: 900;
             letter-spacing: 2px;
             margin-bottom: 20px;
@@ -142,8 +151,15 @@
             animation: pulseGlow 3s infinite;
         }
 
-        .hero h1 span {
-            color: var(--primary-brown);
+        .hero h1 span { color: var(--primary-brown); }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            max-width: 650px;
+            margin: 0 auto;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
         }
 
         /* --- Stats Row --- */
@@ -184,6 +200,11 @@
             margin: 0 auto;
         }
 
+        .section-alt {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+        }
+
         .section-title {
             font-size: 2.8rem;
             color: var(--dark-charcoal);
@@ -193,6 +214,8 @@
             font-weight: 900;
             position: relative;
         }
+
+        .section-alt .section-title { color: var(--text-light); }
 
         .section-title::after {
             content: '';
@@ -204,9 +227,8 @@
             transition: width 0.6s ease;
         }
 
-        .section-title:hover::after {
-            width: 180px;
-        }
+        .section-alt .section-title::after { background-color: var(--dark-charcoal); }
+        .section-title:hover::after { width: 180px; }
 
         .intro-text {
             text-align: center;
@@ -217,39 +239,76 @@
             line-height: 1.8;
         }
 
-        /* --- Feature Grid --- */
-        .features {
+        .section-alt .intro-text { color: var(--light-beige); }
+
+        /* --- Component Cards & Grids --- */
+        .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
         }
 
-        .feature-card {
+        .component-card {
             background: #fff;
-            padding: 35px 25px;
+            padding: 40px 30px;
             border-top: 6px solid var(--primary-brown);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
             transition: var(--transition-bounce);
             position: relative;
-            border-radius: 6px;
+            overflow: hidden;
         }
 
-        .feature-card:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(50, 47, 44, 0.12);
+        .component-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(50, 47, 44, 0.15);
         }
 
-        .feature-card h3 {
+        .component-card h3 {
             color: var(--dark-charcoal);
-            margin-bottom: 12px;
-            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
             font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .feature-card p {
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.6;
+        .component-card h3 span {
+            display: inline-block;
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .component-card p {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .component-card strong { color: var(--dark-charcoal); }
+
+        /* Tags */
+        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+        .tag {
+            font-size: 0.75rem; font-weight: 600;
+            padding: 5px 12px;
+            background: var(--light-beige);
+            color: var(--dark-charcoal);
+            border: 1px solid var(--primary-brown);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .tag:hover {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            transform: translateY(-2px);
         }
 
         /* --- Footer --- */
@@ -258,7 +317,6 @@
             padding: 60px 20px;
             text-align: center;
             color: var(--light-beige);
-            margin-top: 50px;
         }
         footer p { opacity: 0.8; font-size: 0.95rem; letter-spacing: 1px; }
 
@@ -267,89 +325,188 @@
 <body>
 
     <nav>
-        <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
+        <a class="nav-brand" href="#">Ayush Kumar Ojha</a>
     </nav>
 
     <header class="hero">
         <div class="hero-content animate-up">
-            <h2>The Data Behind the Magic</h2>
-            <h1>Inside The <span>Dataset</span></h1>
+            <h2>Machine Learning Project</h2>
+            <h1>Sleep <span>Sense</span></h1>
+            <p class="animate-up delay-1">Because your sleep has a story.</p>
             
-            <div class="stats-container animate-up delay-1">
+            <div class="stats-container animate-up delay-2">
                 <div class="stat-box">
                     <h3>15,000</h3>
-                    <p>Total Records[cite: 10]</p>
+                    <p>Total Records</p>
                 </div>
                 <div class="stat-box" style="animation-delay: 1s;">
                     <h3>11</h3>
-                    <p>Total Features[cite: 10]</p>
+                    <p>Total Features</p>
                 </div>
             </div>
         </div>
     </header>
 
     <section class="section">
-        <h2 class="section-title reveal">Feature Breakdown</h2>
+        <h2 class="section-title reveal">The Problem Statement</h2>
         <p class="intro-text reveal-scale delay-1">
-            To build an accurate stress prediction model, we need to understand the variables at play. Here are the 11 key features[cite: 10] we analyzed and how each one actively influences our sleep and stress levels.
+            Given a person's mobile usage and lifestyle data, our objective is to predict their stress level score (on a scale of 1–10) using advanced machine learning models, progressing from baseline Linear Regression to powerful ensemble methods like XGBoost, rigorously validated using Stratified K-Fold techniques.
+        </p>
+
+        <div class="component-grid">
+            <div class="component-card reveal-left delay-1">
+                <h3><span>The Context</span> Rising Stress Levels</h3>
+                <p>Excessive mobile screen time is increasingly linked to rising stress levels, disrupted sleep patterns, and reduced mental well-being across all age groups.</p>
+            </div>
+
+            <div class="component-card reveal-scale delay-2">
+                <h3><span>The Approach</span> Predictive Modeling</h3>
+                <p>This project applies regression-based algorithms to predict stress scores directly from daily habits. By implementing Stratified K-Fold cross-validation, we ensure models like XGBoost and Decision Trees are highly robust and prevent overfitting.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <h2 class="section-title reveal">Inside The Dataset</h2>
+        <p class="intro-text reveal-scale delay-1">
+            To build an accurate stress prediction model, we analyzed 11 core features to understand how everyday behavioral data actively shapes our physiological rest patterns.
         </p>
         
-        <div class="features">
-            <div class="feature-card reveal-scale delay-1">
-                <h3>Daily Screen Time (hrs)[cite: 10]</h3>
-                <p>Prolonged exposure to the blue light from our screens suppresses melatonin production, throwing off our circadian rhythm and increasing baseline stress.</p>
+        <div class="component-grid">
+            <div class="component-card reveal-scale delay-1">
+                <h3>Daily Screen Time</h3>
+                <p>Prolonged exposure to the blue light from screens suppresses natural melatonin production, throwing off our circadian rhythm and increasing baseline stress inputs.</p>
             </div>
 
-            <div class="feature-card reveal-scale delay-2">
-                <h3>Phone Usage Before Sleep[cite: 10]</h3>
-                <p>Measured in minutes, scrolling right before bed keeps the brain highly stimulated, delaying the onset of restorative sleep.</p>
+            <div class="component-card reveal-scale delay-2">
+                <h3>Phone Usage Before Sleep</h3>
+                <p>Late-night smartphone scrolling keeps the brain highly stimulated right before bed, delaying the onset of restorative deep-sleep cycles.</p>
             </div>
 
-            <div class="feature-card reveal-scale delay-3">
-                <h3>Sleep Duration (hrs)[cite: 10]</h3>
-                <p>The core foundation of rest. Consistently sleeping under 5 hours drastically spikes cortisol levels and prevents physical recovery.</p>
+            <div class="component-card reveal-scale delay-3">
+                <h3>Sleep Duration</h3>
+                <p>The core foundation of physical rest. Consistently sleeping under 5 hours drastically spikes cortisol levels and restricts mental decompression.</p>
             </div>
 
-            <div class="feature-card reveal-scale delay-1">
-                <h3>Caffeine Intake (cups)[cite: 10]</h3>
-                <p>A central nervous system stimulant. Consuming too much caffeine directly reduces the amount of deep, slow-wave sleep we get at night.</p>
+            <div class="component-card reveal-scale delay-1">
+                <h3>Caffeine Intake</h3>
+                <p>A central nervous system stimulant. Consuming too many cups of caffeine directly fragments sleep architecture and shrinks slow-wave cycles.</p>
             </div>
 
-            <div class="feature-card reveal-scale delay-2">
-                <h3>Physical Activity (min)[cite: 10]</h3>
-                <p>Daily exercise acts as a powerful stress buffer. It burns off nervous energy and promotes a faster transition into deep sleep.</p>
+            <div class="component-card reveal-scale delay-2">
+                <h3>Physical Activity</h3>
+                <p>Daily active minutes act as a powerful stress buffer, expending excess adrenaline and helping the body transition smoothly into deep sleep.</p>
             </div>
 
-            <div class="feature-card reveal-scale delay-3">
-                <h3>Notifications Per Day[cite: 10]</h3>
-                <p>Constant buzzing creates a state of hyper-arousal. High notifications lead to micro-awakenings at night and constant anxiety during the day.</p>
+            <div class="component-card reveal-scale delay-3">
+                <h3>Notifications Per Day</h3>
+                <p>Constant phone buzzing alerts trigger micro-arousals and an ongoing state of digital hyper-vigilance, degrading daytime productivity.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title reveal">ML Concepts Applied</h2>
+        
+        <div class="component-grid">
+            <div class="component-card reveal-left delay-1">
+                <h3><span>Unit 1: Fundamentals</span>Data Preprocessing</h3>
+                <p>StandardScaler scales variables like 'screen time' and 'caffeine intake' to a uniform range so no single feature dominates our Sleep Sense predictions.</p>
+                <div class="tag-row">
+                    <span class="tag">StandardScaler</span>
+                    <span class="tag">LabelEncoding</span>
+                </div>
             </div>
 
-            <div class="feature-card reveal-scale delay-1">
-                <h3>Sleep Quality Score[cite: 10]</h3>
-                <p>A subjective, self-reported measure of how restful and uninterrupted a person felt their sleep was on a given night.</p>
+            <div class="component-card reveal-scale delay-2">
+                <h3><span>Unit 2: Core Algorithms</span>Regression & Trees</h3>
+                <p>Linear Regression maps the direct impact of sleep duration on stress, while Decision Trees catch complex, non-linear smartphone usage habits.</p>
+                <div class="tag-row">
+                    <span class="tag">Linear Regression</span>
+                    <span class="tag">Decision Trees</span>
+                </div>
             </div>
 
-            <div class="feature-card reveal-scale delay-2">
-                <h3>Stress Level (Target)[cite: 10]</h3>
-                <p>The final outcome (scaled 1-10) that our machine learning models are designed to predict based on the combination of all other habits.</p>
+            <div class="component-card reveal-scale delay-3">
+                <h3><span>Unit 3: Advanced Concepts</span>Stacking & Ensembles</h3>
+                <p>Stacking Regressors combine multiple weak models (like MLPs and Trees) into XGBoost to minimize overall error and achieve high-precision stress scoring.</p>
+                <div class="tag-row">
+                    <span class="tag">XGBoost</span>
+                    <span class="tag">StackingRegressor</span>
+                </div>
             </div>
 
-            <div class="feature-card reveal-scale delay-3">
-                <h3>Demographics[cite: 10]</h3>
-                <p>Includes <strong>Age</strong>, <strong>Gender</strong>, and <strong>Occupation</strong>. These provide vital context, as stress baselines and lifestyle habits naturally vary across different life stages and job roles.</p>
+            <div class="component-card reveal-left delay-1">
+                <h3><span>Key Concept</span>Loss Reduction</h3>
+                <p>Gradient descent iteratively tweaks the model's internal weights to find the minimum point, systematically reducing our overall prediction error.</p>
+                <div class="tag-row">
+                    <span class="tag">Gradient Descent</span>
+                    <span class="tag">Cost Function</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <h2 class="section-title reveal">What Fascinated Me</h2>
+        <p class="intro-text reveal-scale delay-1">
+            As I dove deeper into machine learning, there were certain concepts that just completely blew my mind and made me fall in love with the subject.
+        </p>
+        
+        <div class="component-grid">
+            <div class="component-card reveal-left delay-1">
+                <h3><span>Mind-Bending Math</span> The Scale of Dimensionality</h3>
+                <p>As humans, we literally can't think or visualize anything beyond 3 dimensions. But these AI models? They work on millions and billions of parameters—essentially millions and billions of dimensions! When I first read about this, it was so incredibly interesting that I went down a rabbit hole and read about it on the internet straight for 30 minutes.</p>
+            </div>
+
+            <div class="component-card reveal-scale delay-2">
+                <h3><span>Algorithmic Elegance</span> Backpropagation Efficiency</h3>
+                <p>The sheer efficiency of Backpropagation is amazing. It computes gradients for all weights simultaneously using the chain rule, instead of painstakingly calculating each derivative separately from scratch. It heavily reduces redundant computations and is the exact reason why training massive neural networks is actually feasible today.</p>
+            </div>
+
+            <div class="component-card reveal-scale delay-3">
+                <h3><span>The Balancing Act</span> Overfitting vs. Underfitting</h3>
+                <p>It was fascinating to learn about the delicate balance of model training. It's crazy to see how a model can perform flawlessly on the data it knows (overfitting) but completely fail in the real world, or how it can just fail to learn entirely (underfitting). Getting that perfect balance is like an art form.</p>
+            </div>
+
+            <div class="component-card reveal-left delay-4">
+                <h3><span>Data Power</span> The Impact of Preprocessing</h3>
+                <p>The last thing that truly fascinated me was data preprocessing. It's incredible to see how vastly something seemingly simple—like scaling features, handling missing values, or encoding variables—can completely change the final output and the prediction accuracy of your entire model.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title reveal">My Learning Journey</h2>
+        
+        <div class="component-grid">
+            <div class="component-card reveal-left delay-1">
+                <h3><span>Challenge 01</span>Grasping the Basics</h3>
+                <p><strong>The Obstacle:</strong> When the course started, Unit 1 was honestly very hard for me to understand. I was still figuring out the fundamental terminology and concepts of the subject.</p>
+                <p style="margin-top: 10px;"><strong>The Solution:</strong> I decided to tackle this by reading the textbook chapter by chapter. It took a lot of time, but eventually, all the theory clicked, and I really started to see the beauty of the subject.</p>
+            </div>
+
+            <div class="component-card reveal-scale delay-2">
+                <h3><span>Challenge 02</span>Navigating Harder Concepts</h3>
+                <p><strong>The Obstacle:</strong> Moving into Unit 2, the topics introduced were definitely a bit more tricky and complex than what we covered in Unit 1.</p>
+                <p style="margin-top: 10px;"><strong>The Solution:</strong> Because I had spent so much time thoroughly clearing up my basics in the first unit, this actually wasn't a big deal. Having a strong foundation made it much easier to adapt and understand the harder algorithms.</p>
+            </div>
+
+            <div class="component-card reveal-scale delay-3">
+                <h3><span>Challenge 03</span>Shifting Paradigms</h3>
+                <p><strong>The Obstacle:</strong> Unit 3 was a whole different thing since we started diving into unsupervised learning, like clustering and finding hidden structures.</p>
+                <p style="margin-top: 10px;"><strong>The Solution:</strong> By this point, my core concepts were so clear that I just had to read through the topics once. Concepts like clustering made intuitive sense immediately because of the groundwork I laid earlier.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>Ayush Kumar Ojha · Personal Portfolio</p>
+        <p>Ayush Kumar Ojha · Machine Learning Portfolio</p>
     </footer>
 
-    <!-- Scroll Animation Script -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const reveals = document.querySelectorAll(".reveal, .reveal-scale");
+            const reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-scale");
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -358,8 +515,8 @@
                     }
                 });
             }, {
-                threshold: 0.15,
-                rootMargin: "0px 0px -50px 0px"
+                threshold: 0.1,
+                rootMargin: "0px 0px -40px 0px"
             });
 
             reveals.forEach(reveal => {
