@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Building & Evaluation — Sleep Sense</title>
+    <style>
+        /* --- Color Palette & Fonts (Expense Splitter Theme) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
+
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- Continuous & Keyframe Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+            50% { text-shadow: 0 0 25px rgba(137, 106, 85, 0.7); transform: scale(1.02); }
+            100% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes shadowPulse {
+            0% { box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+            50% { box-shadow: 0 25px 50px rgba(137, 106, 85, 0.2); }
+            100% { box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        }
+
+        .animate-up { animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Scroll Reveal Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-bounce);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: translateY(40px) scale(0.92);
+            transition: var(--transition-bounce);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--dark-charcoal);
+            padding: 15px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 2px solid var(--primary-brown);
+        }
+        .nav-brand {
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--light-beige);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+        .nav-brand:hover { color: var(--primary-brown); }
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+            padding: 140px 20px 120px;
+            text-align: center;
+            border-bottom: 15px solid var(--primary-brown);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(137,106,85,0.1) 0%, transparent 60%);
+            animation: pulseGlow 6s infinite alternate;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-weight: 300;
+            color: var(--primary-brown);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .hero h1 span { color: var(--primary-brown); }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            max-width: 650px;
+            margin: 0 auto;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Content Sections --- */
+        .section {
+            padding: 100px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 900;
+            position: relative;
+        }
+        
+        .section-alt .section-title { color: var(--text-light); }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-brown);
+            display: block;
+            margin: 15px auto 0;
+            transition: width 0.6s ease;
+        }
+        
+        .section-alt .section-title::after { background-color: var(--dark-charcoal); }
+        .section-title:hover::after { width: 180px; }
+
+        .intro-text {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        .section-alt .intro-text { color: var(--light-beige); }
+
+        /* --- Models Explored Grid --- */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .model-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition-bounce);
+            border-top: 5px solid var(--primary-brown);
+        }
+
+        .model-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(137, 106, 85, 0.15);
+        }
+
+        .model-card h3 {
+            color: var(--dark-charcoal);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .model-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .model-card ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 1.05rem;
+        }
+
+        .model-card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-brown);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* --- Pipeline Flow UI --- */
+        .pipeline-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+
+        .pipeline-step {
+            background: #fff;
+            color: var(--dark-charcoal);
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .pipeline-arrow {
+            color: var(--dark-charcoal);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .pipeline-highlight {
+            background: rgba(255,255,255,0.1);
+            border-left: 6px solid var(--dark-charcoal);
+            padding: 30px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+        }
+        
+        .pipeline-highlight h4 {
+            color: var(--dark-charcoal);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* --- Evaluation Charts --- */
+        .chart-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border-top: 8px solid var(--primary-brown);
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            animation: shadowPulse 6s infinite ease-in-out;
+            transition: var(--transition-bounce);
+        }
+
+        .chart-container:hover {
+            transform: scale(1.02);
+        }
+
+        .chart-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            display: block;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark-charcoal);
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--light-beige);
+        }
+        footer p { opacity: 0.8; font-size: 0.95rem; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content animate-up">
+            <h2>Architecture & Results</h2>
+            <h1>Model <span>Building</span> & Evaluation</h1>
+            <p class="animate-up delay-1">From baseline algorithms to an advanced, highly-validated XGBoost ensemble.</p>
+        </div>
+    </header>
+
+    <!-- SECTION 1: MODELS EXPLORED -->
+    <section class="section">
+        <h2 class="section-title reveal">Models & Techniques Explored</h2>
+        <p class="intro-text reveal-scale delay-1">
+            Multiple machine learning and deep learning approaches were explored and tested before synthesizing the final stacked model for stress level prediction.
+        </p>
+
+        <div class="models-grid">
+            <div class="model-card reveal-scale delay-1">
+                <h3>Baseline Models</h3>
+                <ul>
+                    <li>Linear Regression</li>
+                    <li>Decision Tree Regressor</li>
+                </ul>
+            </div>
+
+            <div class="model-card reveal-scale delay-2">
+                <h3>Boosting & Ensemble</h3>
+                <ul>
+                    <li>XGBoost Regressor</li>
+                    <li>Stacking Meta-Learner</li>
+                </ul>
+            </div>
+
+            <div class="model-card reveal-scale delay-3">
+                <h3>Deep Learning</h3>
+                <ul>
+                    <li>Multi-Layer Perceptron (MLP)</li>
+                    <li>Backpropagation Neural Networks</li>
+                </ul>
+            </div>
+
+            <div class="model-card reveal-scale delay-1">
+                <h3>Validation Techniques</h3>
+                <ul>
+                    <li><strong>Stratified K-Fold (5 Folds)</strong></li>
+                    <li>Grid Search Optimization</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: FINAL PIPELINE -->
+    <section class="section section-alt">
+        <h2 class="section-title reveal">Final Pipeline</h2>
+        <p class="intro-text reveal-scale delay-1">
+            After evaluating multiple approaches, a final pipeline was designed by combining base models, robust cross-validation, and ensemble learning to generate highly reliable stress predictions.
+        </p>
+
+        <div class="pipeline-container reveal delay-2">
+            <div class="pipeline-step">Data Scaling & Encoding</div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">Stratified 5-Fold Split</div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">Base Models (LR, DT, MLP)</div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">XGBoost Meta-Model</div>
+        </div>
+
+        <div class="pipeline-highlight reveal-left delay-3">
+            <h4>Pipeline Highlights</h4>
+            <p>The final pipeline utilizes <strong>Stratified K-Fold cross-validation with exactly 5 folds</strong> to ensure that every variation of stress levels is perfectly represented during training. The predictions from our baseline and neural network models are then fed directly into an XGBoost meta-learner (Stacking) to correct individual model biases and produce a highly accurate final score.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: PERFORMANCE EVALUATION -->
+    <section class="section">
+        <h2 class="section-title reveal">Performance Evaluation</h2>
+        <p class="intro-text reveal-scale delay-1">
+            To truly understand how well our model distinguishes between high-stress and low-stress individuals, we plotted the Receiver Operating Characteristic (ROC) and Precision-Recall (POC) curves.
+        </p>
+
+        <!-- Chart Image Container -->
+        <div class="chart-container reveal delay-2">
+            <!-- Ensure final_roc_and_poc_cureve.png is in the same directory! -->
+            <img src="final_roc_and_poc_cureve.png" alt="ROC and Precision-Recall Curves">
+        </div>
+
+        <div class="intro-text reveal-scale delay-3" style="margin-top: 30px; font-weight: 600; color: var(--dark-charcoal);">
+            <p>The ROC curve demonstrates an exceptional Area Under the Curve (AUC) of <strong>0.98</strong>, while the Precision-Recall curve maintains an AUC of <strong>0.90</strong>, proving the model's high reliability and precision in identifying elevated stress risk across the dataset.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Ayush Kumar Ojha · Personal Portfolio</p>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale");
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
+</body>
+</html>
