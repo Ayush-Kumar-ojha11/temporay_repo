@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pre-processing — Sleep Sense</title>
+    <style>
+        /* --- Color Palette & Fonts (Expense Splitter Theme) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
+
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --code-bg: #1e1c1b;
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- Continuous & Keyframe Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+            50% { text-shadow: 0 0 25px rgba(137, 106, 85, 0.7); transform: scale(1.02); }
+            100% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-up { animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+
+        /* Scroll Reveal Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-bounce);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            transition: var(--transition-bounce);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--dark-charcoal);
+            padding: 15px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 2px solid var(--primary-brown);
+        }
+        .nav-brand {
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--light-beige);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+        .nav-brand:hover { color: var(--primary-brown); }
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+            padding: 140px 20px 120px;
+            text-align: center;
+            border-bottom: 15px solid var(--primary-brown);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(137,106,85,0.1) 0%, transparent 60%);
+            animation: pulseGlow 6s infinite alternate;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-weight: 300;
+            color: var(--primary-brown);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .hero h1 span { color: var(--primary-brown); }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            max-width: 650px;
+            margin: 0 auto;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Content Sections --- */
+        .section {
+            padding: 100px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 900;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-brown);
+            display: block;
+            margin: 15px auto 0;
+            transition: width 0.6s ease;
+        }
+        .section-title:hover::after { width: 180px; }
+
+        .intro-text {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* --- Process Grid --- */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .process-card {
+            background: #fff;
+            padding: 35px 25px;
+            border-top: 6px solid var(--primary-brown);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition-bounce);
+            position: relative;
+            border-radius: 6px;
+        }
+
+        .process-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(50, 47, 44, 0.12);
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(137, 106, 85, 0.15);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .process-card h3 {
+            color: var(--dark-charcoal);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-card p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Code Block Section --- */
+        .code-container {
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(137, 106, 85, 0.3);
+        }
+
+        .code-container::before {
+            content: 'Python 3';
+            position: absolute;
+            top: 0; right: 0;
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 4px 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-bottom-left-radius: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        pre {
+            overflow-x: auto;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .kw { color: #cc7832; font-weight: bold; } /* Keywords */
+        .str { color: #6a8759; } /* Strings */
+        .func { color: #ffc66d; } /* Functions */
+        .com { color: #808080; font-style: italic; } /* Comments */
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark-charcoal);
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--light-beige);
+        }
+        footer p { opacity: 0.8; font-size: 0.95rem; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a class="nav-brand" href="#">Ayush Kumar Ojha</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content animate-up">
+            <h2>Data Engineering</h2>
+            <h1>Pre-<span>Processing</span></h1>
+            <p class="animate-up delay-1">Transforming raw data into actionable insights through rigorous scaling and encoding.</p>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title reveal">The Pipeline</h2>
+        <p class="intro-text reveal-scale delay-1">
+            Raw data is inherently messy. To ensure our models perform optimally, the dataset underwent a strict, multi-step pre-processing pipeline designed to clean, encode, and scale the data while completely eliminating data leakage.
+        </p>
+        
+        <div class="process-grid">
+            <div class="process-card reveal-left">
+                <div class="step-number">01</div>
+                <h3>Dropping Identifiers</h3>
+                <p>Removed the <code>user_id</code> column as it is a unique identifier, not a predictive feature. Also dropped target-related scores to prevent target leakage.</p>
+            </div>
+
+            <div class="process-card reveal-scale">
+                <div class="step-number">02</div>
+                <h3>Integrity Checks</h3>
+                <p>Verified that the dataset has absolutely zero missing values across all 15,000 rows (no imputation needed) and confirmed there are zero duplicate entries.</p>
+            </div>
+
+            <div class="process-card reveal-left">
+                <div class="step-number">03</div>
+                <h3>Categorical Encoding</h3>
+                <p>Used <code>LabelEncoder</code> to transform categorical strings into machine-readable numeric values for columns like <strong>Gender</strong> and <strong>Occupation</strong>.</p>
+            </div>
+
+            <div class="process-card reveal-scale">
+                <div class="step-number">04</div>
+                <h3>Data Splitting</h3>
+                <p>Executed a stratified Train-Test split. It is critical to split the data <em>before</em> scaling to ensure our model is evaluated fairly on entirely unseen data.</p>
+            </div>
+
+            <div class="process-card reveal-left">
+                <div class="step-number">05</div>
+                <h3>Standard Scaling</h3>
+                <p>Applied <code>StandardScaler</code> to normalize all 9 numerical features (mean=0, std=1). The scaler was strictly fitted only on the training data.</p>
+            </div>
+
+            <div class="process-card reveal-scale">
+                <div class="step-number">06</div>
+                <h3>Feature Engineering</h3>
+                <p>Engineered complex non-linear features by creating custom interaction terms, such as calculating the ratio of Screen Time to Sleep Duration.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title reveal" style="margin-top: 80px;">The Source Code</h2>
+        <p class="intro-text reveal-scale delay-1">
+            Below is the finalized Python implementation of our pre-processing pipeline, utilizing Pandas and Scikit-Learn to prepare the tensors for the machine learning models.
+        </p>
+
+        <div class="code-container reveal-scale delay-2">
+<pre>
+<span class="com"># ==========================================</span>
+<span class="com"># PREPROCESSING PIPELINE (UPGRADED)</span>
+<span class="com"># ==========================================</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler, LabelEncoder
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+
+<span class="com"># 1. LOAD DATA & CLEAN</span>
+df = pd.<span class="func">read_csv</span>(<span class="str">"sleep_mobile_stress_dataset_15000.csv"</span>)
+df.<span class="func">drop</span>(columns=[<span class="str">"user_id"</span>, <span class="str">"sleep_quality_score"</span>, <span class="str">"mental_fatigue_score"</span>], inplace=<span class="kw">True</span>)
+
+df[<span class="str">'gender'</span>] = <span class="func">LabelEncoder</span>().<span class="func">fit_transform</span>(df[<span class="str">'gender'</span>])
+df[<span class="str">'occupation'</span>] = <span class="func">LabelEncoder</span>().<span class="func">fit_transform</span>(df[<span class="str">'occupation'</span>])
+
+<span class="com"># 2. ADVANCED FEATURE ENGINEERING (Non-Linear Context)</span>
+df[<span class="str">"Screen_to_Sleep_Ratio"</span>] = df[<span class="str">"daily_screen_time_hours"</span>] / (df[<span class="str">"sleep_duration_hours"</span>] + <span class="str">0.001</span>)
+df[<span class="str">"Caffeine_vs_Sleep"</span>] = df[<span class="str">"caffeine_intake_cups"</span>] / (df[<span class="str">"sleep_duration_hours"</span>] + <span class="str">0.001</span>)
+
+<span class="com"># 3. DEFINE FEATURES & TARGET</span>
+X = df.<span class="func">drop</span>(columns=[<span class="str">"stress_level"</span>])
+y = df[<span class="str">"stress_level"</span>]
+
+<span class="com"># 4. SPLIT DATA (Stratified Splitting)</span>
+y_binned = pd.<span class="func">qcut</span>(y, q=<span class="str">5</span>, labels=<span class="kw">False</span>, duplicates=<span class="str">'drop'</span>)
+
+X_temp, X_kfold, y_temp, y_kfold = <span class="func">train_test_split</span>(
+    X, y, test_size=<span class="str">0.20</span>, stratify=y_binned, random_state=<span class="str">42</span>
+)
+
+y_temp_binned = pd.<span class="func">qcut</span>(y_temp, q=<span class="str">5</span>, labels=<span class="kw">False</span>, duplicates=<span class="str">'drop'</span>)
+X_train, X_test, y_train, y_test = <span class="func">train_test_split</span>(
+    X_temp, y_temp, test_size=<span class="str">0.375</span>, stratify=y_temp_binned, random_state=<span class="str">42</span>
+)
+
+<span class="com"># 5. STANDARDIZE FEATURES (Fit on Training Data Only)</span>
+scaler = <span class="func">StandardScaler</span>()
+X_train_scaled = pd.<span class="func">DataFrame</span>(scaler.<span class="func">fit_transform</span>(X_train), columns=X_train.columns)
+X_test_scaled = pd.<span class="func">DataFrame</span>(scaler.<span class="func">transform</span>(X_test), columns=X_test.columns)
+X_kfold_scaled = pd.<span class="func">DataFrame</span>(scaler.<span class="func">transform</span>(X_kfold), columns=X_kfold.columns)
+</pre>
+        </div>
+    </section>
+
+    <footer>
+        <p>Ayush Kumar Ojha · Personal Portfolio</p>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal, .reveal-scale, .reveal-left");
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
+</body>
+</html>
