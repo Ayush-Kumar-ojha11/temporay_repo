@@ -208,9 +208,14 @@
             box-shadow: 0 25px 50px rgba(137, 106, 85, 0.2);
         }
 
-        /* Background Images via Unsplash API - Stressed Adult & Cute Sleeping Cat */
-        .img-1 { background: url('https://images.unsplash.com/photo-1498656028122-38622c8a4aaf?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat; }
-        .img-2 { background: url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat; }
+        /* Updated Background Images - Reliable Unsplash Links with Fallback Colors */
+        .img-1 { 
+            background: #896a55 url('https://images.unsplash.com/photo-1554188248-986adbb73292?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat; 
+        } /* Stressed person at laptop */
+        
+        .img-2 { 
+            background: #322f2c url('https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat; 
+        } /* Sleeping orange cat */
 
         .image-overlay {
             position: absolute;
@@ -321,7 +326,7 @@
 <body>
 
     <nav>
-        <a class="nav-brand" href="#">Ayush Kumar Ojha</a>
+        <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
     </nav>
 
     <header class="hero">
