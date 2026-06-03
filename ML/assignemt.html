@@ -48,16 +48,6 @@ nav{
   letter-spacing:.04em;
   text-decoration:none;
 }
-.nav-links{display:flex;gap:1.5rem}
-.nav-links a{
-  font-size:12px;font-weight:500;
-  color:var(--theme-accent-light);
-  text-decoration:none;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  transition:color .2s;
-}
-.nav-links a:hover{color:var(--text-light)}
 
 /* ── HERO ── */
 .hero{
@@ -126,6 +116,44 @@ nav{
   box-shadow: 0 12px 24px rgba(53, 47, 44, 0.08);
   border-color: var(--theme-accent-light);
 }
+
+/* ── SCROLL REVEAL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.reveal-scale.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* Delay classes for grid items */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* Hero initial animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-anim {
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  opacity: 0;
+}
+.hero-anim-1 { animation-delay: 0.1s; }
+.hero-anim-2 { animation-delay: 0.2s; }
+.hero-anim-3 { animation-delay: 0.3s; }
 
 /* ── ABOUT ── */
 .about-grid{
@@ -227,7 +255,7 @@ nav{
 .tab-button:hover { background: rgba(147, 99, 75, 0.05); }
 .tab-button.active { background: #fff; color: var(--theme-accent); border-top: 3px solid var(--theme-accent); }
 .tab-content { display: none; padding: 2rem; }
-.tab-content.active { display: block; }
+.tab-content.active { display: block; animation: fadeInUp 0.4s ease forwards; }
 
 /* ── CONTACT / FOOTER ── */
 footer{
@@ -247,7 +275,7 @@ footer p{color:var(--theme-tan);font-size:.875rem}
   border-radius:2px;
   transition: var(--transition-smooth);
 }
-.contact-link:hover{background:var(--theme-accent);color:var(--text-light)}
+.contact-link:hover{background:var(--theme-accent);color:var(--text-light); transform: translateY(-2px);}
 .footer-bottom{
   border-top:1px solid var(--theme-accent);
   padding-top:1.25rem;
@@ -256,17 +284,13 @@ footer p{color:var(--theme-tan);font-size:.875rem}
   display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
 }
 
-/* ── RESPONSIVE CANVAS & iFRAME FIXES ── */
+/* ── RESPONSIVE ── */
 @media(max-width:960px){
   .skills-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
   .about-grid,.projects-grid,.skills-grid{grid-template-columns:1fr}
   .section{padding:3.5rem 1.25rem}
-  .nav-links { display: none; }
-}
-@media(min-width:641px) {
-  .nav-links { display: flex; flex-wrap: wrap; }
 }
 
 </style>
@@ -275,30 +299,23 @@ footer p{color:var(--theme-tan);font-size:.875rem}
 
 <nav>
   <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="profile.html">Profile</a>
-    <a href="learning.html">Learning</a>
-    <a href="assignments.html">Assignments</a>
-    <a href="challenges.html">Challenges</a>
-    <a href="course_project.html">Project</a>
-  </div>
 </nav>
 
 
-<section class="hero" style="padding: 4rem 2rem 3rem;">
-  <h1>Assignment <span>Interest</span></h1>
+<section class="hero">
+  <div class="hero-tag hero-anim hero-anim-1">Coursework</div>
+  <h1 class="hero-anim hero-anim-2">Assignment <span>Interest</span></h1>
 </section>
 <div class="section-wrapper">
   <section class="section">
-    <div class="section-title">Two Moons Operation</div>
-    <div class="section-divider"></div>
+    <div class="section-title reveal">Two Moons Operation</div>
+    <div class="section-divider reveal"></div>
     <div class="about-grid">
-      <div class="about-card">
+      <div class="about-card reveal-scale delay-1">
         <h3>1. Computational Aspect</h3>
         <p>The "Two Moons" dataset is a classic non-linear classification problem. On the computational side, I implemented multi-layer perceptrons (MLPs) and Kernel SVMs to effectively separate the intertwined data points. This involved optimizing the cost function using gradient descent algorithms and tuning the learning rate for convergence.</p>
       </div>
-      <div class="about-card">
+      <div class="about-card reveal-scale delay-2">
         <h3>2. Analytical Aspect</h3>
         <p>Analytically, the challenge was to understand why linear models fail on this dataset. By mapping the data to a higher-dimensional space using the kernel trick, or by using the non-linear activation functions in a neural network, the decision boundary becomes linear in the transformed space. I analyzed the impact of different hyperparameters (like tree depth or kernel bandwidth) on the decision boundary's shape.</p>
       </div>
@@ -307,7 +324,7 @@ footer p{color:var(--theme-tan);font-size:.875rem}
 </div>
 
 
-<footer id="contact">
+<footer id="contact" class="reveal">
   <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text-light);margin-bottom:1rem">Let's Connect</p>
   <p style="margin-bottom:1.5rem; color: var(--theme-accent-light)">Ayush Kumar Ojha · Computer Science & Engineering</p>
   <div class="contact-links">
@@ -319,5 +336,18 @@ footer p{color:var(--theme-tan);font-size:.875rem}
   </div>
 </footer>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const reveals = document.querySelectorAll(".reveal, .reveal-scale");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach((reveal) => observer.observe(reveal));
+  });
+</script>
 </body>
 </html>
