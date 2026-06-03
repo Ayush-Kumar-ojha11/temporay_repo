@@ -47,7 +47,6 @@
         .animate-up { animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; opacity: 0; }
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
 
         /* Scroll Reveal Classes */
         .reveal {
@@ -209,8 +208,8 @@
             box-shadow: 0 25px 50px rgba(137, 106, 85, 0.2);
         }
 
-        /* Background Images via Unsplash API */
-        .img-1 { background: url('https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat; }
+        /* Background Images via Unsplash API - Updated to a stressed person */
+        .img-1 { background: url('https://images.unsplash.com/photo-1555529733-0e67056058e1?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat; }
         .img-2 { background: url('https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat; }
 
         .image-overlay {
@@ -241,52 +240,29 @@
         }
 
         /* --- SDG Highlights --- */
-        .sdg-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+        .sdg-container {
+            display: flex;
+            justify-content: center;
             margin-top: 60px;
-        }
-
-        .sdg-card {
-            background: #fff;
-            padding: 30px;
-            border-top: 5px solid var(--primary-brown);
-            border-radius: 6px;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: var(--transition-bounce);
-            position: relative;
-        }
-
-        .sdg-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .sdg-card h4 {
-            color: var(--primary-brown);
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .sdg-card p {
-            color: #555;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
         }
 
         /* --- Highlighted SDG Target Card --- */
         .highlight-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
             border-top: 6px solid var(--dark-charcoal);
-            background: rgba(137, 106, 85, 0.03); /* Subtle brown tint */
-            transform: scale(1.02);
             box-shadow: 0 15px 30px rgba(137, 106, 85, 0.1);
-            margin-top: 15px;
+            position: relative;
+            transition: var(--transition-bounce);
         }
 
         .highlight-card:hover {
             transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 45px rgba(137, 106, 85, 0.2);
         }
 
         .target-badge {
@@ -296,23 +272,38 @@
             transform: translateX(-50%);
             background: var(--dark-charcoal);
             color: var(--light-beige);
-            padding: 5px 15px;
+            padding: 5px 20px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 1px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
+        .highlight-card h4 {
+            color: var(--dark-charcoal);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
         .target-quote {
             font-style: italic;
-            color: var(--primary-brown) !important;
+            color: var(--primary-brown);
             font-weight: 600;
-            font-size: 0.95rem !important;
-            padding: 10px 15px;
-            background: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            padding: 15px 20px;
+            background: rgba(137, 106, 85, 0.05);
             border-radius: 4px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .highlight-card p {
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
         /* --- Footer --- */
@@ -365,24 +356,13 @@
         </div>
 
         <!-- SDG Breakdown -->
-        <div class="sdg-grid">
-            
+        <div class="sdg-container">
             <!-- Highlighted Target 3.4 Mapping -->
-            <div class="sdg-card highlight-card reveal delay-1">
+            <div class="highlight-card reveal delay-1">
                 <div class="target-badge">SDG Target 3.4</div>
-                <h4 style="color: var(--dark-charcoal);">Goal 3: Good Health & Well-being</h4>
+                <h4>Goal 3: Good Health & Well-being</h4>
                 <p class="target-quote">"Promote mental health and well-being and reduce premature mortality from non-communicable diseases."</p>
                 <p><strong>Our Mapping:</strong> By quantifying stress risks directly from daily digital habits, Sleep Sense supports the early detection of harmful sleep deprivation and high-stress patterns long before they escalate into severe clinical issues.</p>
-            </div>
-            
-            <div class="sdg-card reveal delay-2">
-                <h4>Goal 9</h4>
-                <p><strong>Industry & Innovation:</strong> Driving innovation in digital health by enabling accurate stress prediction straight from standard wearable and app data.</p>
-            </div>
-
-            <div class="sdg-card reveal delay-3">
-                <h4>Goal 10</h4>
-                <p><strong>Reduced Inequalities:</strong> Bridging the gap between high-end technology and public health by offering robust stress monitoring without the need for specialist access.</p>
             </div>
         </div>
     </section>
