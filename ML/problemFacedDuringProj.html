@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenges & Solutions — Sleep Sense</title>
+    <style>
+        /* --- Color Palette & Fonts (Expense Splitter Theme) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
+
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+            50% { text-shadow: 0 0 25px rgba(137, 106, 85, 0.7); transform: scale(1.02); }
+            100% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-up { animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-bounce);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--dark-charcoal);
+            padding: 15px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 2px solid var(--primary-brown);
+        }
+        .nav-brand {
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--light-beige);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+        .nav-brand:hover { color: var(--primary-brown); }
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+            padding: 140px 20px 120px;
+            text-align: center;
+            border-bottom: 15px solid var(--primary-brown);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(137,106,85,0.1) 0%, transparent 60%);
+            animation: pulseGlow 6s infinite alternate;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-weight: 300;
+            color: var(--primary-brown);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .hero h1 span { color: var(--primary-brown); }
+
+        /* --- Content Sections --- */
+        .section {
+            padding: 100px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 900;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-brown);
+            display: block;
+            margin: 15px auto 0;
+            transition: width 0.6s ease;
+        }
+        .section-title:hover::after { width: 180px; }
+
+        .intro-text {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* --- Challenges Grid --- */
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .challenge-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-top: 6px solid var(--primary-brown);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition-bounce);
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(50, 47, 44, 0.15);
+        }
+
+        .challenge-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(137, 106, 85, 0.15);
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .challenge-card h3 {
+            color: var(--dark-charcoal);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .challenge-card p {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .challenge-card strong { color: var(--primary-brown); }
+
+        footer {
+            background: var(--dark-charcoal);
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--light-beige);
+            margin-top: 50px;
+        }
+        footer p { opacity: 0.8; font-size: 0.95rem; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content animate-up">
+            <h2>The Obstacles We Hit</h2>
+            <h1>Roadblocks & <span>Solutions</span></h1>
+            <p class="animate-up delay-1">It wasn't always smooth sailing. Here’s how we actually fixed the problems we faced.</p>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title reveal">Lessons from the Struggle</h2>
+        <p class="intro-text reveal delay-1">
+            Building this project was a real back-and-forth process for the team. We hit some serious walls with data quality and accuracy, and it took a lot of trial and error to actually push past them.
+        </p>
+
+        <div class="challenges-grid">
+            <!-- Point 1 -->
+            <div class="challenge-card reveal-left delay-1">
+                <div class="challenge-number">1</div>
+                <h3>The Preprocessing Struggle</h3>
+                <p><strong>The Obstacle:</strong> At first, the dataset features were just not balanced at all. Because of that, our early models were barely performing—they were basically just locking onto one or two random functions to make predictions, which gave us really poor accuracy.</p>
+                <p><strong>The Solution:</strong> We had to go back to the drawing board and do multiple iterations on our preprocessing. We focused on functional importance until the model was actually learning from all the features, not just taking shortcuts.</p>
+            </div>
+
+            <!-- Point 2 -->
+            <div class="challenge-card reveal-left delay-2">
+                <div class="challenge-number">2</div>
+                <h3>Chasing That Accuracy</h3>
+                <p><strong>The Obstacle:</strong> Even after fixing the basics, our accuracy improvements were still frustratingly small. We tried throwing everything at it—stacking multiple models, running Stratified K-Fold (for those 5 solid folds), and testing XGBoost—but we still weren't satisfied with the results.</p>
+                <p><strong>The Solution:</strong> It turned out the answer wasn't just in the models themselves, but back in the preprocessing. We started focusing hard on feature scaling and other transformation methods. That was the real game-changer; fixing the quality of the input data did way more for our accuracy than just swapping out models ever did.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Ayush Kumar Ojha · Personal Portfolio</p>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal, .reveal-left");
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
+</body>
+</html>
