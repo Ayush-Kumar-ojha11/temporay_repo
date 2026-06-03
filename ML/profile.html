@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ayush Ojha — ML Portfolio</title>
+<title>Ayush Ojha — CS Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --theme-dark: #352F2C;       
@@ -19,7 +18,8 @@
   --text-muted: #6B625E;
   --text-light: #FBF9F6;
   
-  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 html{scroll-behavior:smooth; height: 100%; overflow-x: hidden;}
 body{
@@ -47,12 +47,14 @@ nav{
   color:var(--theme-tan);
   letter-spacing:.04em;
   text-decoration:none;
+  transition: var(--transition-smooth);
 }
+.nav-brand:hover { color: var(--theme-accent-light); }
 
 /* ── HERO ── */
 .hero{
   background:var(--theme-dark);
-  padding:6rem 2rem 5rem;
+  padding:7rem 2rem 6rem;
   position:relative;
   overflow:hidden;
 }
@@ -77,13 +79,13 @@ nav{
 .hero-sub{
   font-size:1.05rem;font-weight:400;
   color:var(--theme-tan);
-  max-width:560px;
+  max-width:600px;
   margin-bottom:1rem;
   line-height:1.6;
 }
 
 /* ── SECTION WRAPPER ── */
-.section{padding:5rem 2rem; max-width: 1300px; margin: 0 auto;}
+.section{padding:5.5rem 2rem; max-width: 1300px; margin: 0 auto;}
 .section-bg-alt { background: var(--theme-tan); }
 .section-label{
   font-size:11px;font-weight:600;
@@ -93,7 +95,7 @@ nav{
 }
 .section-title{
   font-family:'Playfair Display',serif;
-  font-size:2rem;font-weight:700;
+  font-size:2.2rem;font-weight:700;
   color:var(--theme-dark);
   margin-bottom:.4rem;
   line-height:1.2;
@@ -101,26 +103,27 @@ nav{
 .section-divider{
   width:48px;height:3px;
   background:var(--theme-accent);
-  margin-bottom:2.5rem;
+  margin-bottom:3rem;
   border-radius:1px;
 }
 
 /* ── CARD POP-UP ANIMATIONS & INTERACTIONS ── */
 .about-card, .project-card, .skill-group {
-  transition: var(--transition-smooth);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  transition: var(--transition-bounce);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  position: relative;
 }
 .about-card:hover, .project-card:hover, .skill-group:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   background-color: #FFFDFB !important;
-  box-shadow: 0 12px 24px rgba(53, 47, 44, 0.08);
+  box-shadow: 0 15px 30px rgba(53, 47, 44, 0.1);
   border-color: var(--theme-accent-light);
 }
 
 /* ── SCROLL REVEAL ANIMATIONS ── */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(40px);
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .reveal.active {
@@ -129,7 +132,7 @@ nav{
 }
 .reveal-scale {
   opacity: 0;
-  transform: translateY(30px) scale(0.95);
+  transform: translateY(40px) scale(0.92);
   transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .reveal-scale.active {
@@ -142,50 +145,62 @@ nav{
 .delay-3 { transition-delay: 0.3s; }
 .delay-4 { transition-delay: 0.4s; }
 
+/* Continuous floating animation for badges/tags */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
 /* Hero initial animations */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .hero-anim {
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
   opacity: 0;
 }
-.hero-anim-1 { animation-delay: 0.1s; }
-.hero-anim-2 { animation-delay: 0.2s; }
-.hero-anim-3 { animation-delay: 0.3s; }
+.hero-anim-1 { animation-delay: 0.2s; }
+.hero-anim-2 { animation-delay: 0.4s; }
+.hero-anim-3 { animation-delay: 0.6s; }
 
 /* ── ABOUT ── */
 .about-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:1.5rem;
+  gap:2rem;
 }
 .about-card{
   background:#fff;
   border:1px solid rgba(147, 99, 75, 0.15);
   border-left:4px solid var(--theme-accent);
-  padding:1.5rem;
+  padding:2rem;
   border-radius:0 4px 4px 0;
 }
 .about-card h3{
   font-family:'Playfair Display',serif;
-  font-size:1.1rem;font-weight:700;
+  font-size:1.3rem;font-weight:700;
   color:var(--theme-dark);
-  margin-bottom:.5rem;
+  margin-bottom:.8rem;
 }
-.about-card p{font-size:.9rem;color:var(--text-muted);line-height:1.6}
-.about-card .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:.75rem}
+.about-card p{font-size:.95rem;color:var(--text-muted);line-height:1.7}
+.about-card .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.2rem}
 .tag{
-  font-size:11px;font-weight:500;
-  padding:3px 10px;
+  font-size:11px;font-weight:600;
+  padding:4px 12px;
   background:var(--theme-tan);
   color:var(--theme-dark);
   border-radius:2px;
+  transition: var(--transition-smooth);
+}
+.tag:hover {
+  background: var(--theme-accent);
+  color: var(--text-light);
 }
 
 /* ── PROJECTS ── */
-.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
 .project-card{
   background:#fff;
   border:1px solid rgba(147, 99, 75, 0.15);
@@ -194,93 +209,91 @@ nav{
 }
 .project-header{
   background:var(--theme-dark);
-  padding:1.25rem;
+  padding:1.5rem;
   display:flex;align-items:center;justify-content:space-between;
 }
 .project-header h3{
   font-family:'Playfair Display',serif;
-  font-size:1.1rem;font-weight:700;
+  font-size:1.2rem;font-weight:700;
   color:var(--text-light);
 }
 .project-badge{
   font-size:10px;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;
-  padding:3px 10px;
+  padding:4px 12px;
   background:var(--theme-accent);
   color:var(--text-light);
   border-radius:2px;
+  animation: float 4s ease-in-out infinite;
 }
-.project-body{padding:1.25rem}
-.project-body p{font-size:.875rem;color:var(--text-muted);margin-bottom:.75rem;line-height:1.6}
-.project-stack{display:flex;flex-wrap:wrap;gap:5px}
+.project-body{padding:1.5rem}
+.project-body p{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;line-height:1.7}
+.project-stack{display:flex;flex-wrap:wrap;gap:6px}
 .stack-tag{
-  font-size:11px;padding:3px 9px;
+  font-size:11px;padding:4px 10px;
   background:var(--theme-cream);
   border:1px solid var(--theme-tan);
   color:var(--theme-dark);
   border-radius:2px;
-  font-weight:500;
+  font-weight:600;
 }
 
 /* ── SKILLS ── */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .skill-group{
   background:#fff;
   border:1px solid rgba(147, 99, 75, 0.15);
-  padding:1.25rem;border-radius:4px;
+  padding:1.5rem;border-radius:4px;
 }
 .skill-group h3{
-  font-size:.8rem;font-weight:700;
+  font-size:.85rem;font-weight:700;
   letter-spacing:.1em;text-transform:uppercase;
   color:var(--theme-accent);
-  margin-bottom:.75rem;
-  padding-bottom:.5rem;
+  margin-bottom:1rem;
+  padding-bottom:.6rem;
   border-bottom:1px solid var(--theme-tan);
 }
 .skill-pill{
   display:inline-block;
-  font-size:12px;font-weight:500;
-  padding:4px 11px;
+  font-size:12px;font-weight:600;
+  padding:5px 14px;
   background:var(--theme-cream);
   border:1px solid var(--theme-tan);
   color:var(--theme-dark);
   border-radius:2px;
-  margin:3px 2px;
+  margin:4px 3px;
+  transition: var(--transition-smooth);
 }
-
-/* ── TABS ── */
-.tab-container { background: #fff; border: 1px solid rgba(147, 99, 75, 0.15); border-radius: 4px; overflow: hidden; margin-top: 1rem; }
-.tab-header { display: flex; background: var(--theme-tan); border-bottom: 1px solid rgba(147, 99, 75, 0.15); flex-wrap: wrap;}
-.tab-button { flex: 1; padding: 1rem; border: none; background: none; font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: var(--transition-smooth); min-width: 120px;}
-.tab-button:hover { background: rgba(147, 99, 75, 0.05); }
-.tab-button.active { background: #fff; color: var(--theme-accent); border-top: 3px solid var(--theme-accent); }
-.tab-content { display: none; padding: 2rem; }
-.tab-content.active { display: block; animation: fadeInUp 0.4s ease forwards; }
+.skill-pill:hover {
+  background: var(--theme-accent-light);
+  color: var(--theme-dark);
+  border-color: var(--theme-accent-light);
+}
 
 /* ── CONTACT / FOOTER ── */
 footer{
   background:var(--theme-dark);
-  padding:4rem 2rem;
+  padding:5rem 2rem;
   text-align:center;
 }
-footer p{color:var(--theme-tan);font-size:.875rem}
-.contact-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+footer p{color:var(--theme-tan);font-size:.9rem}
+.contact-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2rem;flex-wrap:wrap}
 .contact-link{
   display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.875rem;font-weight:500;
+  font-size:.9rem;font-weight:600;
   color:var(--text-light);
   text-decoration:none;
-  padding:.5rem 1.25rem;
+  padding:.6rem 1.5rem;
   border:1px solid var(--theme-accent);
   border-radius:2px;
-  transition: var(--transition-smooth);
+  transition: var(--transition-bounce);
 }
-.contact-link:hover{background:var(--theme-accent);color:var(--text-light); transform: translateY(-2px);}
+.contact-link:hover{background:var(--theme-accent);color:var(--text-light); transform: translateY(-4px);}
 .footer-bottom{
   border-top:1px solid var(--theme-accent);
-  padding-top:1.25rem;
-  margin-top:1.5rem;
-  font-size:.8rem;color:var(--theme-accent-light);
+  padding-top:1.5rem;
+  margin-top:2rem;
+  font-size:.85rem;color:var(--theme-accent-light);
   display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
 }
 
@@ -290,22 +303,20 @@ footer p{color:var(--theme-tan);font-size:.875rem}
 }
 @media(max-width:640px){
   .about-grid,.projects-grid,.skills-grid{grid-template-columns:1fr}
-  .section{padding:3.5rem 1.25rem}
+  .section{padding:4rem 1.25rem}
 }
-
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
+  <a class="nav-brand" href="#">Ayush Kumar Ojha</a>
 </nav>
 
-
 <section class="hero">
-  <div class="hero-tag hero-anim hero-anim-1">Machine Learning Enthusiast</div>
+  <div class="hero-tag hero-anim hero-anim-1">Computer Science Student</div>
   <h1 class="hero-anim hero-anim-2">Ayush Kumar <span>Ojha</span></h1>
-  <p class="hero-sub hero-anim hero-anim-3">I'm a computer science student who loves exploring data, training machine learning models, and solving complex algorithmic problems.</p>
+  <p class="hero-sub hero-anim hero-anim-3">I'm an aspiring software developer with a strong foundation in data structures, algorithms, and writing efficient code.</p>
 </section>
 
 <div class="section-wrapper">
@@ -316,37 +327,25 @@ footer p{color:var(--theme-tan);font-size:.875rem}
     <div class="about-grid">
       <div class="about-card reveal-scale delay-1" style="grid-column: 1 / -1;">
         <h3>Detailed Background</h3>
-        <p>I am a highly motivated 4th semester Computer Science & Engineering student at KLE Tech. Over the past few semesters, I have developed a strong passion for Machine Learning and Data Science. I enjoy the mathematical foundations—like linear algebra and probability—just as much as the practical coding aspect.</p>
-        <p>My goal is to leverage data to build solutions that are not only accurate but also interpretable and scalable. I actively participate in hackathons, work on open-source ML libraries, and continually read up on the latest advancements in AI.</p>
+        <p>Hi, I'm Ayush Kumar Ojha, currently majoring in Computer Science. I chose this field because computers have always fascinated me, and I wanted to dive deeper into how they work. Coding started as a fun activity with my friends, and it quickly grew into a true passion.</p>
+        <p style="margin-top: 0.8rem;">I'm proficient in Python, C, and C++, and have built a few exciting projects along the way. As a hostelite, I love spending my free time hanging out with friends and watching movies. Moving forward, I am eager to expand my coding knowledge, master Data Structures and Algorithms, and further explore the tech industry.</p>
       </div>
       <div class="about-card reveal-scale delay-1">
-        <h3>Background</h3>
-        <p>I spend most of my time learning how to build intelligent systems and writing clean Python code.</p>
-      </div>
-      <div class="about-card reveal-scale delay-2">
-        <h3>Interests</h3>
-        <p>When I'm not coding, I'm usually deep diving into new ML papers, messing around with datasets, or gaming. I love finding patterns in data that aren't obvious at first glance.</p>
+        <h3>Interests & Hobbies</h3>
+        <p>Beyond the screen, I enjoy campus life, collaborating on code with my peers, and unwinding with good movies. I love the balance between intense logic problems and hanging out with friends.</p>
         <div class="tag-row">
-          <span class="tag">Machine Learning</span>
-          <span class="tag">Data Science</span>
-          <span class="tag">AI</span>
+          <span class="tag">Movies</span>
+          <span class="tag">Gaming</span>
+          <span class="tag">Collaboration</span>
         </div>
       </div>
-      <div class="about-card reveal-scale delay-1">
+      <div class="about-card reveal-scale delay-2">
         <h3>Current Focus</h3>
-        <p>Right now, I'm building end-to-end ML pipelines—from data preprocessing to model deployment. It's been a great way to get hands-on with PyTorch and Scikit-learn.</p>
+        <p>Right now, I am heavily focused on strengthening my core logic through Data Structures and Algorithms (DSA), building robust web applications, and participating in hackathons.</p>
         <div class="tag-row">
-          <span class="tag">PyTorch</span>
-          <span class="tag">Pipelines</span>
-          <span class="tag">Modeling</span>
-        </div>
-      </div>
-      <div class="about-card reveal-scale delay-2">
-        <h3>Academics</h3>
-        <p>Taking what I learn in classes like Statistics, Linear Algebra, and Machine Learning and actually applying those concepts to my personal projects.</p>
-        <div class="tag-row">
-          <span class="tag">Linear Algebra</span>
-          <span class="tag">Statistics</span>
+          <span class="tag">DSA</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">Web Dev</span>
         </div>
       </div>
     </div>
@@ -360,25 +359,23 @@ footer p{color:var(--theme-tan);font-size:.875rem}
     <div class="section-divider reveal"></div>
     <div class="skills-grid">
       <div class="skill-group reveal-scale delay-1">
-        <h3>Languages</h3>
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">R</span>
+        <h3>Core Languages</h3>
+        <span class="skill-pill">C</span>
         <span class="skill-pill">C++</span>
-        <span class="skill-pill">SQL</span>
+        <span class="skill-pill">Python</span>
       </div>
       <div class="skill-group reveal-scale delay-2">
-        <h3>ML Frameworks</h3>
+        <h3>Web & Databases</h3>
+        <span class="skill-pill">HTML5</span>
+        <span class="skill-pill">CSS3</span>
+        <span class="skill-pill">SQL</span>
+      </div>
+      <div class="skill-group reveal-scale delay-3">
+        <h3>Machine Learning</h3>
         <span class="skill-pill">TensorFlow</span>
         <span class="skill-pill">PyTorch</span>
         <span class="skill-pill">Scikit-learn</span>
-        <span class="skill-pill">Keras</span>
-      </div>
-      <div class="skill-group reveal-scale delay-3">
-        <h3>Data Tools</h3>
         <span class="skill-pill">Pandas</span>
-        <span class="skill-pill">NumPy</span>
-        <span class="skill-pill">Matplotlib</span>
-        <span class="skill-pill">Jupyter</span>
       </div>
     </div>
   </section>
@@ -397,7 +394,7 @@ footer p{color:var(--theme-tan);font-size:.875rem}
           <span class="project-badge">Regression</span>
         </div>
         <div class="project-body">
-          <p>An ML model built to predict housing prices based on various features. I handled missing data, engineered new features, and fine-tuned a Random Forest regressor.</p>
+          <p>An ML model built to predict housing prices based on various structural and locational features. Handled missing data, engineered new features, and fine-tuned a regressor for optimal accuracy.</p>
           <div class="project-stack">
             <span class="stack-tag">Python</span>
             <span class="stack-tag">Scikit-learn</span>
@@ -408,15 +405,15 @@ footer p{color:var(--theme-tan);font-size:.875rem}
 
       <div class="project-card reveal-scale delay-2">
         <div class="project-header">
-          <h3>Image Classifier</h3>
-          <span class="project-badge">Deep Learning</span>
+          <h3>Two Moons Boundary</h3>
+          <span class="project-badge">Neural Nets</span>
         </div>
         <div class="project-body">
-          <p>Built a Convolutional Neural Network (CNN) to classify images into different categories. It was a great dive into deep learning architectures and tensor operations.</p>
+          <p>Built a multi-layer perceptron (MLP) with hidden layers to mathematically plot and analyze the non-linear decision boundary for the complex Two Moons dataset.</p>
           <div class="project-stack">
+            <span class="stack-tag">Python</span>
             <span class="stack-tag">PyTorch</span>
-            <span class="stack-tag">NumPy</span>
-            <span class="stack-tag">CNN</span>
+            <span class="stack-tag">Matplotlib</span>
           </div>
         </div>
       </div>
@@ -425,29 +422,38 @@ footer p{color:var(--theme-tan);font-size:.875rem}
   </section>
 </div>
 
-
 <footer id="contact" class="reveal">
-  <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text-light);margin-bottom:1rem">Let's Connect</p>
-  <p style="margin-bottom:1.5rem; color: var(--theme-accent-light)">Ayush Kumar Ojha · Computer Science & Engineering</p>
+  <p style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--text-light);margin-bottom:1rem">Let's Connect</p>
+  <p style="margin-bottom:2rem; color: var(--theme-accent-light)">Ayush Kumar Ojha · Computer Science Student</p>
   <div class="contact-links">
     <a class="contact-link" href="https://github.com/Ayush-Kumar-ojha11" target="_blank">GitHub</a>
     <a class="contact-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=01fe24bcs211@kletech.ac.in" target="_blank">Email</a>
   </div>
   <div class="footer-bottom">
-    <span>Ayush Kumar Ojha · Machine Learning Portfolio</span>
+    <span>Ayush Kumar Ojha · Personal Portfolio</span>
   </div>
 </footer>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const reveals = document.querySelectorAll(".reveal, .reveal-scale");
-    const observer = new IntersectionObserver((entries) => {
+    
+    const observerOptions = {
+      root: null,
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("active");
+          // Optional: Unobserve after animating so it only animates once per load
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, observerOptions);
+
     reveals.forEach((reveal) => observer.observe(reveal));
   });
 </script>
