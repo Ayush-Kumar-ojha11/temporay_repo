@@ -1,353 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ayush Ojha — ML Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sleep Sense - Introduction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+    <style>
+        /* --- Color Palette & Fonts (Expense Splitter Theme) --- */
+        :root {
+            --primary-brown: #896a55; 
+            --dark-charcoal: #322f2c; 
+            --light-beige: #f6f3ed; 
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --theme-dark: #352F2C;       
-  --theme-cream: #FBF9F6;      
-  --theme-tan: #EFEBE4;        
-  --theme-accent: #93634B;     
-  --theme-accent-light: #D4BCAE;
-  
-  --text-dark: #25201E;
-  --text-muted: #6B625E;
-  --text-light: #FBF9F6;
-  
-  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-html{scroll-behavior:smooth; height: 100%; overflow-x: hidden;}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--theme-cream);
-  color:var(--text-dark);
-  font-size:15px;
-  line-height:1.7;
-  overflow-x: hidden;
-  width: 100%;
-}
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
 
-/* ── NAV ── */
-nav{
-  position:sticky;top:0;z-index:100;
-  background:var(--theme-dark);
-  padding:0 2rem;
-  display:flex;align-items:center;justify-content:space-between;
-  height:60px;
-  border-bottom:1px solid var(--theme-accent);
-}
-.nav-brand{
-  font-family:'Playfair Display',serif;
-  font-size:1.2rem;font-weight:700;
-  color:var(--theme-tan);
-  letter-spacing:.04em;
-  text-decoration:none;
-}
+        body {
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
 
-/* ── HERO ── */
-.hero{
-  background:var(--theme-dark);
-  padding:6rem 2rem 5rem;
-  position:relative;
-  overflow:hidden;
-}
-.hero-tag{
-  display:inline-block;
-  font-size:11px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--theme-accent-light);
-  border:1px solid var(--theme-accent);
-  padding:4px 14px;border-radius:2px;
-  margin-bottom:1.2rem;
-}
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.2rem,5vw,3.6rem);
-  font-weight:900;
-  color:var(--text-light);
-  line-height:1.1;
-  margin-bottom:.6rem;
-}
-.hero h1 span{color:var(--theme-accent-light)}
-.hero-sub{
-  font-size:1.05rem;font-weight:400;
-  color:var(--theme-tan);
-  max-width:560px;
-  margin-bottom:1rem;
-  line-height:1.6;
-}
+        /* --- Continuous & Keyframe Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* ── SECTION WRAPPER ── */
-.section{padding:5rem 2rem; max-width: 1300px; margin: 0 auto;}
-.section-bg-alt { background: var(--theme-tan); }
-.section-label{
-  font-size:11px;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
-  color:var(--theme-accent);
-  margin-bottom:.5rem;
-}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:2rem;font-weight:700;
-  color:var(--theme-dark);
-  margin-bottom:.4rem;
-  line-height:1.2;
-}
-.section-divider{
-  width:48px;height:3px;
-  background:var(--theme-accent);
-  margin-bottom:2.5rem;
-  border-radius:1px;
-}
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
-/* ── CARD POP-UP ANIMATIONS & INTERACTIONS ── */
-.about-card, .project-card, .skill-group {
-  transition: var(--transition-smooth);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-}
-.about-card:hover, .project-card:hover, .skill-group:hover {
-  transform: translateY(-6px);
-  background-color: #FFFDFB !important;
-  box-shadow: 0 12px 24px rgba(53, 47, 44, 0.08);
-  border-color: var(--theme-accent-light);
-}
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
-/* ── SCROLL REVEAL ANIMATIONS ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-scale {
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.reveal-scale.active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-/* Delay classes for grid items */
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+            50% { text-shadow: 0 0 25px rgba(137, 106, 85, 0.7); transform: scale(1.02); }
+            100% { text-shadow: 0 0 10px rgba(137, 106, 85, 0.2); }
+        }
 
-/* Hero initial animations */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.hero-anim {
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-  opacity: 0;
-}
-.hero-anim-1 { animation-delay: 0.1s; }
-.hero-anim-2 { animation-delay: 0.2s; }
-.hero-anim-3 { animation-delay: 0.3s; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
 
-/* ── ABOUT ── */
-.about-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1.5rem;
-}
-.about-card{
-  background:#fff;
-  border:1px solid rgba(147, 99, 75, 0.15);
-  border-left:4px solid var(--theme-accent);
-  padding:1.5rem;
-  border-radius:0 4px 4px 0;
-}
-.about-card h3{
-  font-family:'Playfair Display',serif;
-  font-size:1.1rem;font-weight:700;
-  color:var(--theme-dark);
-  margin-bottom:.5rem;
-}
-.about-card p{font-size:.9rem;color:var(--text-muted);line-height:1.6}
-.about-card .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:.75rem}
-.tag{
-  font-size:11px;font-weight:500;
-  padding:3px 10px;
-  background:var(--theme-tan);
-  color:var(--theme-dark);
-  border-radius:2px;
-}
+        .animate-up { animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
 
-/* ── PROJECTS ── */
-.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.project-card{
-  background:#fff;
-  border:1px solid rgba(147, 99, 75, 0.15);
-  border-radius:4px;
-  overflow:hidden;
-}
-.project-header{
-  background:var(--theme-dark);
-  padding:1.25rem;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.project-header h3{
-  font-family:'Playfair Display',serif;
-  font-size:1.1rem;font-weight:700;
-  color:var(--text-light);
-}
-.project-badge{
-  font-size:10px;font-weight:700;
-  letter-spacing:.08em;text-transform:uppercase;
-  padding:3px 10px;
-  background:var(--theme-accent);
-  color:var(--text-light);
-  border-radius:2px;
-}
-.project-body{padding:1.25rem}
-.project-body p{font-size:.875rem;color:var(--text-muted);margin-bottom:.75rem;line-height:1.6}
-.project-stack{display:flex;flex-wrap:wrap;gap:5px}
-.stack-tag{
-  font-size:11px;padding:3px 9px;
-  background:var(--theme-cream);
-  border:1px solid var(--theme-tan);
-  color:var(--theme-dark);
-  border-radius:2px;
-  font-weight:500;
-}
+        /* Scroll Reveal Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-bounce);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            transition: var(--transition-bounce);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
 
-/* ── SKILLS ── */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.skill-group{
-  background:#fff;
-  border:1px solid rgba(147, 99, 75, 0.15);
-  padding:1.25rem;border-radius:4px;
-}
-.skill-group h3{
-  font-size:.8rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-  color:var(--theme-accent);
-  margin-bottom:.75rem;
-  padding-bottom:.5rem;
-  border-bottom:1px solid var(--theme-tan);
-}
-.skill-pill{
-  display:inline-block;
-  font-size:12px;font-weight:500;
-  padding:4px 11px;
-  background:var(--theme-cream);
-  border:1px solid var(--theme-tan);
-  color:var(--theme-dark);
-  border-radius:2px;
-  margin:3px 2px;
-}
+        /* --- Navigation --- */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--dark-charcoal);
+            padding: 15px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 2px solid var(--primary-brown);
+        }
+        .nav-brand {
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--light-beige);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+        .nav-brand:hover { color: var(--primary-brown); }
 
-/* ── TABS ── */
-.tab-container { background: #fff; border: 1px solid rgba(147, 99, 75, 0.15); border-radius: 4px; overflow: hidden; margin-top: 1rem; }
-.tab-header { display: flex; background: var(--theme-tan); border-bottom: 1px solid rgba(147, 99, 75, 0.15); flex-wrap: wrap;}
-.tab-button { flex: 1; padding: 1rem; border: none; background: none; font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: var(--transition-smooth); min-width: 120px;}
-.tab-button:hover { background: rgba(147, 99, 75, 0.05); }
-.tab-button.active { background: #fff; color: var(--theme-accent); border-top: 3px solid var(--theme-accent); }
-.tab-content { display: none; padding: 2rem; }
-.tab-content.active { display: block; animation: fadeInUp 0.4s ease forwards; }
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--dark-charcoal);
+            color: var(--text-light);
+            padding: 140px 20px 120px;
+            text-align: center;
+            border-bottom: 15px solid var(--primary-brown);
+            position: relative;
+            overflow: hidden;
+        }
 
-/* ── CONTACT / FOOTER ── */
-footer{
-  background:var(--theme-dark);
-  padding:4rem 2rem;
-  text-align:center;
-}
-footer p{color:var(--theme-tan);font-size:.875rem}
-.contact-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.contact-link{
-  display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.875rem;font-weight:500;
-  color:var(--text-light);
-  text-decoration:none;
-  padding:.5rem 1.25rem;
-  border:1px solid var(--theme-accent);
-  border-radius:2px;
-  transition: var(--transition-smooth);
-}
-.contact-link:hover{background:var(--theme-accent);color:var(--text-light); transform: translateY(-2px);}
-.footer-bottom{
-  border-top:1px solid var(--theme-accent);
-  padding-top:1.25rem;
-  margin-top:1.5rem;
-  font-size:.8rem;color:var(--theme-accent-light);
-  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
-}
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(137,106,85,0.1) 0%, transparent 60%);
+            animation: pulseGlow 6s infinite alternate;
+            z-index: 0;
+        }
 
-/* ── RESPONSIVE ── */
-@media(max-width:960px){
-  .skills-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:640px){
-  .about-grid,.projects-grid,.skills-grid{grid-template-columns:1fr}
-  .section{padding:3.5rem 1.25rem}
-}
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
 
-</style>
+        .hero h2 {
+            font-weight: 300;
+            color: var(--primary-brown);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .hero h1 span {
+            color: var(--primary-brown);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            max-width: 650px;
+            margin: 0 auto;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Content Sections --- */
+        .section {
+            padding: 100px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 900;
+            position: relative;
+        }
+
+        .section-alt .section-title {
+            color: var(--text-light);
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-brown);
+            display: block;
+            margin: 15px auto 0;
+            transition: width 0.6s ease;
+        }
+
+        .section-alt .section-title::after {
+            background-color: var(--dark-charcoal);
+        }
+
+        .section-title:hover::after {
+            width: 180px;
+        }
+
+        .intro-text {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .section-alt .intro-text {
+            color: var(--light-beige);
+        }
+
+        /* --- Focus Cards --- */
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .focus-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-top: 6px solid var(--primary-brown);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            transition: var(--transition-bounce);
+            position: relative;
+        }
+
+        .focus-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(50, 47, 44, 0.15);
+        }
+
+        .focus-card h3 {
+            color: var(--dark-charcoal);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .focus-card h3 span {
+            display: inline-block;
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .focus-card p {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark-charcoal);
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--light-beige);
+        }
+        footer p { opacity: 0.8; font-size: 0.95rem; letter-spacing: 1px; }
+
+    </style>
 </head>
 <body>
 
-<nav>
-  <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
-</nav>
+    <nav>
+        <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
+    </nav>
 
+    <header class="hero">
+        <div class="hero-content animate-up">
+            <h2>Machine Learning Project</h2>
+            <h1>Sleep <span>Sense</span></h1>
+            <p class="animate-up delay-1">Because your sleep has a story.</p>
+        </div>
+    </header>
 
-<section class="hero">
-  <div class="hero-tag hero-anim hero-anim-1">Coursework</div>
-  <h1 class="hero-anim hero-anim-2">Assignment <span>Interest</span></h1>
-</section>
-<div class="section-wrapper">
-  <section class="section">
-    <div class="section-title reveal">Two Moons Operation</div>
-    <div class="section-divider reveal"></div>
-    <div class="about-grid">
-      <div class="about-card reveal-scale delay-1">
-        <h3>1. Computational Aspect</h3>
-        <p>The "Two Moons" dataset is a classic non-linear classification problem. On the computational side, I implemented multi-layer perceptrons (MLPs) and Kernel SVMs to effectively separate the intertwined data points. This involved optimizing the cost function using gradient descent algorithms and tuning the learning rate for convergence.</p>
-      </div>
-      <div class="about-card reveal-scale delay-2">
-        <h3>2. Analytical Aspect</h3>
-        <p>Analytically, the challenge was to understand why linear models fail on this dataset. By mapping the data to a higher-dimensional space using the kernel trick, or by using the non-linear activation functions in a neural network, the decision boundary becomes linear in the transformed space. I analyzed the impact of different hyperparameters (like tree depth or kernel bandwidth) on the decision boundary's shape.</p>
-      </div>
-    </div>
-  </section>
-</div>
+    <section class="section">
+        <h2 class="section-title reveal">The Problem Statement</h2>
+        <p class="intro-text reveal-scale delay-1">
+            Given a person's mobile usage and lifestyle data, our objective is to predict their stress level score (on a scale of 1–10) using advanced regression models like Linear Regression and Decision Tree Regressors[cite: 10].
+        </p>
 
+        <div class="focus-grid">
+            <div class="focus-card reveal-left delay-1">
+                <h3><span>The Context</span> Rising Stress Levels</h3>
+                <p>Excessive mobile screen time is increasingly linked to rising stress levels, disrupted sleep patterns, and reduced mental well-being across all age groups[cite: 10].</p>
+            </div>
 
-<footer id="contact" class="reveal">
-  <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text-light);margin-bottom:1rem">Let's Connect</p>
-  <p style="margin-bottom:1.5rem; color: var(--theme-accent-light)">Ayush Kumar Ojha · Computer Science & Engineering</p>
-  <div class="contact-links">
-    <a class="contact-link" href="https://github.com/Ayush-Kumar-ojha11" target="_blank">GitHub</a>
-    <a class="contact-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=01fe24bcs211@kletech.ac.in" target="_blank">Email</a>
-  </div>
-  <div class="footer-bottom">
-    <span>Ayush Kumar Ojha · Machine Learning Portfolio</span>
-  </div>
-</footer>
+            <div class="focus-card reveal-scale delay-2">
+                <h3><span>The Approach</span> Predictive Modeling</h3>
+                <p>This project applies regression-based machine learning to predict a person's stress level score directly from their mobile usage and lifestyle habits[cite: 10].</p>
+            </div>
+        </div>
+    </section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const reveals = document.querySelectorAll(".reveal, .reveal-scale");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("active");
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach((reveal) => observer.observe(reveal));
-  });
-</script>
+    <section class="section section-alt">
+        <h2 class="section-title reveal">Why This Matters</h2>
+        <p class="intro-text reveal delay-1">
+            Understanding the non-linear patterns between our digital habits and our physical well-being is crucial for developing healthier lifestyles[cite: 10].
+        </p>
+
+        <div class="focus-grid">
+            <div class="focus-card reveal delay-1">
+                <h3><span>01</span> Surging Screen Time</h3>
+                <p>Mobile screen time has surged dramatically — average usage now frequently exceeds 6–7 hours daily[cite: 10].</p>
+            </div>
+
+            <div class="focus-card reveal delay-2">
+                <h3><span>02</span> Physiological Impact</h3>
+                <p>High screen exposure actively disrupts natural sleep cycles and elevates cortisol, the body's primary stress hormone[cite: 10].</p>
+            </div>
+
+            <div class="focus-card reveal delay-3">
+                <h3><span>03</span> AI-Driven Wellness</h3>
+                <p>Machine Learning models can quantify stress risk directly from daily habits — eliminating the immediate need for clinical tests[cite: 10].</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Ayush Kumar Ojha · Machine Learning Portfolio</p>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-scale");
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
 </body>
 </html>
