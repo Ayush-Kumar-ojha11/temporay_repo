@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Resources</title>
+    <style>
+        /* --- Typography & Colors --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+        :root {
+            /* Exact Theme Colors */
+            --bg-color: #faf8f5; /* Clean overall background */
+            --card-bg: #efede5; /* Soft beige for cards from reference */
+            --primary-brown: #a67c52; /* Warm brown active tab */
+            --primary-brown-hover: #8f6a45;
+            --dark-charcoal: #211f1e; /* Almost black for buttons/text */
+            --text-main: #333333;
+            --text-muted: #666666;
+            --border-color: #dcd7ce;
+            
+            /* Spacing & Effects */
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.08);
+            --radius-pill: 50px;
+            --radius-card: 6px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        /* --- Section Header --- */
+        .resource-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 50px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* --- Navigation Tabs --- */
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 10px 24px;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary-brown);
+            color: var(--primary-brown);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-brown);
+            color: #ffffff;
+            border-color: var(--primary-brown);
+            box-shadow: 0 4px 10px rgba(166, 124, 82, 0.3);
+        }
+
+        /* --- Content Panels --- */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Resource Grid & Cards --- */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        .resource-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-card);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+            opacity: 0; /* For scroll reveal */
+            transform: translateY(20px); /* For scroll reveal */
+        }
+
+        .resource-card.reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(166, 124, 82, 0.2);
+        }
+
+        .resource-card h3 {
+            font-size: 1.3rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .resource-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        /* --- Buttons --- */
+        .card-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        /* View Button (Dark Solid) */
+        .btn-view {
+            background-color: var(--dark-charcoal);
+            color: #ffffff;
+            border: 1px solid var(--dark-charcoal);
+        }
+
+        .btn-view:hover {
+            background-color: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Download Button (Light Outline) */
+        .btn-download {
+            background-color: transparent;
+            color: var(--primary-brown);
+            border: 1px solid rgba(166, 124, 82, 0.4);
+        }
+
+        .btn-download:hover {
+            background-color: rgba(166, 124, 82, 0.05);
+            border-color: var(--primary-brown);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .resource-section {
+                padding: 30px 20px;
+            }
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+            .tabs-container {
+                gap: 8px;
+            }
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            .card-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="resource-section">
+        <div class="section-header">
+            <h2>Course Materials</h2>
+            <p>A curated repository of theoretical notes, laboratory implementations, and academic presentations.</p>
+        </div>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" data-target="notes">Notes</button>
+            <button class="tab-btn" data-target="assignments">Assignments</button>
+            <button class="tab-btn" data-target="lab-programs">Lab Programs</button>
+            <button class="tab-btn" data-target="project-report">Project Report</button>
+            <button class="tab-btn" data-target="slides">Presentation Slides</button>
+        </div>
+
+        <div id="notes" class="tab-content active">
+            <div class="resource-grid">
+                
+                <div class="resource-card reveal">
+                    <h3>Machine Learning Foundations</h3>
+                    <p>Comprehensive theoretical notes on optimization, hypothesis spaces, and gradient descent. (.pdf format)</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/USERNAME/REPO/blob/main/files/ml_foundations.pdf" target="_blank" class="action-btn btn-view">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            View
+                        </a>
+                        <a href="https://raw.githubusercontent.com/USERNAME/REPO/main/files/ml_foundations.pdf" download class="action-btn btn-download">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card reveal">
+                    <h3>DBMS Scheduling Algorithms</h3>
+                    <p>Detailed breakdown of transaction scheduling and timestamp ordering (S1 & S2 analysis). (.pdf format)</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/USERNAME/REPO/blob/main/files/dbms_scheduling.pdf" target="_blank" class="action-btn btn-view">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            View
+                        </a>
+                        <a href="https://raw.githubusercontent.com/USERNAME/REPO/main/files/dbms_scheduling.pdf" download class="action-btn btn-download">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card reveal">
+                    <h3>C++ Advanced Concepts</h3>
+                    <p>Handwritten/typed notes covering memory management, pointer arithmetic, and logic debugging. (.docx format)</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/USERNAME/REPO/blob/main/files/cpp_notes.docx" target="_blank" class="action-btn btn-view">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            View
+                        </a>
+                        <a href="https://raw.githubusercontent.com/USERNAME/REPO/main/files/cpp_notes.docx" download class="action-btn btn-download">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="assignments" class="tab-content">
+            <div class="resource-grid">
+                <div class="resource-card reveal">
+                    <h3>C++ Logic Error Debugging</h3>
+                    <p>Assignment focused on variable initialization tracking (specifically loop logic `for int i = 0 + k`). (.cpp format)</p>
+                    <div class="card-actions">
+                        <a href="#" class="action-btn btn-view"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View</a>
+                        <a href="#" class="action-btn btn-download"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="lab-programs" class="tab-content">
+            <div class="resource-grid">
+                <div class="resource-card reveal">
+                    <h3>Unsupervised Learning Lab</h3>
+                    <p>K-Means clustering and DBSCAN noise filtering implementation using NumPy. (.ipynb format)</p>
+                    <div class="card-actions">
+                        <a href="#" class="action-btn btn-view"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View</a>
+                        <a href="#" class="action-btn btn-download"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="project-report" class="tab-content">
+            <div class="resource-grid">
+                <div class="resource-card reveal">
+                    <h3>IMDb Sentiment Engine</h3>
+                    <p>Final project documentation detailing regularized Perceptron tuning against a Naive Bayes baseline. (.pdf format)</p>
+                    <div class="card-actions">
+                        <a href="#" class="action-btn btn-view"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View</a>
+                        <a href="#" class="action-btn btn-download"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="slides" class="tab-content">
+            <div class="resource-grid">
+                <div class="resource-card reveal">
+                    <h3>Outcome Attainment Presentation</h3>
+                    <p>Slides mapping theoretical knowledge and laboratory execution directly to CO metrics. (.pptx format)</p>
+                    <div class="card-actions">
+                        <a href="#" class="action-btn btn-view"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View</a>
+                        <a href="#" class="action-btn btn-download"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab Switching Logic
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    button.classList.add('active');
+
+                    // Show corresponding content
+                    const targetId = button.getAttribute('data-target');
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                        // Re-trigger scroll reveal for newly visible items
+                        triggerReveals();
+                    }
+                });
+            });
+
+            // Scroll Reveal Animation Logic
+            const triggerReveals = () => {
+                const reveals = document.querySelectorAll('.reveal');
+                reveals.forEach((element, index) => {
+                    // Stagger the animation slightly for cards in the same view
+                    setTimeout(() => {
+                        element.classList.add('reveal-active');
+                    }, index * 100);
+                });
+            };
+
+            // Intersection Observer for scroll detection
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                        // Optional: Stop observing once revealed
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            // Observe all elements with .reveal class
+            document.querySelectorAll('.reveal').forEach((el) => {
+                observer.observe(el);
+            });
+
+            // Initial trigger for items already in viewport on load
+            triggerReveals();
+        });
+    </script>
+</body>
+</html>
