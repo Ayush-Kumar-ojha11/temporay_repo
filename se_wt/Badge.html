@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Certifications — Ayush Ojha</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --theme-dark: #352F2C;       
+  --theme-cream: #FBF9F6;      
+  --theme-tan: #EFEBE4;        
+  --theme-accent: #93634B;     
+  --theme-accent-light: #D4BCAE;
+  
+  --text-dark: #25201E;
+  --text-muted: #6B625E;
+  --text-light: #FBF9F6;
+  
+  --transition-smooth: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+html{scroll-behavior:smooth; height: 100%; overflow-x: hidden;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--theme-cream);
+  color:var(--text-dark);
+  font-size:15px; 
+  line-height:1.6;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ── GLOBAL ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-load {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--theme-dark);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:center;
+  height:70px;
+  border-bottom:1px solid var(--theme-accent);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.nav-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:var(--theme-tan);
+  letter-spacing:.04em;
+  text-decoration:none;
+  transition: var(--transition-smooth);
+}
+.nav-brand:hover { color: #fff; transform: scale(1.05); }
+
+/* ── HERO ── */
+.hero{
+  background: linear-gradient(-45deg, #352F2C, #25201E, #4A3A32, #2B211D);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  padding: 5rem 2rem 4rem;
+  position:relative;
+  text-align:center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:900;
+  color:var(--text-light);
+  line-height:1.2;
+  margin-bottom:1rem;
+}
+.hero p{
+  color:var(--theme-tan);
+  font-size:1.1rem;
+  max-width:700px;
+  margin:0 auto;
+}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:4rem 2rem; max-width: 1000px; margin: 0 auto;}
+
+/* ── CERTIFICATE DISPLAY ── */
+.cert-showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.cert-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--theme-tan);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* Brown Accent Bar on the Left */
+.cert-card::before {
+  content: '';
+  position: absolute;
+  top: 1.5rem; bottom: 1.5rem; left: 0;
+  width: 6px; 
+  background-color: var(--theme-accent); 
+  border-radius: 0 4px 4px 0;
+  transition: transform 0.4s ease;
+}
+
+/* Hover Effects */
+.cert-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(147, 99, 75, 0.15);
+  border-color: var(--theme-accent-light);
+}
+
+.cert-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid var(--theme-tan);
+}
+
+.cert-details {
+  margin-top: 2rem;
+  text-align: center;
+}
+.cert-details h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--theme-dark);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.cert-details p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* ── FOOTER ── */
+footer{ background:var(--theme-dark); padding:3rem 2rem; text-align:center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem;}
+.footer-bottom{ color:var(--theme-accent-light); font-size:.9rem; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand animate-load" href="index.html">Ayush Kumar Ojha</a>
+</nav>
+
+<section class="hero">
+  <h1 class="animate-load delay-1">Certifications</h1>
+  <p class="animate-load delay-2">Showcasing formal recognition of specialized skills and technical competencies.</p>
+</section>
+
+<div class="section">
+  
+  <div class="cert-showcase animate-load delay-3">
+    <div class="cert-details">
+      <h2>IBM DevOps Basics for Everyone</h2>
+      <p>Issued by edX & IBM</p>
+    </div>
+    
+    <div class="cert-card" style="margin-top: 2rem;">
+      <!-- Referencing the exact file name provided -->
+      <img src="badge.png" alt="Verified Certificate - Ayush Kumar Ojha" class="cert-image" />
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span>Ayush Kumar Ojha · Certifications Portfolio</span>
+  </div>
+</footer>
+
+</body>
+</html>
