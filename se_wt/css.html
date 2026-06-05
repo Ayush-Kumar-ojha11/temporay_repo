@@ -374,10 +374,16 @@ nav{
   color: #F8F8F2;
   line-height: 1.6;
 }
+
+/* Syntax Highlighting Colors */
 .token-tag { color: #FF79C6; }
 .token-attr { color: #50FA7B; }
 .token-string { color: #F1FA8C; }
 .token-text { color: #8BE9FD; }
+.token-keyword { color: #FF79C6; }
+.token-function { color: #50FA7B; }
+.token-variable { color: #8BE9FD; }
+.token-comment { color: #6272A4; }
 
 /* Output Side */
 .output-window {
@@ -400,7 +406,7 @@ nav{
   padding-bottom: 0.8rem;
 }
 
-/* HTML Base styles for output renders */
+/* Base styles for output renders */
 .render-article h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--theme-dark); font-family: 'Playfair Display', serif;}
 .render-article p { font-size: 1rem; margin-bottom: 1rem; color: var(--text-muted); }
 .render-article hr { border: 0; border-top: 1px solid var(--theme-tan); margin: 1.5rem 0; }
@@ -416,7 +422,7 @@ nav{
 .render-table tr { transition: background 0.3s ease; }
 .render-table tr:hover td { background: var(--theme-cream); }
 
-/* CSS Tab Base styles for output renders */
+/* Centered output content */
 .output-content-centered {
   flex-grow: 1;
   display: flex;
@@ -426,61 +432,29 @@ nav{
   border-radius: 8px;
   padding: 1.5rem;
   border: 1px solid var(--theme-tan);
+  flex-direction: column;
+  gap: 1rem;
 }
-.demo-flex-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  gap: 10px;
-}
-.demo-flex-item {
-  background: var(--theme-accent);
-  color: #fff;
-  padding: 15px 20px;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-align: center;
-  flex: 1;
-}
-.demo-grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 100%;
-}
-.demo-grid-item {
-  background: var(--theme-dark);
-  color: var(--theme-tan);
-  padding: 15px;
-  border-radius: 4px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 0.9rem;
-}
-.demo-grid-item:nth-child(1) { 
-  grid-column: span 2; 
-  background: var(--theme-accent); 
-  color: white;
-}
-.demo-hover-btn {
-  background: var(--theme-dark);
-  color: #fff;
-  border: none;
-  padding: 15px 30px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.demo-hover-btn:hover {
-  transform: translateY(-8px) scale(1.05);
-  background: var(--theme-accent);
-  box-shadow: 0 15px 25px rgba(147, 99, 75, 0.3);
-}
+
+/* CSS Demos */
+.demo-flex-container { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px; }
+.demo-flex-item { background: var(--theme-accent); color: #fff; padding: 15px 20px; border-radius: 4px; font-weight: 700; font-size: 0.9rem; text-align: center; flex: 1; }
+.demo-grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+.demo-grid-item { background: var(--theme-dark); color: var(--theme-tan); padding: 15px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+.demo-grid-item:nth-child(1) { grid-column: span 2; background: var(--theme-accent); color: white;}
+.demo-hover-btn { background: var(--theme-dark); color: #fff; border: none; padding: 15px 30px; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.demo-hover-btn:hover { transform: translateY(-8px) scale(1.05); background: var(--theme-accent); box-shadow: 0 15px 25px rgba(147, 99, 75, 0.3); }
+
+/* JS Demos */
+.js-dom-box { padding: 2rem; border-radius: 8px; font-weight: bold; transition: all 0.3s; background: #fff; border: 2px solid var(--theme-tan); color: var(--theme-dark); width: 100%; text-align: center; margin-bottom: 1rem;}
+.js-dom-box.dark-mode { background: #282A36; color: #F8F8F2; border-color: #282A36;}
+.js-profile-card { background: #fff; border: 1px solid var(--theme-tan); padding: 1.5rem; border-radius: 8px; width: 100%; text-align: center; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);}
+.js-profile-card h4 { margin-bottom: 0.2rem; color: var(--theme-dark); font-size: 1.2rem;}
+.js-profile-card p { color: var(--theme-accent); font-size: 0.9rem; font-weight: bold; margin: 0;}
+.js-counter-wrapper { display: flex; align-items: center; gap: 1rem; background: #fff; padding: 1rem; border-radius: 8px; border: 1px solid var(--theme-tan);}
+.js-counter-val { font-size: 2rem; font-weight: 900; color: var(--theme-dark); min-width: 50px; text-align: center;}
+.js-btn { background: var(--theme-accent); color: white; border: none; width: 40px; height: 40px; border-radius: 4px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: transform 0.2s;}
+.js-btn:hover { transform: scale(1.1); background: var(--theme-dark);}
 
 /* Placeholder for empty tabs */
 .empty-tab-state {
@@ -839,10 +813,116 @@ footer{
         </div>
 
         <div id="wt-js" class="wt-subpanel">
-          <div class="empty-tab-state">
-            <h3>JavaScript Outcomes</h3>
-            <p>Your DOM manipulation and vanilla JS logic examples will go here.</p>
+          
+          <div class="demo-section reveal">
+            <div class="demo-header">
+              <h2>01. DOM Manipulation & Events</h2>
+              <p>Interacting with the Document Object Model to dynamically change content and styles based on user actions.</p>
+            </div>
+            <div class="interactive-demo">
+              <div class="code-window">
+                <div class="window-header">
+                  <div class="window-dots">
+                    <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                  </div>
+                  <div class="window-title">script.js</div>
+                </div>
+                <pre><code><span class="token-keyword">const</span> <span class="token-variable">btn</span> = document.<span class="token-function">getElementById</span>(<span class="token-string">'themeBtn'</span>);
+<span class="token-keyword">const</span> <span class="token-variable">box</span> = document.<span class="token-function">getElementById</span>(<span class="token-string">'targetBox'</span>);
+
+<span class="token-variable">btn</span>.<span class="token-function">addEventListener</span>(<span class="token-string">'click'</span>, () => {
+  <span class="token-variable">box</span>.classList.<span class="token-function">toggle</span>(<span class="token-string">'dark-mode'</span>);
+  <span class="token-variable">box</span>.textContent = <span class="token-variable">box</span>.classList.<span class="token-function">contains</span>(<span class="token-string">'dark-mode'</span>)
+    ? <span class="token-string">'Dark Mode Active'</span>
+    : <span class="token-string">'Light Mode Active'</span>;
+});</code></pre>
+              </div>
+              <div class="output-window">
+                <div class="output-label">Rendered Output</div>
+                <div class="output-content-centered">
+                  <div id="demo-dom-box" class="js-dom-box">Light Mode Active</div>
+                  <button class="demo-hover-btn" onclick="toggleDemoMode()">Toggle Theme</button>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <div class="demo-section reveal">
+            <div class="demo-header">
+              <h2>02. Asynchronous Data Fetching</h2>
+              <p>Using Promises and Async/Await to handle network requests without blocking the main execution thread.</p>
+            </div>
+            <div class="interactive-demo">
+              <div class="code-window">
+                <div class="window-header">
+                  <div class="window-dots">
+                    <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                  </div>
+                  <div class="window-title">api.js</div>
+                </div>
+                <pre><code><span class="token-keyword">async function</span> <span class="token-function">fetchUser</span>() {
+  <span class="token-keyword">try</span> {
+    <span class="token-keyword">const</span> <span class="token-variable">response</span> = <span class="token-keyword">await</span> <span class="token-function">fetch</span>(<span class="token-string">'/api/user/1'</span>);
+    <span class="token-keyword">const</span> <span class="token-variable">data</span> = <span class="token-keyword">await</span> <span class="token-variable">response</span>.<span class="token-function">json</span>();
+    
+    <span class="token-function">renderCard</span>(<span class="token-variable">data</span>.name, <span class="token-variable">data</span>.role);
+  } <span class="token-keyword">catch</span> (<span class="token-variable">error</span>) {
+    console.<span class="token-function">error</span>(<span class="token-string">'Fetch failed:'</span>, <span class="token-variable">error</span>);
+  }
+}</code></pre>
+              </div>
+              <div class="output-window">
+                <div class="output-label">Rendered Output</div>
+                <div class="output-content-centered">
+                  <button id="demo-fetch-btn" class="demo-hover-btn" onclick="loadDemoUser(this)">Fetch User Data</button>
+                  <div id="demo-fetch-card" class="js-profile-card">
+                    <h4>Ayush Kumar Ojha</h4>
+                    <p>Software Engineer</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-section reveal">
+            <div class="demo-header">
+              <h2>03. State Management & Logic</h2>
+              <p>Managing client-side state and implementing pure JavaScript logic for interactive components.</p>
+            </div>
+            <div class="interactive-demo">
+              <div class="code-window">
+                <div class="window-header">
+                  <div class="window-dots">
+                    <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                  </div>
+                  <div class="window-title">counter.js</div>
+                </div>
+                <pre><code><span class="token-keyword">let</span> <span class="token-variable">count</span> = <span class="token-string">0</span>;
+<span class="token-keyword">const</span> <span class="token-variable">display</span> = document.<span class="token-function">querySelector</span>(<span class="token-string">'.val'</span>);
+
+<span class="token-keyword">function</span> <span class="token-function">updateCount</span>(<span class="token-variable">amount</span>) {
+  <span class="token-variable">count</span> += <span class="token-variable">amount</span>;
+  <span class="token-variable">display</span>.innerText = <span class="token-variable">count</span>;
+  
+  <span class="token-comment">// Logical conditional styling</span>
+  <span class="token-variable">display</span>.style.color = <span class="token-variable">count</span> < 0 
+    ? <span class="token-string">'red'</span> 
+    : <span class="token-string">'black'</span>;
+}</code></pre>
+              </div>
+              <div class="output-window">
+                <div class="output-label">Rendered Output</div>
+                <div class="output-content-centered">
+                  <div class="js-counter-wrapper">
+                    <button class="js-btn" onclick="changeDemoCount(-1)">-</button>
+                    <div id="demo-counter-display" class="js-counter-val">0</div>
+                    <button class="js-btn" onclick="changeDemoCount(1)">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div id="wt-nodejs" class="wt-subpanel">
@@ -995,6 +1075,49 @@ footer{
         }
       });
     }, 50);
+  }
+
+  // 4. Interactive JavaScript Demo Logic
+  
+  // JS Demo 1: DOM Toggle
+  function toggleDemoMode() {
+    const box = document.getElementById('demo-dom-box');
+    box.classList.toggle('dark-mode');
+    if (box.classList.contains('dark-mode')) {
+      box.textContent = 'Dark Mode Active';
+    } else {
+      box.textContent = 'Light Mode Active';
+    }
+  }
+
+  // JS Demo 2: Simulated Async Fetch
+  function loadDemoUser(btnElement) {
+    const originalText = btnElement.innerText;
+    btnElement.innerText = "Loading...";
+    btnElement.style.opacity = "0.7";
+    btnElement.disabled = true;
+
+    // Simulate network delay of 1.5 seconds
+    setTimeout(() => {
+      btnElement.style.display = "none";
+      document.getElementById('demo-fetch-card').style.display = "block";
+    }, 1200);
+  }
+
+  // JS Demo 3: State Management (Counter)
+  let demoCount = 0;
+  function changeDemoCount(amount) {
+    demoCount += amount;
+    const display = document.getElementById('demo-counter-display');
+    display.innerText = demoCount;
+    
+    if (demoCount < 0) {
+      display.style.color = '#FF5F56'; // Red
+    } else if (demoCount > 0) {
+      display.style.color = '#27C93F'; // Green
+    } else {
+      display.style.color = 'var(--theme-dark)'; // Black/Dark default
+    }
   }
 </script>
 
