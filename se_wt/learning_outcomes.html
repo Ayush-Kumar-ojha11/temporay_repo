@@ -111,7 +111,6 @@ nav{
 .dropbtn:hover {
   color: #fff;
 }
-/* Smooth Dropdown Animation */
 .dropdown-content {
   position: absolute;
   background-color: #fff;
@@ -187,7 +186,7 @@ nav{
 }
 
 /* ── SECTION WRAPPER ── */
-.section{padding:5rem 2rem; max-width: 1100px; margin: 0 auto;}
+.section{padding:5rem 2rem; max-width: 1200px; margin: 0 auto;}
 
 /* ── PANELS ── */
 .outcome-panel {
@@ -199,7 +198,81 @@ nav{
   animation: fadeIn 0.6s ease forwards;
 }
 
-/* ── INTERACTIVE DEMO (WT) ── */
+/* ── WT MASTER TAB LAYOUT (SIDEBAR + CONTENT) ── */
+.wt-layout {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+}
+.wt-sidebar {
+  width: 180px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 100px; /* Sticks slightly below the nav */
+}
+.wt-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wt-tab {
+  margin-bottom: 1.5rem;
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.wt-tab span {
+  padding: 6px 12px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+/* Styling to perfectly match image_c16c6e.png */
+.wt-tab.active span {
+  background-color: #1a1a1a;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.wt-tab:not(.active):hover {
+  color: var(--theme-dark);
+}
+.wt-content {
+  flex-grow: 1;
+  min-width: 0;
+}
+.wt-subpanel {
+  display: none;
+  opacity: 0;
+}
+.wt-subpanel.active {
+  display: block;
+  animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Responsive sidebar */
+@media(max-width: 900px) {
+  .wt-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .wt-sidebar {
+    width: 100%;
+    position: static;
+    border-bottom: 1px solid var(--theme-tan);
+    padding-bottom: 1rem;
+  }
+  .wt-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .wt-tab {
+    margin-bottom: 0;
+  }
+}
+
+/* ── INTERACTIVE DEMO COMPONENTS ── */
 .demo-section {
   margin-bottom: 6rem;
 }
@@ -238,7 +311,7 @@ nav{
   gap: 2.5rem;
   align-items: stretch;
 }
-@media(max-width: 800px) {
+@media(max-width: 900px) {
   .interactive-demo {
     grid-template-columns: 1fr;
   }
@@ -345,6 +418,15 @@ nav{
 .render-table tr { transition: background 0.3s ease; }
 .render-table tr:hover td { background: var(--theme-cream); }
 
+/* Placeholder for empty tabs */
+.empty-tab-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 2px dashed var(--theme-accent-light);
+  border-radius: 8px;
+  color: var(--text-muted);
+}
+
 /* ── SE DIAGRAMS ── */
 .diagram-card {
   background: #fff;
@@ -431,21 +513,39 @@ footer{
   <!-- WT PANEL -->
   <div id="panel-wt" class="outcome-panel active">
     
-    <!-- EXAMPLE 1: Semantic HTML -->
-    <div class="demo-section reveal">
-      <div class="demo-header">
-        <h2>01. Semantic Document Structure</h2>
-        <p>Using HTML5 semantic tags to create accessible and well-structured documents.</p>
-      </div>
-      <div class="interactive-demo">
-        <div class="code-window">
-          <div class="window-header">
-            <div class="window-dots">
-              <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+    <div class="wt-layout">
+      <!-- Sidebar Master Tab Selector -->
+      <aside class="wt-sidebar">
+        <ul class="wt-tabs">
+          <li class="wt-tab active" onclick="switchWtTab(event, 'html')"><span>HTML</span></li>
+          <li class="wt-tab" onclick="switchWtTab(event, 'css')"><span>CSS</span></li>
+          <li class="wt-tab" onclick="switchWtTab(event, 'js')"><span>JS</span></li>
+          <li class="wt-tab" onclick="switchWtTab(event, 'nodejs')"><span>NodeJs</span></li>
+          <li class="wt-tab" onclick="switchWtTab(event, 'react')"><span>React JS</span></li>
+        </ul>
+      </aside>
+
+      <!-- Content Area for WT -->
+      <div class="wt-content">
+        
+        <!-- HTML SUBPANEL -->
+        <div id="wt-html" class="wt-subpanel active">
+          
+          <!-- EXAMPLE 1: Semantic HTML -->
+          <div class="demo-section reveal">
+            <div class="demo-header">
+              <h2>01. Semantic Document Structure</h2>
+              <p>Using HTML5 semantic tags to create accessible and well-structured documents.</p>
             </div>
-            <div class="window-title">article.html</div>
-          </div>
-          <pre><code><span class="token-tag">&lt;article&gt;</span>
+            <div class="interactive-demo">
+              <div class="code-window">
+                <div class="window-header">
+                  <div class="window-dots">
+                    <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                  </div>
+                  <div class="window-title">article.html</div>
+                </div>
+                <pre><code><span class="token-tag">&lt;article&gt;</span>
   <span class="token-tag">&lt;header&gt;</span>
     <span class="token-tag">&lt;h1&gt;</span><span class="token-text">Understanding Web Standards</span><span class="token-tag">&lt;/h1&gt;</span>
     <span class="token-tag">&lt;p&gt;</span><span class="token-text">Published on June 5, 2026</span><span class="token-tag">&lt;/p&gt;</span>
@@ -455,40 +555,40 @@ footer{
     <span class="token-tag">&lt;p&gt;</span><span class="token-text">Semantic HTML helps screen readers understand context.</span><span class="token-tag">&lt;/p&gt;</span>
   <span class="token-tag">&lt;/section&gt;</span>
 <span class="token-tag">&lt;/article&gt;</span></code></pre>
-        </div>
-        <div class="output-window">
-          <div class="output-label">Rendered Output</div>
-          <div class="render-article">
-            <article>
-              <header>
-                <h1>Understanding Web Standards</h1>
-                <p>Published on June 5, 2026</p>
-              </header>
-              <hr>
-              <section>
-                <p>Semantic HTML helps screen readers understand context.</p>
-              </section>
-            </article>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- EXAMPLE 2: Forms & User Input -->
-    <div class="demo-section reveal">
-      <div class="demo-header">
-        <h2>02. Forms & User Input</h2>
-        <p>Building a product listing form utilizing required attributes, semantic input types, and structured labels.</p>
-      </div>
-      <div class="interactive-demo">
-        <div class="code-window">
-          <div class="window-header">
-            <div class="window-dots">
-              <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+              </div>
+              <div class="output-window">
+                <div class="output-label">Rendered Output</div>
+                <div class="render-article">
+                  <article>
+                    <header>
+                      <h1>Understanding Web Standards</h1>
+                      <p>Published on June 5, 2026</p>
+                    </header>
+                    <hr>
+                    <section>
+                      <p>Semantic HTML helps screen readers understand context.</p>
+                    </section>
+                  </article>
+                </div>
+              </div>
             </div>
-            <div class="window-title">new-listing.html</div>
           </div>
-          <pre><code><span class="token-tag">&lt;form</span> <span class="token-attr">action</span>=<span class="token-string">"/post"</span> <span class="token-attr">method</span>=<span class="token-string">"POST"</span><span class="token-tag">&gt;</span>
+
+          <!-- EXAMPLE 2: Forms & User Input -->
+          <div class="demo-section reveal">
+            <div class="demo-header">
+              <h2>02. Forms & User Input</h2>
+              <p>Building a product listing form utilizing required attributes, semantic input types, and structured labels.</p>
+            </div>
+            <div class="interactive-demo">
+              <div class="code-window">
+                <div class="window-header">
+                  <div class="window-dots">
+                    <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                  </div>
+                  <div class="window-title">new-listing.html</div>
+                </div>
+                <pre><code><span class="token-tag">&lt;form</span> <span class="token-attr">action</span>=<span class="token-string">"/post"</span> <span class="token-attr">method</span>=<span class="token-string">"POST"</span><span class="token-tag">&gt;</span>
 
   <span class="token-tag">&lt;label</span> <span class="token-attr">for</span>=<span class="token-string">"item"</span><span class="token-tag">&gt;</span><span class="token-text">Product Title:</span><span class="token-tag">&lt;/label&gt;</span>
   <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"text"</span> <span class="token-attr">id</span>=<span class="token-string">"item"</span> <span class="token-attr">required</span><span class="token-tag">&gt;</span>
@@ -499,37 +599,37 @@ footer{
   <span class="token-tag">&lt;button</span> <span class="token-attr">type</span>=<span class="token-string">"submit"</span><span class="token-tag">&gt;</span><span class="token-text">Post Listing</span><span class="token-tag">&lt;/button&gt;</span>
 
 <span class="token-tag">&lt;/form&gt;</span></code></pre>
-        </div>
-        <div class="output-window">
-          <div class="output-label">Rendered Output</div>
-          <form class="demo-form" onsubmit="event.preventDefault(); alert('Listing Posted!');">
-            <label for="item">Product Title:</label>
-            <input type="text" id="item" placeholder="e.g. Basic Electronics Book" required>
+              </div>
+              <div class="output-window">
+                <div class="output-label">Rendered Output</div>
+                <form class="demo-form" onsubmit="event.preventDefault(); alert('Listing Posted!');">
+                  <label for="item">Product Title:</label>
+                  <input type="text" id="item" placeholder="e.g. Basic Electronics Book" required>
 
-            <label for="price">Price (₹):</label>
-            <input type="number" id="price" value="0" min="0">
+                  <label for="price">Price (₹):</label>
+                  <input type="number" id="price" value="0" min="0">
 
-            <button type="submit">Post Listing</button>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- EXAMPLE 3: Data Tabulation -->
-    <div class="demo-section reveal">
-      <div class="demo-header">
-        <h2>03. Data Tabulation</h2>
-        <p>Organizing structured data using HTML table rows, headers, and data cells.</p>
-      </div>
-      <div class="interactive-demo">
-        <div class="code-window">
-          <div class="window-header">
-            <div class="window-dots">
-              <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                  <button type="submit">Post Listing</button>
+                </form>
+              </div>
             </div>
-            <div class="window-title">data-table.html</div>
           </div>
-          <pre><code><span class="token-tag">&lt;table&gt;</span>
+
+          <!-- EXAMPLE 3: Data Tabulation -->
+          <div class="demo-section reveal">
+            <div class="demo-header">
+              <h2>03. Data Tabulation</h2>
+              <p>Organizing structured data using HTML table rows, headers, and data cells.</p>
+            </div>
+            <div class="interactive-demo">
+              <div class="code-window">
+                <div class="window-header">
+                  <div class="window-dots">
+                    <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                  </div>
+                  <div class="window-title">data-table.html</div>
+                </div>
+                <pre><code><span class="token-tag">&lt;table&gt;</span>
   <span class="token-tag">&lt;thead&gt;</span>
     <span class="token-tag">&lt;tr&gt;</span>
       <span class="token-tag">&lt;th&gt;</span><span class="token-text">Subject</span><span class="token-tag">&lt;/th&gt;</span>
@@ -547,31 +647,67 @@ footer{
     <span class="token-tag">&lt;/tr&gt;</span>
   <span class="token-tag">&lt;/tbody&gt;</span>
 <span class="token-tag">&lt;/table&gt;</span></code></pre>
+              </div>
+              <div class="output-window">
+                <div class="output-label">Rendered Output</div>
+                <table class="render-table">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Web Technology</td>
+                      <td>A+</td>
+                    </tr>
+                    <tr>
+                      <td>Software Eng.</td>
+                      <td>A</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="output-window">
-          <div class="output-label">Rendered Output</div>
-          <table class="render-table">
-            <thead>
-              <tr>
-                <th>Subject</th>
-                <th>Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Web Technology</td>
-                <td>A+</td>
-              </tr>
-              <tr>
-                <td>Software Eng.</td>
-                <td>A</td>
-              </tr>
-            </tbody>
-          </table>
+
+        <!-- CSS SUBPANEL -->
+        <div id="wt-css" class="wt-subpanel">
+          <div class="empty-tab-state">
+            <h3>CSS Outcomes</h3>
+            <p>Your CSS layout, flexbox, and animation code examples will go here.</p>
+          </div>
         </div>
+
+        <!-- JS SUBPANEL -->
+        <div id="wt-js" class="wt-subpanel">
+          <div class="empty-tab-state">
+            <h3>JavaScript Outcomes</h3>
+            <p>Your DOM manipulation and vanilla JS logic examples will go here.</p>
+          </div>
+        </div>
+
+        <!-- NODEJS SUBPANEL -->
+        <div id="wt-nodejs" class="wt-subpanel">
+          <div class="empty-tab-state">
+            <h3>Node.js Outcomes</h3>
+            <p>Your backend routing and API design examples will go here.</p>
+          </div>
+        </div>
+
+        <!-- REACT SUBPANEL -->
+        <div id="wt-react" class="wt-subpanel">
+          <div class="empty-tab-state">
+            <h3>React JS Outcomes</h3>
+            <p>Your component structure and state management examples will go here.</p>
+          </div>
+        </div>
+
       </div>
     </div>
-
   </div>
 
 
@@ -657,20 +793,50 @@ footer{
   // Initialize observer on DOM load
   document.addEventListener('DOMContentLoaded', initObserver);
 
-  // 2. Dropdown Panel Switcher Logic
+  // 2. Top Dropdown Panel Switcher Logic (WT vs SE)
   function switchPanel(panelId) {
-    // Hide all panels
+    // Hide all main panels
     document.querySelectorAll('.outcome-panel').forEach(panel => {
       panel.classList.remove('active');
     });
     
-    // Show selected panel
+    // Show selected main panel
     const activePanel = document.getElementById('panel-' + panelId);
     activePanel.classList.add('active');
 
-    // Small hack to ensure items currently in the viewport trigger their reveal animation immediately after switching tabs
+    // Trigger reveal animations for items already in the viewport
     setTimeout(() => {
       activePanel.querySelectorAll('.reveal').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if(rect.top < window.innerHeight) {
+          el.classList.add('active');
+        }
+      });
+    }, 50);
+  }
+
+  // 3. Sidebar Master Tab Switcher Logic (Inside WT)
+  function switchWtTab(event, tabId) {
+    // Remove active class from all sidebar tabs
+    document.querySelectorAll('.wt-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Add active class to clicked tab
+    event.currentTarget.classList.add('active');
+
+    // Hide all subpanels inside WT
+    document.querySelectorAll('.wt-subpanel').forEach(panel => {
+      panel.classList.remove('active');
+    });
+
+    // Show the targeted subpanel
+    const activeSubpanel = document.getElementById('wt-' + tabId);
+    activeSubpanel.classList.add('active');
+
+    // Trigger reveal animations for the newly opened subpanel
+    setTimeout(() => {
+      activeSubpanel.querySelectorAll('.reveal').forEach(el => {
         const rect = el.getBoundingClientRect();
         if(rect.top < window.innerHeight) {
           el.classList.add('active');
