@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ayush Ojha — CS Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --theme-dark: #352F2C;       
+  --theme-cream: #FBF9F6;      
+  --theme-tan: #EFEBE4;        
+  --theme-accent: #93634B;     
+  --theme-accent-light: #D4BCAE;
+  
+  --text-dark: #25201E;
+  --text-muted: #6B625E;
+  --text-light: #FBF9F6;
+  
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+html{scroll-behavior:smooth; height: 100%; overflow-x: hidden;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--theme-cream);
+  color:var(--text-dark);
+  font-size:15px;
+  line-height:1.7;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--theme-dark);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;
+  border-bottom:1px solid var(--theme-accent);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.nav-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:var(--theme-tan);
+  letter-spacing:.04em;
+  text-decoration:none;
+  transition: var(--transition-smooth);
+}
+.nav-brand:hover { color: var(--theme-accent-light); }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { color: var(--theme-tan); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: var(--transition-smooth); }
+.nav-links a:hover { color: #fff; }
+
+/* ── HERO ── */
+.hero{
+  background:var(--theme-dark);
+  padding:7rem 2rem 6rem;
+  position:relative;
+  overflow:hidden;
+}
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 3rem;
+}
+.hero-text {
+  flex: 1;
+}
+.hero-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.hero-image {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  border: 3px solid var(--theme-accent);
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.hero-image:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+.hero-tag{
+  display:inline-block;
+  font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--theme-accent-light);
+  border:1px solid var(--theme-accent);
+  padding:4px 14px;border-radius:2px;
+  margin-bottom:1.2rem;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:900;
+  color:var(--text-light);
+  line-height:1.1;
+  margin-bottom:.6rem;
+}
+.hero h1 span{color:var(--theme-accent-light)}
+.hero-sub{
+  font-size:1.1rem;font-weight:400;
+  color:var(--theme-tan);
+  max-width:600px;
+  margin-bottom:2rem;
+  line-height:1.7;
+}
+.hero-btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: var(--theme-accent);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 4px;
+  transition: var(--transition-bounce);
+}
+.hero-btn:hover {
+  background: var(--theme-accent-light);
+  color: var(--theme-dark);
+  transform: translateY(-4px);
+}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:6rem 2rem; max-width: 1100px; margin: 0 auto;}
+.section-bg-alt { background: var(--theme-tan); }
+.section-label{
+  font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--theme-accent);
+  margin-bottom:.5rem;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;font-weight:700;
+  color:var(--theme-dark);
+  margin-bottom:.4rem;
+  line-height:1.2;
+}
+.section-divider{
+  width:48px;height:3px;
+  background:var(--theme-accent);
+  margin-bottom:3rem;
+  border-radius:1px;
+}
+
+/* ── CARD POP-UP ANIMATIONS & INTERACTIONS ── */
+.about-card, .project-card, .skill-group {
+  transition: var(--transition-bounce);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  position: relative;
+}
+.about-card:hover, .project-card:hover, .skill-group:hover {
+  transform: translateY(-8px);
+  background-color: #FFFDFB !important;
+  box-shadow: 0 15px 30px rgba(53, 47, 44, 0.1);
+  border-color: var(--theme-accent-light);
+}
+
+/* ── SCROLL REVEAL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.reveal-scale.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* Delay classes */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* Continuous floating animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Hero animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-anim {
+  animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  opacity: 0;
+}
+.hero-anim-1 { animation-delay: 0.1s; }
+.hero-anim-2 { animation-delay: 0.2s; }
+.hero-anim-3 { animation-delay: 0.3s; }
+.hero-anim-4 { animation-delay: 0.4s; }
+.hero-anim-5 { animation-delay: 0.5s; }
+
+/* ── ABOUT ── */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2rem;
+}
+.about-card{
+  background:#fff;
+  border:1px solid rgba(147, 99, 75, 0.15);
+  border-left:4px solid var(--theme-accent);
+  padding:2rem;
+  border-radius:0 4px 4px 0;
+}
+.about-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;
+  color:var(--theme-dark);
+  margin-bottom:.8rem;
+}
+.about-card p{font-size:1rem;color:var(--text-muted);line-height:1.7}
+.about-card .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.2rem}
+.tag{
+  font-size:11px;font-weight:600;
+  padding:5px 14px;
+  background:var(--theme-tan);
+  color:var(--theme-dark);
+  border-radius:4px;
+  transition: var(--transition-smooth);
+}
+.tag:hover {
+  background: var(--theme-accent);
+  color: var(--text-light);
+}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.project-card{
+  background:#fff;
+  border:1px solid rgba(147, 99, 75, 0.15);
+  border-radius:8px;
+  overflow:hidden;
+  display: flex;
+  flex-direction: column;
+}
+.project-header{
+  background:var(--theme-dark);
+  padding:1.5rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.project-header h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;
+  color:var(--text-light);
+}
+.project-badge{
+  font-size:10px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 12px;
+  background:var(--theme-accent);
+  color:var(--text-light);
+  border-radius:4px;
+  animation: float 4s ease-in-out infinite;
+}
+.project-body{padding:2rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;}
+.project-body p{font-size:.95rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.7}
+.project-stack{display:flex;flex-wrap:wrap;gap:8px}
+.stack-tag{
+  font-size:11px;padding:5px 12px;
+  background:var(--theme-cream);
+  border:1px solid var(--theme-tan);
+  color:var(--theme-dark);
+  border-radius:4px;
+  font-weight:600;
+}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.skill-group{
+  background:#fff;
+  border:1px solid rgba(147, 99, 75, 0.15);
+  padding:2rem;border-radius:8px;
+}
+.skill-group h3{
+  font-size:.9rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--theme-accent);
+  margin-bottom:1.2rem;
+  padding-bottom:.8rem;
+  border-bottom:1px solid var(--theme-tan);
+}
+.skill-pill{
+  display:inline-block;
+  font-size:13px;font-weight:600;
+  padding:6px 16px;
+  background:var(--theme-cream);
+  border:1px solid var(--theme-tan);
+  color:var(--theme-dark);
+  border-radius:4px;
+  margin:4px 4px 8px 0;
+  transition: var(--transition-smooth);
+}
+.skill-pill:hover {
+  background: var(--theme-accent-light);
+  color: var(--theme-dark);
+  border-color: var(--theme-accent-light);
+  transform: translateY(-2px);
+}
+
+/* ── CONTACT / FOOTER ── */
+footer{
+  background:var(--theme-dark);
+  padding:6rem 2rem 4rem;
+  text-align:center;
+}
+footer p{color:var(--theme-tan);font-size:1rem}
+.contact-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:3rem;flex-wrap:wrap}
+.contact-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:1rem;font-weight:600;
+  color:var(--text-light);
+  text-decoration:none;
+  padding:.8rem 2rem;
+  border:1px solid var(--theme-accent);
+  border-radius:4px;
+  transition: var(--transition-bounce);
+}
+.contact-link:hover{background:var(--theme-accent);color:var(--text-light); transform: translateY(-4px);}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.05);
+  padding-top:2rem;
+  font-size:.9rem;color:var(--theme-accent-light);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero-content { flex-direction: column-reverse; text-align: center; }
+  .hero-image-wrapper { justify-content: center; margin-bottom: 1rem; }
+  .hero-sub { margin: 0 auto 2rem auto; }
+  .skills-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .about-grid,.projects-grid,.skills-grid{grid-template-columns:1fr}
+  .section{padding:4rem 1.5rem}
+  .nav-links { display: none; } /* Hide links on mobile for simplicity */
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Ayush Kumar Ojha</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-tag hero-anim hero-anim-1">Computer Science Student</div>
+      <h1 class="hero-anim hero-anim-2">Ayush Kumar <span>Ojha</span></h1>
+      <p class="hero-sub hero-anim hero-anim-3">I'm a student with a strong foundation in data structures, algorithms, and a person who loves to architect full-stack applications and write efficient code.</p>
+      <div class="hero-anim hero-anim-4">
+        <a href="#projects" class="hero-btn">View My Work</a>
+      </div>
+    </div>
+    <div class="hero-image-wrapper hero-anim hero-anim-5">
+      <img src="pic.jpeg" alt="Ayush Kumar Ojha" class="hero-image" />
+    </div>
+  </div>
+</section>
+
+<div class="section-wrapper">
+  <section class="section" id="about">
+    <div class="section-label reveal">Introduction</div>
+    <div class="section-title reveal">About Me</div>
+    <div class="section-divider reveal"></div>
+    <div class="about-grid">
+      <div class="about-card reveal-scale delay-1" style="grid-column: 1 / -1;">
+        <h3>Detailed Background</h3>
+        <p>Hi, I'm Ayush Kumar Ojha, currently majoring in Computer Science. I chose this field because computers have always fascinated me, and I wanted to dive deeper into how they work. Coding started as a fun activity with my friends, and it quickly grew into a true passion.</p>
+        <p style="margin-top: 0.8rem;">I'm proficient in Python, C, and C++, and have built a few exciting projects along the way. As a hostelite, I love spending my free time hanging out with friends and watching movies. Moving forward, I am eager to expand my coding knowledge, master Data Structures and Algorithms, and dive deeper into software architecture.</p>
+      </div>
+      <div class="about-card reveal-scale delay-1">
+        <h3>Interests & Hobbies</h3>
+        <p>Beyond the screen, I enjoy campus life, collaborating on code with my peers, and unwinding with good movies. I love the balance between intense logic problems and hanging out with friends.</p>
+        <div class="tag-row">
+          <span class="tag">Movies</span>
+          <span class="tag">Gaming</span>
+          <span class="tag">Collaboration</span>
+        </div>
+      </div>
+      <div class="about-card reveal-scale delay-2">
+        <h3>Current Focus</h3>
+        <p>Right now, I am heavily focused on strengthening my core logic through Data Structures and Algorithms (DSA), building robust full-stack web applications, and participating in hackathons.</p>
+        <div class="tag-row">
+          <span class="tag">DSA</span>
+          <span class="tag">System Design</span>
+          <span class="tag">Web Dev</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="section-bg-alt">
+  <section class="section" id="skills">
+    <div class="section-label reveal">Technical</div>
+    <div class="section-title reveal">Skills & Toolkit</div>
+    <div class="section-divider reveal"></div>
+    <div class="skills-grid">
+      <div class="skill-group reveal-scale delay-1">
+        <h3>Core Languages & Logic</h3>
+        <span class="skill-pill">C / C++</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">JavaScript</span>
+        <span class="skill-pill">DSA</span>
+      </div>
+      <div class="skill-group reveal-scale delay-2">
+        <h3>Web Technology</h3>
+        <span class="skill-pill">React.js</span>
+        <span class="skill-pill">Node.js</span>
+        <span class="skill-pill">Express API</span>
+        <span class="skill-pill">HTML5 / CSS3</span>
+      </div>
+      <div class="skill-group reveal-scale delay-3">
+        <h3>Software Engineering</h3>
+        <span class="skill-pill">MongoDB</span>
+        <span class="skill-pill">UML / System Design</span>
+        <span class="skill-pill">Agile (Scrum)</span>
+        <span class="skill-pill">Unit/Integration Testing</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="section-wrapper">
+  <section class="section" id="projects">
+    <div class="section-label reveal">Work</div>
+    <div class="section-title reveal">Featured Projects</div>
+    <div class="section-divider reveal"></div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal-scale delay-1">
+        <div class="project-header">
+          <h3>Expense Splitter</h3>
+          <span class="project-badge">SE & WebTech</span>
+        </div>
+        <div class="project-body">
+          <p>A full-stack MERN application engineered to automate and simplify shared expenses among groups. Implemented secure JWT authentication, RESTful routing, and a complex backend algorithm to compute exact balances and minimum debt transactions.</p>
+          <div class="project-stack">
+            <span class="stack-tag">React.js</span>
+            <span class="stack-tag">Node.js</span>
+            <span class="stack-tag">MongoDB</span>
+            <span class="stack-tag">Express</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal-scale delay-2">
+        <div class="project-header">
+          <h3>Transaction Scheduler</h3>
+          <span class="project-badge">Algorithms</span>
+        </div>
+        <div class="project-body">
+          <p>Developed a robust C++ system to apply strict timestamp ordering algorithms to complex transaction schedules. Ensured high database concurrency while actively debugging initialization logic loops to prevent data race conditions.</p>
+          <div class="project-stack">
+            <span class="stack-tag">C++</span>
+            <span class="stack-tag">Data Structures</span>
+            <span class="stack-tag">Logic Gates</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal-scale delay-3">
+        <div class="project-header">
+          <h3>CityPlan Rajdwar</h3>
+          <span class="project-badge">Frontend Web</span>
+        </div>
+        <div class="project-body">
+          <p>Collaborated via GitHub on an interactive web layout showcasing detailed city planning structures. Focused heavily on semantic HTML, responsive CSS frameworks, and collaborative version control.</p>
+          <div class="project-stack">
+            <span class="stack-tag">HTML/CSS</span>
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">Git / GitHub</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card reveal-scale delay-4">
+        <div class="project-header">
+          <h3>House Price Predictor</h3>
+          <span class="project-badge">Machine Learning</span>
+        </div>
+        <div class="project-body">
+          <p>An ML model built to predict housing prices based on structural and locational features. Handled missing data, engineered new features, and fine-tuned a regression model for optimal accuracy.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Scikit-learn</span>
+            <span class="stack-tag">Pandas</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<footer id="contact" class="reveal">
+  <p style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text-light);margin-bottom:1rem">Let's Connect</p>
+  <p style="margin-bottom:3rem; color: var(--theme-accent-light); font-size: 1.1rem;">Ayush Kumar Ojha · Computer Science Student</p>
+  <div class="contact-links">
+    <a class="contact-link" href="https://github.com/CityPlan_Rajdwar" target="_blank">GitHub</a>
+    <a class="contact-link" href="mailto:01fe24bcs211@kletech.ac.in" target="_blank">Email</a>
+  </div>
+  <div class="footer-bottom">
+    <span>Ayush Kumar Ojha · Personal Portfolio</span>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const reveals = document.querySelectorAll(".reveal, .reveal-scale");
+    
+    const observerOptions = {
+      root: null,
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    reveals.forEach((reveal) => observer.observe(reveal));
+  });
+</script>
+</body>
+</html>
